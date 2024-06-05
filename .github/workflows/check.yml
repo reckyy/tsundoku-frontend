@@ -28,5 +28,18 @@ jobs:
     - name: Run Prettier
       run: npm run check
 
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20.9.0'
+
     - name: Run Jest
       run: npm run test
