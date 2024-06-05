@@ -28,7 +28,6 @@ jobs:
     - name: Run Prettier
       run: npm run check
 
-jobs:
   test:
     runs-on: ubuntu-latest
 
