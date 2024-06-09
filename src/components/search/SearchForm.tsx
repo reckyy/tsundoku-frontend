@@ -7,11 +7,11 @@ type Result = {
   title: string;
   author: string;
   imageUrl: string;
-}
+};
 
 type SearchFormProps = {
   onResults: (results: Result[]) => void;
-}
+};
 
 type Item = {
   affiliateUrl: string;
@@ -44,12 +44,11 @@ type Item = {
   subTitleKana: string;
   title: string;
   titleKana: string;
-}
+};
 
 type ItemProps = {
-  Item: Item
-}
-
+  Item: Item;
+};
 
 const SearchForm = ({ onResults }: SearchFormProps) => {
   const form = useForm({
@@ -64,13 +63,13 @@ const SearchForm = ({ onResults }: SearchFormProps) => {
       const res = await axios.get(
         `https://app.rakuten.co.jp/services/api/BooksBook/Search/20170404?applicationId=1063966721330772407&title=${values.searchWord}`,
       );
-      const books = res.data.Items.map((element: ItemProps , index: number) => ({
+      const books = res.data.Items.map((element: ItemProps, index: number) => ({
         id: index + 1,
         title: element.Item.title,
         author: element.Item.author,
-        imageUrl: element.Item.mediumImageUrl
-      }))
-      onResults(books)
+        imageUrl: element.Item.mediumImageUrl,
+      }));
+      onResults(books);
     } catch (error) {
       console.error(error);
     }
