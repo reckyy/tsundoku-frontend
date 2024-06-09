@@ -6,6 +6,7 @@ const createJestConfig = nextJest({
 });
 
 const config: Config = {
+  setupFilesAfterEnv: ['./setupTests.ts'],
   clearMocks: true,
   collectCoverage: true,
   coverageDirectory: 'coverage',
