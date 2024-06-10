@@ -19,7 +19,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <MantineProvider>{children}</MantineProvider>
+        <main className="flex min-h-screen flex-col items-center justify-between p-24">
+          <MantineProvider>{children}</MantineProvider>
+        </main>
       </body>
     </html>
   );
