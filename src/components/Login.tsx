@@ -1,9 +1,9 @@
-import { SignIn } from '@/components/signin-button';
-import { SignOut } from '@/components/signout-button';
+import { SignInButton } from '@/components/button/SignInButton';
+import { SignOutButton } from '@/components/button/SignOutButton';
 import { auth } from '@/auth';
 
 export default async function Login() {
   const session = await auth();
 
-  return <div>{!session?.user ? <SignIn /> : <SignOut />}</div>;
+  return <div>{!session?.user ? <SignInButton /> : <SignOutButton />}</div>;
 }
