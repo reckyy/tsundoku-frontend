@@ -1,11 +1,11 @@
 import Login from '@/components/Login';
-import SearchHome from '@/components/search/SearchHome';
+import SearchBooksButton from '@/components/button/SearchBooksButton';
 
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <SearchHome />
+    <div>
+      <SearchBooksButton />
       <Login />
-    </main>
+    </div>
   );
 }
