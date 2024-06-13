@@ -22,7 +22,7 @@ export default function AddBookConfirmButton({ book }: BookProps) {
         <AddBookConfirmContent book={book} />
       </Modal>
 
-      <Button onClick={open}>Open centered Modal</Button>
+      <Button onClick={open}>本棚に追加</Button>
     </>
   );
 }
