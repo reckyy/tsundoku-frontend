@@ -58,10 +58,10 @@ const SearchForm = ({ onResults }: SearchFormProps) => {
     },
   });
 
-  const handleSubmit = async (values: { searchWord: string }) => {
+  const handleSubmit = async (value: { searchWord: string }) => {
     try {
       const res = await axios.get(
-        `https://app.rakuten.co.jp/services/api/BooksBook/Search/20170404?applicationId=1063966721330772407&title=${values.searchWord}`,
+        `https://app.rakuten.co.jp/services/api/BooksBook/Search/20170404?applicationId=1063966721330772407&title=${value.searchWord}`,
       );
       const books = res.data.Items.map((element: ItemProps, index: number) => ({
         id: index + 1,
