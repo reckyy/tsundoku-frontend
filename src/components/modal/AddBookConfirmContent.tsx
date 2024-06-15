@@ -1,6 +1,7 @@
 import { Card, Image, Text, Button, Group } from '@mantine/core';
 import axios from 'axios';
 import { useSession } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
 
 type Book = {
   id: number;
@@ -15,6 +16,7 @@ type BookProps = {
 
 const AddBookConfirmContent = ({ book }: BookProps) => {
   const { data: session } = useSession();
+  const router = useRouter();
 
   const handleSubmit = async () => {
     const title = book.title;
@@ -29,7 +31,7 @@ const AddBookConfirmContent = ({ book }: BookProps) => {
         email,
       });
       if (res.status === 200) {
-        return true;
+        router.push('/');
       } else {
         return false;
       }
