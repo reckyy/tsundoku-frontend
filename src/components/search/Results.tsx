@@ -27,7 +27,7 @@ const Results = ({ results }: ResultProps) => {
               src={result.imageUrl}
               alt={result.title}
             />
-            <AddBookConfirmButton book={result}/>
+            <AddBookConfirmButton book={result} />
           </div>
         ))
       ) : (

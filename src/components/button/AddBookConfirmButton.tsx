@@ -11,10 +11,10 @@ type Book = {
 };
 
 type BookProps = {
-  book: Book
-}
+  book: Book;
+};
 
-export default function AddBookConfirmButton({ book }: BookProps) {
+const AddBookConfirmButton = ({ book }: BookProps) => {
   const [opened, { open, close }] = useDisclosure(false);
 
   return (
@@ -26,4 +26,6 @@ export default function AddBookConfirmButton({ book }: BookProps) {
       <Button onClick={open}>本棚に追加</Button>
     </SessionProvider>
   );
-}
+};
+
+export default AddBookConfirmButton;
