@@ -1,4 +1,5 @@
 import { Image } from '@mantine/core';
+import AddBookConfirmButton from '../button/AddBookConfirmButton';
 
 type Result = {
   id: number;
@@ -26,6 +27,7 @@ const Results = ({ results }: ResultProps) => {
               src={result.imageUrl}
               alt={result.title}
             />
+            <AddBookConfirmButton book={result} />
           </div>
         ))
       ) : (
