@@ -1,6 +1,6 @@
 import type { Preview } from '@storybook/react';
 import '@mantine/core/styles.css';
-import { MantineProvider } from '@mantine/core'
+import { MantineProvider } from '@mantine/core';
 import React from 'react';
 
 const preview: Preview = {
@@ -15,7 +15,7 @@ const preview: Preview = {
   decorators: [
     (Story) => (
       <MantineProvider>
-          <Story />
+        <Story />
       </MantineProvider>
     ),
   ],
