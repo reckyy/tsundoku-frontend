@@ -37,5 +37,3 @@ next-env.d.ts
 
 # storybook
 *storybook.log
-.storybook
-src/stories/
