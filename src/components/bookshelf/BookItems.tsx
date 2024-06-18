@@ -12,14 +12,14 @@ type Book = {
 const BookItems = async () => {
   const session = await auth();
   const res = await fetch(
-    `http://localhost:3001/api/books?email=${!session?.user?.email}`,
+    `http://localhost:3001/api/books?email=${session?.user?.email}`,
   );
   const bookItems = await res.json();
 
   return (
     <div>
       {bookItems.length > 0 ? (
-        <SimpleGrid cols={3}>
+        <SimpleGrid cols={3} spacing='xl' verticalSpacing='xl'>
           {bookItems.map((book: Book) => (
             <div key={book.id}>
               <BookItem book={book} />
