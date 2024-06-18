@@ -19,7 +19,12 @@ const BookItems = async () => {
   return (
     <div>
       {bookItems.length > 0 ? (
-        <SimpleGrid cols={3} spacing='xl' verticalSpacing='xl'>
+        <SimpleGrid
+          cols={3}
+          spacing="xl"
+          verticalSpacing="xl"
+          p={{ base: 'xl' }}
+        >
           {bookItems.map((book: Book) => (
             <div key={book.id}>
               <BookItem book={book} />
