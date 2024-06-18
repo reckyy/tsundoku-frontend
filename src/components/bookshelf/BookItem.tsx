@@ -8,11 +8,11 @@ type Book = {
 };
 
 type BookProps = {
-  book: Book
-}
+  book: Book;
+};
 
-const BookItem = ({ book } : BookProps) => {
-  return(
+const BookItem = ({ book }: BookProps) => {
+  return (
     <Image
       radius="md"
       w={100}
@@ -20,7 +20,7 @@ const BookItem = ({ book } : BookProps) => {
       src={book.cover_image_url}
       alt={book.title}
     />
-  )
-}
+  );
+};
 
-export default BookItem
+export default BookItem;

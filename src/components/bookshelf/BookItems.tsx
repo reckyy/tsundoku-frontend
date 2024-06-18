@@ -12,7 +12,7 @@ type Book = {
 const BookItems = async () => {
   const session = await auth();
   const res = await fetch(
-    `http://localhost:3001/api/books?email=${session?.user.email}`,
+    `http://localhost:3001/api/books?email=${!session?.user?.email}`,
   );
   const bookItems = await res.json();
 
