@@ -1,4 +1,4 @@
-import { SignInButton } from '@/components/button/SignInButton';
+import SignInButton from '@/components/button/SignInButton';
 import { SignOutButton } from '@/components/button/SignOutButton';
 import { auth } from '@/auth';
 

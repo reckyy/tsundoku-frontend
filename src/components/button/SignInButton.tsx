@@ -1,6 +1,7 @@
 import { signIn } from '@/auth';
+import GoogleButton from './GoogleButton';
 
-export function SignInButton() {
+const SignInButton = () => {
   return (
     <form
       action={async () => {
@@ -8,7 +9,9 @@ export function SignInButton() {
         await signIn('google');
       }}
     >
-      <button type="submit">Signin with Google</button>
+      <GoogleButton type="submit">Signin with Google</GoogleButton>
     </form>
   );
-}
+};
+
+export default SignInButton;
