@@ -25,6 +25,6 @@ const GoogleIcon = (props: React.ComponentPropsWithoutRef<'svg'>) => {
       />
     </svg>
   );
-}
+};
 
-export default GoogleIcon
+export default GoogleIcon;

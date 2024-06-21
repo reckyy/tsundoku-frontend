@@ -12,6 +12,6 @@ const SignInButton = () => {
       <GoogleButton>Signin with Google</GoogleButton>
     </form>
   );
-}
+};
 
-export default SignInButton
+export default SignInButton;
