@@ -3,6 +3,8 @@ import { Inter } from 'next/font/google';
 import './globals.css';
 import '@mantine/core/styles.css';
 import { MantineProvider } from '@mantine/core';
+import { Header } from '@/components/header/Header';
+import AuthGuard from '@/components/feature/AuthGuard';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -19,8 +21,13 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
+        <MantineProvider>
+          <Header />
+        </MantineProvider>
         <main className="flex min-h-screen flex-col justify-center  p-24">
-          <MantineProvider>{children}</MantineProvider>
+          <MantineProvider>
+            <AuthGuard>{children}</AuthGuard>
+          </MantineProvider>
         </main>
       </body>
     </html>

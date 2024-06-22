@@ -1,4 +1,3 @@
-import Login from '@/components/Login';
 import SearchBooksButton from '@/components/button/SearchBooksButton';
 import BookItems from '@/components/bookshelf/BookItems';
 
@@ -7,7 +6,6 @@ export default function Home() {
     <div>
       <SearchBooksButton />
       <BookItems />
-      <Login />
     </div>
   );
 }
