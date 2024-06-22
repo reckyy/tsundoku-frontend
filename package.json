@@ -69,8 +69,8 @@
     "typescript": "^5"
   },
   "imports": {
-    "#lib/auth": {
-      "storybook": "./src/lib/auth.mock.ts",
+    "#auth": {
+      "storybook": "./src/mocks/auth.mock.ts",
       "default": "./src/auth.ts"
     },
     "#*": [

@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { auth } from '#lib/auth';
+import { auth } from '#auth';
 
 import { Header } from '@/components/header/Header';
 
