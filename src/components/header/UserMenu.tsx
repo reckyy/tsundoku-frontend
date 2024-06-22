@@ -1,15 +1,8 @@
-'use client'
+'use client';
 
 import cx from 'clsx';
 import { useState } from 'react';
-import {
-  Group,
-  Menu,
-  rem,
-  UnstyledButton,
-  Text,
-  Avatar,
-} from '@mantine/core';
+import { Group, Menu, rem, UnstyledButton, Text, Avatar } from '@mantine/core';
 import classes from './HeaderTabs.module.css';
 import {
   IconLogout,
@@ -21,14 +14,14 @@ import {
 import { handleSignOut } from '../../feature/SignOut';
 
 type UserInfo = {
-  name: string,
-  image: string,
-}
+  name: string;
+  image: string;
+};
 
-const UserMenu = ({name, image}: UserInfo) => {
+const UserMenu = ({ name, image }: UserInfo) => {
   const [userMenuOpened, setUserMenuOpened] = useState(false);
 
-  return(
+  return (
     <Menu
       width={260}
       position="bottom-end"
@@ -44,12 +37,7 @@ const UserMenu = ({name, image}: UserInfo) => {
           })}
         >
           <Group gap={7}>
-            <Avatar
-              src={image}
-              alt={name}
-              radius="xl"
-              size={20}
-            />
+            <Avatar src={image} alt={name} radius="xl" size={20} />
             <Text fw={500} size="sm" lh={1} mr={3}>
               {name}
             </Text>
@@ -80,14 +68,14 @@ const UserMenu = ({name, image}: UserInfo) => {
                 stroke={1.5}
               />
             }
-            type='submit'
+            type="submit"
           >
             Logout
           </Menu.Item>
         </form>
-  
+
         <Menu.Divider />
-  
+
         <Menu.Label>Danger zone</Menu.Label>
         <Menu.Item
           leftSection={
@@ -112,7 +100,7 @@ const UserMenu = ({name, image}: UserInfo) => {
         </Menu.Item>
       </Menu.Dropdown>
     </Menu>
-  )
-}
+  );
+};
 
-export default UserMenu
+export default UserMenu;

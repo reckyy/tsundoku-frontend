@@ -21,9 +21,13 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <MantineProvider><Header /></MantineProvider>
+        <MantineProvider>
+          <Header />
+        </MantineProvider>
         <main className="flex min-h-screen flex-col justify-center  p-24">
-          <MantineProvider><AuthGuard>{children}</AuthGuard></MantineProvider>
+          <MantineProvider>
+            <AuthGuard>{children}</AuthGuard>
+          </MantineProvider>
         </main>
       </body>
     </html>

@@ -14,8 +14,10 @@ export async function Header() {
         <Container size="md" className={classes.inner}>
           <Image src="Mantine logo.svg" alt="仮のロゴ" width={28} height={28} />
           {/* 前半でuserが存在してるのは確認してるため、name!と非nullアサーションを使用してundefinedではないことを確定させてる */}
-          {session?.user && <UserMenu name={session.user.name!} image={session.user.image!}/>}
-        </Container>  
+          {session?.user && (
+            <UserMenu name={session.user.name!} image={session.user.image!} />
+          )}
+        </Container>
       </header>
     </Affix>
   );
