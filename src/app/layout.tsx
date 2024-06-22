@@ -4,6 +4,7 @@ import './globals.css';
 import '@mantine/core/styles.css';
 import { MantineProvider } from '@mantine/core';
 import { HeaderTabs } from '@/components/header/HeaderTabs';
+import AuthGuard from '@/components/feature/AuthGuard';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -22,7 +23,7 @@ export default function RootLayout({
       <body className={inter.className}>
         <MantineProvider><HeaderTabs /></MantineProvider>
         <main className="flex min-h-screen flex-col justify-center  p-24">
-          <MantineProvider>{children}</MantineProvider>
+          <MantineProvider><AuthGuard>{children}</AuthGuard></MantineProvider>
         </main>
       </body>
     </html>
