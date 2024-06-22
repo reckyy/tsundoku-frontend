@@ -1,7 +1,7 @@
 import classes from './HeaderTabs.module.css';
 import { Affix } from '@mantine/core';
 import UserMenu from './UserMenu';
-import { auth } from '@/auth';
+import { auth } from '#lib/auth';
 import Image from 'next/image';
 import { Container } from '@mantine/core';
 

@@ -67,5 +67,12 @@
     "ts-jest": "^29.1.4",
     "ts-node": "^10.9.2",
     "typescript": "^5"
+  },
+  "imports": {
+    "#lib/auth": {
+      "storybook": "./src/lib/auth.mock.ts",
+      "default": "./src/auth.ts"
+    },
+    "#*": ["./*", "./*.js", "./*.jsx", "./*.ts", "./*.tsx"]
   }
 }
