@@ -73,6 +73,12 @@
       "storybook": "./src/lib/auth.mock.ts",
       "default": "./src/auth.ts"
     },
-    "#*": ["./*", "./*.js", "./*.jsx", "./*.ts", "./*.tsx"]
+    "#*": [
+      "./*",
+      "./*.js",
+      "./*.jsx",
+      "./*.ts",
+      "./*.tsx"
+    ]
   }
 }
