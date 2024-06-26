@@ -24,6 +24,7 @@
     "next-auth": "^5.0.0-beta.18",
     "react": "^18",
     "react-dom": "^18",
+    "react-hot-toast": "^2.4.1",
     "storybook-addon-module-mock": "^1.3.0"
   },
   "devDependencies": {

@@ -5,6 +5,8 @@ import '@mantine/core/styles.css';
 import { MantineProvider } from '@mantine/core';
 import { Header } from '@/components/header/Header';
 import AuthGuard from '@/components/feature/AuthGuard';
+import { Toaster } from 'react-hot-toast';
+import { AuthToaster } from '@/components/auth/AuthToaster';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -26,7 +28,11 @@ export default function RootLayout({
         </MantineProvider>
         <main className="flex min-h-screen flex-col justify-center  p-24">
           <MantineProvider>
-            <AuthGuard>{children}</AuthGuard>
+            <AuthGuard>
+              <Toaster />
+              <AuthToaster />
+              {children}
+            </AuthGuard>
           </MantineProvider>
         </main>
       </body>
