@@ -6,7 +6,7 @@ const SignInButton = () => {
     <form
       action={async () => {
         'use server';
-        await signIn('google', {redirectTo: '/?authenticated=true'});
+        await signIn('google', { redirectTo: '/?authenticated=true' });
       }}
     >
       <GoogleButton type="submit">Signin with Google</GoogleButton>

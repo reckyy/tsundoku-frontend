@@ -9,21 +9,20 @@ const messages = {
 };
 
 export const AuthToaster = () => {
-
   const router = useRouter();
   const [authenticated, setAuthenticated] = useState<string | null>(null);
 
   useEffect(() => {
-      const params = new URLSearchParams(window.location.search);
-      const authenticatedParams = params.get('authenticated');
-      setAuthenticated(authenticatedParams);
+    const params = new URLSearchParams(window.location.search);
+    const authenticatedParams = params.get('authenticated');
+    setAuthenticated(authenticatedParams);
 
-      if (authenticated === 'true') {
-        toast.success(messages.success);
+    if (authenticated === 'true') {
+      toast.success(messages.success);
 
-        params.delete('authenticated');
-        router.replace(`${window.location.pathname}?${params.toString()}`);
-      }
+      params.delete('authenticated');
+      router.replace(`${window.location.pathname}?${params.toString()}`);
+    }
   }, [authenticated, router]);
 
   return null;
