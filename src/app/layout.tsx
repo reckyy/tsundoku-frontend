@@ -4,6 +4,7 @@ import './globals.css';
 import '@mantine/core/styles.css';
 import { MantineProvider } from '@mantine/core';
 import { Header } from '@/components/header/Header';
+import { Footer } from '@/components/footer/Footer';
 import AuthGuard from '@/components/feature/AuthGuard';
 import { Toaster } from 'react-hot-toast';
 import { AuthToaster } from '@/components/auth/AuthToaster';
@@ -35,6 +36,9 @@ export default function RootLayout({
             </AuthGuard>
           </MantineProvider>
         </main>
+        <MantineProvider>
+          <Footer />
+        </MantineProvider>
       </body>
     </html>
   );
