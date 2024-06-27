@@ -2,6 +2,7 @@ import { Card, Image, Text, Button, Group } from '@mantine/core';
 import axios from 'axios';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
+import toast from 'react-hot-toast';
 
 type Book = {
   id: number;
@@ -32,6 +33,8 @@ const AddBookConfirmContent = ({ book }: BookProps) => {
       });
       if (res.status === 200) {
         router.push('/');
+        router.refresh();
+        toast.success('本を保存しました！');
       } else {
         return false;
       }
