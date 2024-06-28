@@ -1,3 +1,25 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+ul {
+  @apply list-disc;
+  display: block;
+  margin-block-start: 1em;
+  margin-block-end: 1em;
+  margin-inline-start: 0px;
+  margin-inline-end: 0px;
+  unicode-bidi: isolate;
+}
+
+ol {
+  @apply list-decimal;
+}
+
+ul[data-type='taskList'] li {
+  list-style-type: none !important;
+}
+
+a {
+  cursor: pointer;
+}
