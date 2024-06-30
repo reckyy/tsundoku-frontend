@@ -1,8 +1,9 @@
-import { Card, Image, Text, Button, Group } from '@mantine/core';
+import { Card, Image, Text, Button, Group, NumberInput } from '@mantine/core';
 import axios from 'axios';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import toast from 'react-hot-toast';
+import { useRef } from 'react';
 
 type Book = {
   id: number;
@@ -18,18 +19,21 @@ type BookProps = {
 const AddBookConfirmContent = ({ book }: BookProps) => {
   const { data: session } = useSession();
   const router = useRouter();
+  const ref = useRef<HTMLInputElement>(null);
 
   const handleSubmit = async () => {
     const title = book.title;
     const author = book.author;
     const cover_image_url = book.imageUrl;
     const email = session?.user?.email;
+    const heading_number = ref.current?.value;
     try {
       const res = await axios.post('http://localhost:3001/api/books', {
         title,
         author,
         cover_image_url,
         email,
+        heading_number,
       });
       if (res.status === 200) {
         router.push('/');
@@ -49,6 +53,7 @@ const AddBookConfirmContent = ({ book }: BookProps) => {
 
       <Group justify="space-between" mt="md" mb="xs">
         <Text fw={500}>{book.title}を本棚に追加しますか？</Text>
+        <NumberInput label="章の数" min={1} ref={ref} />
       </Group>
 
       <Button color="blue" mt="md" radius="md" onClick={handleSubmit}>
