@@ -1,5 +1,6 @@
 'use client';
 
+import { Button } from '@mantine/core';
 import { RichTextEditor, getTaskListExtension, Link } from '@mantine/tiptap';
 import { useEditor } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
@@ -22,7 +23,7 @@ export function Editor() {
       StarterKit.configure({
         bulletList: {
           keepMarks: true,
-          keepAttributes: false, // TODO : Making this as `false` becase marks are not preserved when I try to preserve attrs, awaiting a bit of help
+          keepAttributes: false,
         },
         orderedList: {
           keepMarks: true,
@@ -43,8 +44,13 @@ export function Editor() {
   });
 
   return (
-    <RichTextEditor editor={editor}>
-      <RichTextEditor.Content />
-    </RichTextEditor>
+    <>
+      <RichTextEditor editor={editor}>
+        <RichTextEditor.Content />
+      </RichTextEditor>
+      <Button variant="light" color="green">
+        保存
+      </Button>
+    </>
   );
 }
