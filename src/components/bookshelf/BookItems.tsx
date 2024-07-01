@@ -9,12 +9,23 @@ type Book = {
   cover_image_url: string;
 };
 
+type Heading = {
+  number: number;
+  title: string | null;
+}
+
+type BookProps = {
+  book: Book;
+  headings: Heading[];
+}
+
 const BookItems = async () => {
   const session = await auth();
   const res = await fetch(
     `http://localhost:3001/api/books?email=${session?.user?.email}`,
   );
   const bookItems = await res.json();
+  console.log(bookItems)
 
   return (
     <div>
@@ -25,9 +36,9 @@ const BookItems = async () => {
           verticalSpacing="xl"
           p={{ base: 'xl' }}
         >
-          {bookItems.map((book: Book) => (
-            <div key={book.id}>
-              <BookItem book={book} />
+          {bookItems.map((bookItem: BookProps) => (
+            <div key={bookItem.book.id}>
+              <BookItem book={bookItem.book} />
             </div>
           ))}
         </SimpleGrid>
