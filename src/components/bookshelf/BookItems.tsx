@@ -1,6 +1,9 @@
+'use client';
+
 import BookItem from './BookItem';
 import { SimpleGrid } from '@mantine/core';
-import { auth } from '@/auth';
+import useBookStore from '@/store/BookStore';
+import { useEffect } from 'react';
 
 type Book = {
   id: number;
@@ -12,31 +15,39 @@ type Book = {
 type Heading = {
   number: number;
   title: string | null;
-}
+};
 
-type BookProps = {
+type BookItem = {
   book: Book;
   headings: Heading[];
-}
+};
 
-const BookItems = async () => {
-  const session = await auth();
-  const res = await fetch(
-    `http://localhost:3001/api/books?email=${session?.user?.email}`,
-  );
-  const bookItems = await res.json();
-  console.log(bookItems)
+type BookProps = {
+  bookItems: BookItem[];
+};
+
+const BookItems = ({ bookItems }: BookProps) => {
+  const isInitialized = useBookStore((state) => state.isInitialized);
+  const setBookItems = useBookStore((state) => state.setBookItems);
+
+  useEffect(() => {
+    if (!isInitialized) {
+      setBookItems({ bookItems });
+    }
+  }, [isInitialized, setBookItems, bookItems]);
+
+  const storedBookItems = useBookStore((state) => state.bookItems.bookItems);
 
   return (
     <div>
-      {bookItems.length > 0 ? (
+      {storedBookItems.length > 0 ? (
         <SimpleGrid
           cols={3}
           spacing="xl"
           verticalSpacing="xl"
           p={{ base: 'xl' }}
         >
-          {bookItems.map((bookItem: BookProps) => (
+          {storedBookItems.map((bookItem: BookItem) => (
             <div key={bookItem.book.id}>
               <BookItem book={bookItem.book} />
             </div>
