@@ -8,9 +8,16 @@ type Book = {
 };
 
 type Heading = {
+  id: number;
   number: number;
   title: string | null;
+  memo: Memo;
 };
+
+type Memo = {
+  id: number;
+  body: string;
+}
 
 type BookItem = {
   book: Book;

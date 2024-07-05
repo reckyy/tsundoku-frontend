@@ -5,6 +5,8 @@ import useBookStore from '@/store/BookStore';
 import { Image, SegmentedControl } from '@mantine/core';
 import { useParams } from 'next/navigation';
 import { useState } from 'react';
+import axios from 'axios';
+import toast from 'react-hot-toast';
 
 export default function Page() {
   const storedBookItems = useBookStore((state) => state.bookItems.bookItems);
@@ -15,6 +17,36 @@ export default function Page() {
   const [heading, setHeading] = useState('1');
   const numbers = bookItem?.headings.map((heading) => String(heading.number));
 
+  const handleSave: (content: string) => Promise<boolean> = async (
+    content: string,
+  ) => {
+    const heading_id = bookItem?.headings.find(
+      (h) => h.number === Number(heading),
+    )?.id;
+    console.log(heading_id)
+    try {
+      const res = await axios.patch(
+        `http://localhost:3001/api/books/${dynamicParams.bookId}/memos`,
+        {
+          heading: {
+            id: Number(heading_id),
+          },
+          memo: {
+            body: content,
+          },
+        },
+      );
+      if (res.status === 200) {
+        toast.success('メモを保存しました！');
+        return true;
+      } else {
+        return false;
+      }
+    } catch (error) {
+      return false;
+    }
+  };
+
   return (
     <>
       <Image
@@ -24,8 +56,14 @@ export default function Page() {
         src={bookItem?.book.cover_image_url}
         alt={bookItem?.book.title}
       />
-      <Editor />
-      <SegmentedControl value={heading} onChange={setHeading} orientation="vertical" size="md" data={numbers ?? []} />
+      <Editor handleSave={handleSave} />
+      <SegmentedControl
+        value={heading}
+        onChange={setHeading}
+        orientation="vertical"
+        size="md"
+        data={numbers ?? []}
+      />
     </>
   );
 }

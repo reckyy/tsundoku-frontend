@@ -1,6 +1,3 @@
-'use client';
-
-import { Button } from '@mantine/core';
 import { RichTextEditor, getTaskListExtension, Link } from '@mantine/tiptap';
 import { useEditor } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
@@ -12,12 +9,17 @@ import TipTapTaskList from '@tiptap/extension-task-list';
 import js from 'highlight.js/lib/languages/javascript';
 import ts from 'highlight.js/lib/languages/typescript';
 import rb from 'highlight.js/lib/languages/ruby';
+import { Button } from '@mantine/core';
 
 const lowlight = createLowlight();
 
 lowlight.register({ js, ts, rb });
 
-export function Editor() {
+type handleProps = {
+  handleSave: (content: string) => Promise<boolean>;
+};
+
+export function Editor({ handleSave }: handleProps) {
   const editor = useEditor({
     extensions: [
       StarterKit.configure({
@@ -43,12 +45,16 @@ export function Editor() {
     content: '',
   });
 
+  const handleSaveClick = async ()=>{
+    const content = editor?.getHTML();
+    await handleSave(content ?? '')
+  }
   return (
     <>
       <RichTextEditor editor={editor}>
         <RichTextEditor.Content />
       </RichTextEditor>
-      <Button variant="light" color="green">
+      <Button variant="light" color="green" onClick={handleSaveClick}>
         保存
       </Button>
     </>
