@@ -10,7 +10,7 @@ import js from 'highlight.js/lib/languages/javascript';
 import ts from 'highlight.js/lib/languages/typescript';
 import rb from 'highlight.js/lib/languages/ruby';
 import { Button } from '@mantine/core';
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 
 const lowlight = createLowlight();
 
@@ -47,9 +47,15 @@ export function Editor({ memoBody, handleSave }: EditorProps) {
     content: memoBody,
   });
 
+  const prevMemoBody = useRef(memoBody);
+
   useEffect(() => {
-    editor?.commands.setContent(memoBody ?? '');
-  }, [editor?.commands, memoBody]);
+    if (editor && memoBody !== prevMemoBody.current) {
+      editor.commands.setContent(memoBody ?? '');
+      prevMemoBody.current = memoBody;
+    }
+  }, [editor, memoBody]);
+
 
   const handleSaveClick = async () => {
     const content = editor?.getHTML();

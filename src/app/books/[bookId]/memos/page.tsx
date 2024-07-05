@@ -24,7 +24,6 @@ export default function Page() {
     const heading_id = bookItem?.headings.find(
       (h) => h.number === Number(heading),
     )?.id;
-    updateMemo(Number(dynamicParams.bookId), Number(heading), content)
     try {
       const res = await axios.patch(
         `http://localhost:3001/api/books/${dynamicParams.bookId}/memos`,
@@ -38,6 +37,7 @@ export default function Page() {
         },
       );
       if (res.status === 200) {
+        updateMemo(Number(dynamicParams.bookId), Number(heading), content)
         toast.success('メモを保存しました！');
         return true;
       } else {
