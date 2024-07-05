@@ -14,7 +14,7 @@ type BookProps = {
 
 const BookItem = ({ book }: BookProps) => {
   return (
-    <Link href={`/books/${book.id}`}>
+    <Link href={`/books/${book.id}//memos`}>
       <Image
         radius="md"
         w={100}
