@@ -10,16 +10,18 @@ import js from 'highlight.js/lib/languages/javascript';
 import ts from 'highlight.js/lib/languages/typescript';
 import rb from 'highlight.js/lib/languages/ruby';
 import { Button } from '@mantine/core';
+import { useEffect } from 'react';
 
 const lowlight = createLowlight();
 
 lowlight.register({ js, ts, rb });
 
-type handleProps = {
+type EditorProps = {
+  memoBody: string | undefined;
   handleSave: (content: string) => Promise<boolean>;
 };
 
-export function Editor({ handleSave }: handleProps) {
+export function Editor({ memoBody, handleSave }: EditorProps) {
   const editor = useEditor({
     extensions: [
       StarterKit.configure({
@@ -42,13 +44,17 @@ export function Editor({ handleSave }: handleProps) {
         autolink: true,
       }),
     ],
-    content: '',
+    content: memoBody,
   });
 
-  const handleSaveClick = async ()=>{
+  useEffect(() => {
+    editor?.commands.setContent(memoBody ?? '');
+  }, [editor?.commands, memoBody]);
+
+  const handleSaveClick = async () => {
     const content = editor?.getHTML();
-    await handleSave(content ?? '')
-  }
+    await handleSave(content ?? '');
+  };
   return (
     <>
       <RichTextEditor editor={editor}>

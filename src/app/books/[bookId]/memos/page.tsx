@@ -10,6 +10,7 @@ import toast from 'react-hot-toast';
 
 export default function Page() {
   const storedBookItems = useBookStore((state) => state.bookItems.bookItems);
+  const updateMemo = useBookStore((state) => state.updateMemo)
   const dynamicParams = useParams<{ bookId: string }>();
   const bookItem = storedBookItems.find(
     (bookItem) => bookItem.book.id === Number(dynamicParams.bookId),
@@ -23,7 +24,7 @@ export default function Page() {
     const heading_id = bookItem?.headings.find(
       (h) => h.number === Number(heading),
     )?.id;
-    console.log(heading_id)
+    updateMemo(Number(dynamicParams.bookId), Number(heading), content)
     try {
       const res = await axios.patch(
         `http://localhost:3001/api/books/${dynamicParams.bookId}/memos`,
@@ -56,7 +57,7 @@ export default function Page() {
         src={bookItem?.book.cover_image_url}
         alt={bookItem?.book.title}
       />
-      <Editor handleSave={handleSave} />
+      <Editor memoBody={bookItem?.headings[Number(heading)-1].memo.body} handleSave={handleSave} />
       <SegmentedControl
         value={heading}
         onChange={setHeading}
@@ -67,3 +68,4 @@ export default function Page() {
     </>
   );
 }
+
