@@ -18,9 +18,10 @@ lowlight.register({ js, ts, rb });
 
 type EditorProps = {
   memoBody: string | undefined;
+  handleSave: (content: string) => Promise<boolean>;
 };
 
-export function Editor({ memoBody }: EditorProps) {
+export function Editor({ memoBody, handleSave }: EditorProps) {
   const editor = useEditor({
     extensions: [
       StarterKit.configure({
@@ -55,13 +56,17 @@ export function Editor({ memoBody }: EditorProps) {
     }
   }, [editor, memoBody]);
 
+  const handleSaveClick = async () => {
+    const content = editor?.getHTML();
+    await handleSave(content ?? '');
+  };
 
   return (
     <>
       <RichTextEditor editor={editor}>
         <RichTextEditor.Content />
       </RichTextEditor>
-      <Button variant="light" color="green">
+      <Button variant="light" color="green" onClick={handleSaveClick}>
         保存
       </Button>
     </>

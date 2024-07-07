@@ -7,6 +7,7 @@ import { useSession, SessionProvider } from 'next-auth/react';
 import { useState } from 'react';
 import useSWR from 'swr';
 import axios from 'axios';
+import toast from 'react-hot-toast';
 
 export default function Page() {
   return (
@@ -50,6 +51,40 @@ function PageContent() {
     },
   );
 
+  const handleSave = async (content: string) => {
+    const memoId = bookWithMemos?.headings[Number(heading) - 1].memo.id;
+    try {
+      const res = await axios.patch(apiUrl, {
+        memo: {
+          id: memoId,
+          body: content,
+        },
+      });
+      if (res.status === 200) {
+        setBookWithMemos((bookWithMemos) => ({
+          ...bookWithMemos,
+          headings: bookWithMemos.headings.map((heading) =>
+            heading.id === Number(heading)
+              ? {
+                  ...heading,
+                  memo: {
+                    ...heading.memo,
+                    body: content,
+                  },
+                }
+              : heading,
+          ),
+        }));
+        toast.success('メモの保存に成功しました！');
+        return true;
+      } else {
+        return false;
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   if (error) return <div>failed to load</div>;
   if (isLoading) return <div>loading...</div>;
 
@@ -64,6 +99,7 @@ function PageContent() {
       />
       <Editor
         memoBody={bookWithMemos?.headings[Number(heading) - 1].memo.body}
+        handleSave={handleSave}
       />
       <SegmentedControl
         value={heading}
