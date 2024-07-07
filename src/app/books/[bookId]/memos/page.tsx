@@ -1,52 +1,57 @@
 'use client';
 
 import { Editor } from '@/components/editor/Editor';
-import useBookStore from '@/store/BookStore';
 import { Image, SegmentedControl } from '@mantine/core';
 import { useParams } from 'next/navigation';
+import { useSession, SessionProvider } from 'next-auth/react';
 import { useState } from 'react';
+import useSWR from 'swr';
 import axios from 'axios';
-import toast from 'react-hot-toast';
 
 export default function Page() {
-  const storedBookItems = useBookStore((state) => state.bookItems.bookItems);
-  const updateMemo = useBookStore((state) => state.updateMemo)
-  const dynamicParams = useParams<{ bookId: string }>();
-  const bookItem = storedBookItems.find(
-    (bookItem) => bookItem.book.id === Number(dynamicParams.bookId),
+  return (
+    <SessionProvider>
+      <PageContent />
+    </SessionProvider>
   );
-  const [heading, setHeading] = useState('1');
-  const numbers = bookItem?.headings.map((heading) => String(heading.number));
+}
 
-  const handleSave: (content: string) => Promise<boolean> = async (
-    content: string,
-  ) => {
-    const heading_id = bookItem?.headings.find(
-      (h) => h.number === Number(heading),
-    )?.id;
-    try {
-      const res = await axios.patch(
-        `http://localhost:3001/api/books/${dynamicParams.bookId}/memos`,
-        {
-          heading: {
-            id: Number(heading_id),
-          },
-          memo: {
-            body: content,
-          },
-        },
-      );
-      if (res.status === 200) {
-        updateMemo(Number(dynamicParams.bookId), Number(heading), content)
-        toast.success('メモを保存しました！');
-        return true;
-      } else {
-        return false;
-      }
-    } catch (error) {
-      return false;
-    }
+type memoParams = {
+  email: string | undefined | null;
+  book_id: number;
+};
+
+function PageContent() {
+  const dynamicParams = useParams<{ bookId: string }>();
+  const bookId = Number(dynamicParams.bookId);
+  const apiUrl = `http://localhost:3001/api/books/${bookId}/memos`;
+  const { data: session, status } = useSession();
+  const params = {
+    email: session?.user?.email,
+    book_id: bookId,
   };
+  const [bookWithMemos, setBookWithMemos] = useState(undefined);
+  const [heading, setHeading] = useState('1');
+
+  const fetchable = status === 'authenticated' && session?.user?.email;
+
+  async function fetcher(url: string, params: memoParams) {
+    const res = await axios.get(url, { params });
+    return res.data;
+  }
+
+  const { data, error, isLoading } = useSWR(
+    fetchable ? [apiUrl, params] : null,
+    ([url, params]) => fetcher(url, params),
+    {
+      onSuccess: (data) => {
+        setBookWithMemos(data);
+      },
+    },
+  );
+
+  if (error) return <div>failed to load</div>;
+  if (isLoading) return <div>loading...</div>;
 
   return (
     <>
@@ -54,18 +59,21 @@ export default function Page() {
         radius="md"
         w={100}
         h={100}
-        src={bookItem?.book.cover_image_url}
-        alt={bookItem?.book.title}
+        src={bookWithMemos?.book.cover_image_url}
+        alt={bookWithMemos?.book.title}
       />
-      <Editor memoBody={bookItem?.headings[Number(heading)-1].memo.body} handleSave={handleSave} />
+      <Editor
+        memoBody={bookWithMemos?.headings[Number(heading) - 1].memo.body}
+      />
       <SegmentedControl
         value={heading}
         onChange={setHeading}
         orientation="vertical"
         size="md"
-        data={numbers ?? []}
+        data={
+          bookWithMemos?.headings.map((heading) => String(heading.number)) ?? []
+        }
       />
     </>
   );
 }
-
