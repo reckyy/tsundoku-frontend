@@ -22,6 +22,28 @@ type memoParams = {
   book_id: number;
 };
 
+type Book = {
+  title: string;
+  cover_image_url: string;
+};
+
+type Heading = {
+  id: number;
+  number: number;
+  title: string | null;
+  memo: Memo;
+};
+
+type Memo = {
+  id: number;
+  body: string;
+};
+
+type BookWithMemo = {
+  book: Book;
+  headings: Heading[];
+};
+
 function PageContent() {
   const dynamicParams = useParams<{ bookId: string }>();
   const bookId = Number(dynamicParams.bookId);
@@ -31,7 +53,7 @@ function PageContent() {
     email: session?.user?.email,
     book_id: bookId,
   };
-  const [bookWithMemos, setBookWithMemos] = useState(undefined);
+  const [bookWithMemos, setBookWithMemos] = useState<BookWithMemo>();
   const [heading, setHeading] = useState('1');
 
   const fetchable = status === 'authenticated' && session?.user?.email;
@@ -41,7 +63,7 @@ function PageContent() {
     return res.data;
   }
 
-  const { data, error, isLoading } = useSWR(
+  const { error, isLoading } = useSWR(
     fetchable ? [apiUrl, params] : null,
     ([url, params]) => fetcher(url, params),
     {
@@ -51,7 +73,9 @@ function PageContent() {
     },
   );
 
-  const handleSave = async (content: string) => {
+  const handleSave: (content: string) => Promise<boolean> = async (
+    content: string,
+  ) => {
     const memoId = bookWithMemos?.headings[Number(heading) - 1].memo.id;
     try {
       const res = await axios.patch(apiUrl, {
@@ -61,27 +85,32 @@ function PageContent() {
         },
       });
       if (res.status === 200) {
-        setBookWithMemos((bookWithMemos) => ({
-          ...bookWithMemos,
-          headings: bookWithMemos.headings.map((heading) =>
-            heading.id === Number(heading)
-              ? {
-                  ...heading,
-                  memo: {
-                    ...heading.memo,
-                    body: content,
-                  },
-                }
-              : heading,
-          ),
-        }));
+        setBookWithMemos((bookWithMemos) => {
+          if (!bookWithMemos) return bookWithMemos;
+
+          return {
+            ...bookWithMemos,
+            headings: bookWithMemos.headings.map((h) =>
+              h.number === Number(heading)
+                ? {
+                    ...h,
+                    memo: {
+                      ...h.memo,
+                      body: content,
+                    },
+                  }
+                : h,
+            ),
+          };
+        });
+        console.log(bookWithMemos);
         toast.success('メモの保存に成功しました！');
         return true;
       } else {
         return false;
       }
     } catch (error) {
-      console.error(error);
+      return false;
     }
   };
 
