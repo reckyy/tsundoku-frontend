@@ -1,39 +1,23 @@
-'use client';
-
-import { Container, Group, Anchor, rem, ActionIcon } from '@mantine/core';
-import classes from './Footer.module.css';
 import {
   IconBrandTwitter,
-  IconBrandYoutube,
-  IconBrandInstagram,
+  IconBrandGithub,
+  IconArticle,
 } from '@tabler/icons-react';
+import { Group, ActionIcon, UnstyledButton, rem } from '@mantine/core';
 import Image from 'next/image';
-
-const links = [
-  { link: '#', label: 'Contact' },
-  { link: '#', label: 'Privacy' },
-  { link: '#', label: 'Blog' },
-  { link: '#', label: 'Careers' },
-];
+import classes from './Footer.module.css';
 
 export function Footer() {
-  const items = links.map((link) => (
-    <Anchor<'a'>
-      c="dimmed"
-      key={link.label}
-      href={link.link}
-      onClick={(event) => event.preventDefault()}
-      size="sm"
-    >
-      {link.label}
-    </Anchor>
-  ));
-
   return (
-    <div className={classes.footer}>
-      <Container className={classes.inner}>
+    <Group h="100%" px="md">
+      <Group justify="space-between" style={{ flex: 1 }}>
         <Image src="Mantine logo.svg" alt="仮のロゴ" width={28} height={28} />
-        <Group className={classes.links}>{items}</Group>
+        <Group ml="xl" gap={0}>
+          <UnstyledButton className={classes.control}>Terms</UnstyledButton>
+          <UnstyledButton className={classes.control}>
+            Privacy policy
+          </UnstyledButton>
+        </Group>
         <Group gap="xs" justify="flex-end" wrap="nowrap">
           <ActionIcon size="lg" variant="default" radius="xl">
             <IconBrandTwitter
@@ -42,19 +26,19 @@ export function Footer() {
             />
           </ActionIcon>
           <ActionIcon size="lg" variant="default" radius="xl">
-            <IconBrandYoutube
+            <IconBrandGithub
               style={{ width: rem(18), height: rem(18) }}
               stroke={1.5}
             />
           </ActionIcon>
           <ActionIcon size="lg" variant="default" radius="xl">
-            <IconBrandInstagram
+            <IconArticle
               style={{ width: rem(18), height: rem(18) }}
               stroke={1.5}
             />
           </ActionIcon>
         </Group>
-      </Container>
-    </div>
+      </Group>
+    </Group>
   );
 }

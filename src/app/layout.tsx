@@ -4,11 +4,10 @@ import './globals.css';
 import '@mantine/tiptap/styles.css';
 import '@mantine/core/styles.css';
 import { MantineProvider } from '@mantine/core';
-import { Header } from '@/components/header/Header';
-import { Footer } from '@/components/footer/Footer';
 import AuthGuard from '@/components/feature/AuthGuard';
 import { Toaster } from 'react-hot-toast';
 import { AuthToaster } from '@/components/auth/AuthToaster';
+import { MyAppShell } from '@/components/appShell/MyAppShell';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -25,21 +24,17 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <MantineProvider>
-          <Header />
-        </MantineProvider>
-        <main className="flex min-h-screen flex-col justify-center  p-24">
+        <main>
           <MantineProvider>
-            <AuthGuard>
-              <Toaster />
-              <AuthToaster />
-              {children}
-            </AuthGuard>
+            <MyAppShell>
+              <AuthGuard>
+                <Toaster />
+                <AuthToaster />
+                {children}
+              </AuthGuard>
+            </MyAppShell>
           </MantineProvider>
         </main>
-        <MantineProvider>
-          <Footer />
-        </MantineProvider>
       </body>
     </html>
   );
