@@ -14,7 +14,9 @@ export function Footer() {
       <Group justify="space-between" style={{ flex: 1 }}>
         <Image src="Mantine logo.svg" alt="仮のロゴ" width={28} height={28} />
         <Group ml="xl" gap={0}>
-          <UnstyledButton className={classes.control}>Terms</UnstyledButton>
+          <Link href={'/terms'}>
+            <UnstyledButton className={classes.control}>Terms</UnstyledButton>
+          </Link>
           <Link href={'/privacy'}>
             <UnstyledButton className={classes.control}>
               Privacy policy
