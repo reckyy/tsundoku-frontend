@@ -6,6 +6,7 @@ import {
 import { Group, ActionIcon, UnstyledButton, rem } from '@mantine/core';
 import Image from 'next/image';
 import classes from './Footer.module.css';
+import Link from 'next/link';
 
 export function Footer() {
   return (
@@ -14,9 +15,11 @@ export function Footer() {
         <Image src="Mantine logo.svg" alt="仮のロゴ" width={28} height={28} />
         <Group ml="xl" gap={0}>
           <UnstyledButton className={classes.control}>Terms</UnstyledButton>
-          <UnstyledButton className={classes.control}>
-            Privacy policy
-          </UnstyledButton>
+          <Link href={'/privacy'}>
+            <UnstyledButton className={classes.control}>
+              Privacy policy
+            </UnstyledButton>
+          </Link>
         </Group>
         <Group gap="xs" justify="flex-end" wrap="nowrap">
           <ActionIcon size="lg" variant="default" radius="xl">
