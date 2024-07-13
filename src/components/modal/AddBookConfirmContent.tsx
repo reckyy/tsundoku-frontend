@@ -53,7 +53,7 @@ const AddBookConfirmContent = ({ book }: BookProps) => {
 
       <Group justify="space-between" mt="md" mb="xs">
         <Text fw={500}>{book.title}を本棚に追加しますか？</Text>
-        <NumberInput label="章の数" min={1} ref={ref} />
+        <NumberInput label="章の数" defaultValue={1} min={1} ref={ref} />
       </Group>
 
       <Button color="blue" mt="md" radius="md" onClick={handleSubmit}>
