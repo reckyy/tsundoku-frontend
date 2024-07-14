@@ -16,9 +16,7 @@ type Book = {
   title: string;
   author: string;
   coverImageUrl: string;
-}
-
-
+};
 
 const BookItems = async () => {
   const getBooks = async () => {

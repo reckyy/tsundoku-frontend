@@ -61,11 +61,11 @@ function PageContent() {
   async function fetcher(url: string, params: memoParams) {
     const res = await axios.get(url, { params });
     return {
-      book:{
+      book: {
         title: res.data.book.title,
         coverImageUrl: res.data.book.cover_image_url,
       },
-      headings: res.data.headings
+      headings: res.data.headings,
     };
   }
 
