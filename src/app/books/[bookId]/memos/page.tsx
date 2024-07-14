@@ -24,7 +24,7 @@ type memoParams = {
 
 type Book = {
   title: string;
-  cover_image_url: string;
+  coverImageUrl: string;
 };
 
 type Heading = {
@@ -60,7 +60,13 @@ function PageContent() {
 
   async function fetcher(url: string, params: memoParams) {
     const res = await axios.get(url, { params });
-    return res.data;
+    return {
+      book: {
+        title: res.data.book.title,
+        coverImageUrl: res.data.book.cover_image_url,
+      },
+      headings: res.data.headings,
+    };
   }
 
   const { error, isLoading } = useSWR(
@@ -103,7 +109,6 @@ function PageContent() {
             ),
           };
         });
-        console.log(bookWithMemos);
         toast.success('メモの保存に成功しました！');
         return true;
       } else {
@@ -123,7 +128,7 @@ function PageContent() {
         radius="md"
         w={100}
         h={100}
-        src={bookWithMemos?.book.cover_image_url}
+        src={bookWithMemos?.book.coverImageUrl}
         alt={bookWithMemos?.book.title}
       />
       <Editor
