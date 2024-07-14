@@ -5,7 +5,7 @@ type Book = {
   id: number;
   title: string;
   author: string;
-  cover_image_url: string;
+  coverImageUrl: string;
 };
 
 type BookProps = {
@@ -14,12 +14,12 @@ type BookProps = {
 
 const BookItem = ({ book }: BookProps) => {
   return (
-    <Link href={`/books/${book.id}//memos`}>
+    <Link href={`/books/${book.id}/memos`}>
       <Image
         radius="md"
         w={100}
         h={100}
-        src={book.cover_image_url}
+        src={book.coverImageUrl}
         alt={book.title}
       />
     </Link>

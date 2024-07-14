@@ -2,19 +2,41 @@ import BookItem from './BookItem';
 import { SimpleGrid } from '@mantine/core';
 import { auth } from '@/auth';
 
-type Book = {
+type BookResponse = {
   id: number;
   title: string;
   author: string;
   cover_image_url: string;
+  created_at: string;
+  updated_at: string;
 };
 
+type Book = {
+  id: number;
+  title: string;
+  author: string;
+  coverImageUrl: string;
+}
+
+
+
 const BookItems = async () => {
-  const session = await auth();
-  const res = await fetch(
-    `http://localhost:3001/api/books?email=${session?.user?.email}`,
-  );
-  const bookItems = await res.json();
+  const getBooks = async () => {
+    const session = await auth();
+    const res = await fetch(
+      `http://localhost:3001/api/books?email=${session?.user?.email}`,
+    );
+    const data = await res.json();
+    console.log(data)
+    return data.map((book: BookResponse) => ({
+      id: book.id,
+      title: book.title,
+      author: book.author,
+      coverImageUrl: book.cover_image_url,
+    }));
+  };
+
+  const bookItems = await getBooks();
 
   return (
     <div>
