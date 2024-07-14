@@ -24,16 +24,16 @@ const AddBookConfirmContent = ({ book }: BookProps) => {
   const handleSubmit = async () => {
     const title = book.title;
     const author = book.author;
-    const cover_image_url = book.imageUrl;
+    const coverImageUrl = book.imageUrl;
     const email = session?.user?.email;
-    const heading_number = ref.current?.value;
+    const headingNumber = ref.current?.value;
     try {
       const res = await axios.post('http://localhost:3001/api/books', {
         title,
         author,
-        cover_image_url,
+        coverImageUrl,
         email,
-        heading_number,
+        headingNumber,
       });
       if (res.status === 200) {
         router.push('/');

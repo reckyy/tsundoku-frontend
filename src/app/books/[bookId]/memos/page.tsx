@@ -109,7 +109,6 @@ function PageContent() {
             ),
           };
         });
-        console.log(bookWithMemos);
         toast.success('メモの保存に成功しました！');
         return true;
       } else {

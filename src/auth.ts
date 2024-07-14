@@ -8,14 +8,14 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     async signIn({ user }) {
       const name = user.name;
       const email = user.email;
-      const avatar_url = user.image;
+      const avatarUrl = user.image;
       try {
         const res = await axios.post(
           'http://localhost:3001/api/auth/callback/google',
           {
             name,
             email,
-            avatar_url,
+            avatarUrl,
           },
         );
         if (res.status === 200) {

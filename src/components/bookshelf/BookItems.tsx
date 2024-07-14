@@ -27,7 +27,6 @@ const BookItems = async () => {
       `http://localhost:3001/api/books?email=${session?.user?.email}`,
     );
     const data = await res.json();
-    console.log(data)
     return data.map((book: BookResponse) => ({
       id: book.id,
       title: book.title,
