@@ -18,7 +18,7 @@ export default function Page() {
 }
 
 type memoParams = {
-  email: string | undefined | null;
+  uid: string | undefined;
   book_id: number;
 };
 
@@ -50,7 +50,7 @@ function PageContent() {
   const apiUrl = `http://localhost:3001/api/books/${bookId}/memos`;
   const { data: session, status } = useSession();
   const params = {
-    email: session?.user?.email,
+    uid: session?.user?.id,
     book_id: bookId,
   };
   const [bookWithMemos, setBookWithMemos] = useState<BookWithMemo>();

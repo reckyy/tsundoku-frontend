@@ -5,10 +5,24 @@ import axios from 'axios';
 export const { handlers, auth, signIn, signOut } = NextAuth({
   providers: [Google],
   callbacks: {
-    async signIn({ user }) {
+    async jwt({ token, profile }) {
+      if (profile) {
+        token.sub = profile.sub || undefined;
+      }
+      return token;
+    },
+    async session({ session, token }) {
+      if (token.sub) {
+        session.user.id = token.sub;
+      }
+      return session;
+    },
+
+    async signIn({ user, profile }) {
       const name = user.name;
       const email = user.email;
       const avatarUrl = user.image;
+      const uid = profile?.sub;
       try {
         const res = await axios.post(
           'http://localhost:3001/api/auth/callback/google',
@@ -16,6 +30,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
             name,
             email,
             avatarUrl,
+            uid,
           },
         );
         if (res.status === 200) {

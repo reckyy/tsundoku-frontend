@@ -25,14 +25,14 @@ const AddBookConfirmContent = ({ book }: BookProps) => {
     const title = book.title;
     const author = book.author;
     const coverImageUrl = book.imageUrl;
-    const email = session?.user?.email;
+    const uid = session?.user?.id;
     const headingNumber = ref.current?.value;
     try {
       const res = await axios.post('http://localhost:3001/api/books', {
         title,
         author,
         coverImageUrl,
-        email,
+        uid,
         headingNumber,
       });
       if (res.status === 200) {
@@ -43,7 +43,7 @@ const AddBookConfirmContent = ({ book }: BookProps) => {
         return false;
       }
     } catch (error) {
-      console.error(error);
+      return false;
     }
   };
 
