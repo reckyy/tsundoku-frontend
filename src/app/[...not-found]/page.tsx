@@ -5,6 +5,6 @@ export const metadata: Metadata = {
   title: 'Page not found',
 };
 
-export default function Page(){
+export default function Page() {
   notFound();
 }
