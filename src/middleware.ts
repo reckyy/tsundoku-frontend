@@ -10,7 +10,6 @@ export default auth((req) => {
   if (pathname !== '/' && !isLoggedIn) {
     if (isAuthRoutes) {
       const newUrl = new URL('/', req.nextUrl.origin);
-      console.log(req);
       return Response.redirect(newUrl);
     }
   }
