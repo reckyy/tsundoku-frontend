@@ -4,22 +4,42 @@ import cx from 'clsx';
 import { useState } from 'react';
 import { Group, Menu, rem, UnstyledButton, Text, Avatar } from '@mantine/core';
 import classes from './HeaderTabs.module.css';
-import {
-  IconLogout,
-  IconSettings,
-  IconPlayerPause,
-  IconTrash,
-  IconChevronDown,
-} from '@tabler/icons-react';
+import { IconLogout, IconTrash, IconChevronDown } from '@tabler/icons-react';
 import { handleSignOut } from '../../feature/SignOut';
+import axios from 'axios';
+import { useSession, SessionProvider } from 'next-auth/react';
 
 type UserInfo = {
   name: string;
   image: string;
 };
 
-const UserMenu = ({ name, image }: UserInfo) => {
+export default function UserMenu({ name, image }: UserInfo) {
+  return (
+    <SessionProvider>
+      <UserMenuContent name={name} image={image} />
+    </SessionProvider>
+  );
+}
+
+const UserMenuContent = ({ name, image }: UserInfo) => {
   const [userMenuOpened, setUserMenuOpened] = useState(false);
+  const { data: session } = useSession();
+
+  const handleDeleteUser = async () => {
+    try {
+      const res = await axios.delete(
+        `http://localhost:3001/api/users/${session?.user?.id}`,
+      );
+      if (res.status === 204) {
+        handleSignOut();
+      } else {
+        return false;
+      }
+    } catch (error) {
+      return false;
+    }
+  };
 
   return (
     <Menu
@@ -50,16 +70,6 @@ const UserMenu = ({ name, image }: UserInfo) => {
       </Menu.Target>
       <Menu.Dropdown>
         <Menu.Label>Settings</Menu.Label>
-        <Menu.Item
-          leftSection={
-            <IconSettings
-              style={{ width: rem(16), height: rem(16) }}
-              stroke={1.5}
-            />
-          }
-        >
-          Account settings
-        </Menu.Item>
         <form action={handleSignOut}>
           <Menu.Item
             leftSection={
@@ -78,16 +88,6 @@ const UserMenu = ({ name, image }: UserInfo) => {
 
         <Menu.Label>Danger zone</Menu.Label>
         <Menu.Item
-          leftSection={
-            <IconPlayerPause
-              style={{ width: rem(16), height: rem(16) }}
-              stroke={1.5}
-            />
-          }
-        >
-          Pause subscription
-        </Menu.Item>
-        <Menu.Item
           color="red"
           leftSection={
             <IconTrash
@@ -95,6 +95,7 @@ const UserMenu = ({ name, image }: UserInfo) => {
               stroke={1.5}
             />
           }
+          onClick={handleDeleteUser}
         >
           Delete account
         </Menu.Item>
@@ -102,5 +103,3 @@ const UserMenu = ({ name, image }: UserInfo) => {
     </Menu>
   );
 };
-
-export default UserMenu;
