@@ -40,7 +40,10 @@ export default function CalContent({ readingLogs }: CalContentProps) {
         }}
         rectRender={(props, data) => {
           return (
-            <Tooltip placement="top" content={`${data.count || 0} logs on ${data.date}`}>
+            <Tooltip
+              placement="top"
+              content={`${data.count || 0} logs on ${data.date}`}
+            >
               <rect {...props} />
             </Tooltip>
           );
