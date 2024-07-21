@@ -12,11 +12,11 @@ type CalContentProps = {
   readingLogs: ReadingLog[];
 };
 
-export default function CalContent({readingLogs}: CalContentProps) {
-  const value = readingLogs.map(log => ({
+export default function CalContent({ readingLogs }: CalContentProps) {
+  const value = readingLogs.map((log) => ({
     date: log.date.replace('-', '/'),
     count: log.count,
-  }))
+  }));
   const today = new Date();
   const currentYear = today.getFullYear();
   return (
@@ -37,8 +37,7 @@ export default function CalContent({readingLogs}: CalContentProps) {
           4: '#009900',
           6: '#006400',
         }}
-  
       />
     </ScrollArea>
   );
-};
+}
