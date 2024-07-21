@@ -2,6 +2,7 @@
 
 import { ScrollArea } from '@mantine/core';
 import HeatMap from '@uiw/react-heat-map';
+import Tooltip from '@uiw/react-tooltip';
 
 type ReadingLog = {
   date: string;
@@ -36,6 +37,13 @@ export default function CalContent({ readingLogs }: CalContentProps) {
           2: '#32CD32',
           4: '#009900',
           6: '#006400',
+        }}
+        rectRender={(props, data) => {
+          return (
+            <Tooltip placement="top" content={`${data.count || 0} logs on ${data.date}`}>
+              <rect {...props} />
+            </Tooltip>
+          );
         }}
       />
     </ScrollArea>
