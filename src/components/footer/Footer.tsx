@@ -12,7 +12,9 @@ export function Footer() {
   return (
     <Group h="100%" px="md">
       <Group justify="space-between" style={{ flex: 1 }}>
-        <Image src="Mantine logo.svg" alt="仮のロゴ" width={28} height={28} />
+        <Link href={'/'}>
+          <Image src="Mantine logo.svg" alt="仮のロゴ" width={28} height={28} />
+        </Link>
         <Group ml="xl" gap={0}>
           <Link href={'/terms'}>
             <UnstyledButton className={classes.control}>Terms</UnstyledButton>
