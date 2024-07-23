@@ -4,33 +4,29 @@ import cx from 'clsx';
 import { useState } from 'react';
 import { Group, Menu, rem, UnstyledButton, Text, Avatar } from '@mantine/core';
 import classes from './HeaderTabs.module.css';
-import { IconLogout, IconTrash, IconChevronDown } from '@tabler/icons-react';
+import {
+  IconLogout,
+  IconTrash,
+  IconChevronDown,
+  IconLink,
+} from '@tabler/icons-react';
 import { handleSignOut } from '../../feature/SignOut';
 import axios from 'axios';
-import { useSession, SessionProvider } from 'next-auth/react';
+import toast from 'react-hot-toast';
 
 type UserInfo = {
   name: string;
   image: string;
+  id: string;
 };
 
-export default function UserMenu({ name, image }: UserInfo) {
-  return (
-    <SessionProvider>
-      <UserMenuContent name={name} image={image} />
-    </SessionProvider>
-  );
-}
-
-const UserMenuContent = ({ name, image }: UserInfo) => {
+export default function UserMenu({ name, image, id }: UserInfo) {
   const [userMenuOpened, setUserMenuOpened] = useState(false);
-  const { data: session } = useSession();
+  const isBrowser = typeof window !== 'undefined';
 
   const handleDeleteUser = async () => {
     try {
-      const res = await axios.delete(
-        `http://localhost:3001/api/users/${session?.user?.id}`,
-      );
+      const res = await axios.delete(`http://localhost:3001/api/users/${id}`);
       if (res.status === 204) {
         handleSignOut();
       } else {
@@ -38,6 +34,18 @@ const UserMenuContent = ({ name, image }: UserInfo) => {
       }
     } catch (error) {
       return false;
+    }
+  };
+
+  const handleCopyUrl = async () => {
+    if (!isBrowser) return;
+    const url = `http://localhost:3000/users/${id}`;
+
+    try {
+      await navigator.clipboard.writeText(url);
+      toast.success('URLのコピーに成功しました');
+    } catch {
+      toast.error('URLのコピーに失敗しました');
     }
   };
 
@@ -69,7 +77,7 @@ const UserMenuContent = ({ name, image }: UserInfo) => {
         </UnstyledButton>
       </Menu.Target>
       <Menu.Dropdown>
-        <Menu.Label>Settings</Menu.Label>
+        <Menu.Label>Menu</Menu.Label>
         <form action={handleSignOut}>
           <Menu.Item
             leftSection={
@@ -83,6 +91,19 @@ const UserMenuContent = ({ name, image }: UserInfo) => {
             Logout
           </Menu.Item>
         </form>
+
+        <Menu.Item
+          color="blue"
+          leftSection={
+            <IconLink
+              style={{ width: rem(16), height: rem(16) }}
+              stroke={1.5}
+            />
+          }
+          onClick={handleCopyUrl}
+        >
+          Your page
+        </Menu.Item>
 
         <Menu.Divider />
 
@@ -102,4 +123,4 @@ const UserMenuContent = ({ name, image }: UserInfo) => {
       </Menu.Dropdown>
     </Menu>
   );
-};
+}
