@@ -11,15 +11,11 @@ import ts from 'highlight.js/lib/languages/typescript';
 import rb from 'highlight.js/lib/languages/ruby';
 import { Button } from '@mantine/core';
 import { useEffect, useRef } from 'react';
+import { EditorProps } from '@/types/index';
 
 const lowlight = createLowlight();
 
 lowlight.register({ js, ts, rb });
-
-type EditorProps = {
-  memoBody: string | undefined;
-  handleSave: (content: string) => Promise<boolean>;
-};
 
 export function Editor({ memoBody, handleSave }: EditorProps) {
   const editor = useEditor({

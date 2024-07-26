@@ -4,17 +4,7 @@ import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import toast from 'react-hot-toast';
 import { useRef } from 'react';
-
-type Book = {
-  id: number;
-  title: string;
-  author: string;
-  imageUrl: string;
-};
-
-type BookProps = {
-  book: Book;
-};
+import { BookProps } from '@/types/index';
 
 const AddBookConfirmContent = ({ book }: BookProps) => {
   const { data: session } = useSession();
@@ -24,7 +14,7 @@ const AddBookConfirmContent = ({ book }: BookProps) => {
   const handleSubmit = async () => {
     const title = book.title;
     const author = book.author;
-    const coverImageUrl = book.imageUrl;
+    const coverImageUrl = book.coverImageUrl;
     const uid = session?.user?.id;
     const headingNumber = ref.current?.value;
     try {
@@ -49,7 +39,7 @@ const AddBookConfirmContent = ({ book }: BookProps) => {
 
   return (
     <Card shadow="sm" padding="sm" radius="md" withBorder>
-      <Image src={book.imageUrl} w={100} h={100} alt="book" />
+      <Image src={book.coverImageUrl} w={100} h={100} alt="book" />
 
       <Group justify="space-between" mt="md" mb="xs">
         <Text fw={500}>{book.title}を本棚に追加しますか？</Text>

@@ -1,16 +1,6 @@
 import BookItem from './BookItem';
 import { SimpleGrid } from '@mantine/core';
-
-type Book = {
-  id: number;
-  title: string;
-  author: string;
-  coverImageUrl: string;
-};
-
-type BookItemsProps = {
-  bookItems: Book[];
-};
+import { BookItemsProps, Book } from '@/types/index';
 
 const BookItems = ({ bookItems }: BookItemsProps) => {
   return (

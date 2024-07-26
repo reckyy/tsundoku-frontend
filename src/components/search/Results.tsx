@@ -1,33 +1,23 @@
 import { Image } from '@mantine/core';
 import AddBookConfirmButton from '../button/AddBookConfirmButton';
+import { BookItemsProps } from '@/types/index';
 
-type Result = {
-  id: number;
-  title: string;
-  author: string;
-  imageUrl: string;
-};
-
-type ResultProps = {
-  results: Result[];
-};
-
-const Results = ({ results }: ResultProps) => {
+const Results = ({ bookItems }: BookItemsProps) => {
   return (
     <div>
-      {results.length > 0 ? (
-        results.map((result) => (
-          <div key={result.id}>
-            <h3>{result.title}</h3>
-            <h3>{result.author}</h3>
+      {bookItems.length > 0 ? (
+        bookItems.map((book) => (
+          <div key={book.id}>
+            <h3>{book.title}</h3>
+            <h3>{book.author}</h3>
             <Image
               radius="md"
               w={100}
               h={100}
-              src={result.imageUrl}
-              alt={result.title}
+              src={book.coverImageUrl}
+              alt={book.title}
             />
-            <AddBookConfirmButton book={result} />
+            <AddBookConfirmButton book={book} />
           </div>
         ))
       ) : (

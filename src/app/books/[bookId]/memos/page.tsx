@@ -8,6 +8,7 @@ import { useState } from 'react';
 import useSWR from 'swr';
 import axios from 'axios';
 import toast from 'react-hot-toast';
+import { MemoParams, BookWithMemo } from '@/types/index';
 
 export default function Page() {
   return (
@@ -17,33 +18,6 @@ export default function Page() {
   );
 }
 
-type memoParams = {
-  uid: string | undefined;
-  book_id: number;
-};
-
-type Book = {
-  title: string;
-  coverImageUrl: string;
-};
-
-type Heading = {
-  id: number;
-  number: number;
-  title: string | null;
-  memo: Memo;
-};
-
-type Memo = {
-  id: number;
-  body: string;
-};
-
-type BookWithMemo = {
-  book: Book;
-  headings: Heading[];
-};
-
 function PageContent() {
   const dynamicParams = useParams<{ bookId: string }>();
   const bookId = Number(dynamicParams.bookId);
@@ -51,14 +25,14 @@ function PageContent() {
   const { data: session, status } = useSession();
   const params = {
     uid: session?.user?.id,
-    book_id: bookId,
+    bookId: bookId,
   };
   const [bookWithMemos, setBookWithMemos] = useState<BookWithMemo>();
   const [heading, setHeading] = useState('1');
 
   const fetchable = status === 'authenticated' && session?.user?.email;
 
-  async function fetcher(url: string, params: memoParams) {
+  async function fetcher(url: string, params: MemoParams) {
     const res = await axios.get(url, { params });
     return {
       book: {

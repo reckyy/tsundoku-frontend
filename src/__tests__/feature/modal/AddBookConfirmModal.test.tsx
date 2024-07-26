@@ -16,7 +16,7 @@ const mockBook = {
   id: 1,
   title: 'テストの書籍',
   author: 'テスト書籍の著者',
-  imageUrl: 'https://thumnailtest1.jpg',
+  coverImageUrl: 'https://thumnailtest1.jpg',
 };
 
 const mockedAxiosGet = axios.get as jest.Mock;
@@ -31,7 +31,7 @@ describe('AddBookConfirmModal', () => {
   });
 
   it('should show modal content', async () => {
-    render(<Results results={[mockBook]} />);
+    render(<Results bookItems={[mockBook]} />);
     const value = '本棚に追加';
     await user.click(screen.getByText(value));
     const bookTitle =
