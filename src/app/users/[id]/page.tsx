@@ -21,12 +21,12 @@ type Book = {
   title: string;
   author: string;
   coverImageUrl: string;
-}
+};
 
 type Log = {
   date: string;
-  count: number
-}
+  count: number;
+};
 
 type Params = {
   uid: string | string[];
@@ -55,7 +55,7 @@ export default function Page() {
           author: book.author,
           coverImageUrl: book.cover_image_url,
         }));
-        setBookItems(bookItems)
+        setBookItems(bookItems);
         setReadingLogs(data.logs);
       },
     },

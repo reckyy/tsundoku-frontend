@@ -44,10 +44,10 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       }
     },
     authorized: async ({ request, auth }) => {
-      if(auth){
-        return true
-      }else{
-        return NextResponse.redirect(new URL('/', request.nextUrl))
+      if (auth) {
+        return true;
+      } else {
+        return NextResponse.redirect(new URL('/', request.nextUrl));
       }
     },
   },

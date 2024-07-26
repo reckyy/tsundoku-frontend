@@ -9,10 +9,10 @@ type Book = {
 };
 
 type BookItemsProps = {
-  bookItems: Book[]
-}
+  bookItems: Book[];
+};
 
-const BookItems = ({ bookItems }: BookItemsProps)=> {
+const BookItems = ({ bookItems }: BookItemsProps) => {
   return (
     <div>
       {bookItems.length > 0 ? (

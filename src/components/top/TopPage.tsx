@@ -1,5 +1,5 @@
-import SignInButton from "../button/SignInButton";
+import SignInButton from '../button/SignInButton';
 
-export default function TopPage(){
-  return <SignInButton />
+export default function TopPage() {
+  return <SignInButton />;
 }

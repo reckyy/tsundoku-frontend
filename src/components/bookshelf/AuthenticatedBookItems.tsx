@@ -25,10 +25,8 @@ const AuthenticatedBookItems = async () => {
   };
 
   const bookItems = await getBooks();
-  
-  return(
-    <BookItems bookItems={bookItems} />
-  )
+
+  return <BookItems bookItems={bookItems} />;
 };
 
-export default AuthenticatedBookItems
+export default AuthenticatedBookItems;
