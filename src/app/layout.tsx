@@ -4,7 +4,6 @@ import './globals.css';
 import '@mantine/tiptap/styles.css';
 import '@mantine/core/styles.css';
 import { MantineProvider } from '@mantine/core';
-import AuthGuard from '@/components/feature/AuthGuard';
 import { Toaster } from 'react-hot-toast';
 import { AuthToaster } from '@/components/auth/AuthToaster';
 import { MyAppShell } from '@/components/appShell/MyAppShell';
@@ -27,11 +26,9 @@ export default function RootLayout({
         <main>
           <MantineProvider>
             <MyAppShell>
-              <AuthGuard>
-                <Toaster />
-                <AuthToaster />
-                {children}
-              </AuthGuard>
+              <Toaster />
+              <AuthToaster />
+              {children}
             </MyAppShell>
           </MantineProvider>
         </main>

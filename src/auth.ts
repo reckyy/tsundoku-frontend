@@ -1,6 +1,7 @@
 import NextAuth from 'next-auth';
 import Google from 'next-auth/providers/google';
 import axios from 'axios';
+import { NextResponse } from 'next/server';
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
   providers: [Google],
@@ -40,6 +41,13 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         }
       } catch (error) {
         return false;
+      }
+    },
+    authorized: async ({ request, auth }) => {
+      if (auth) {
+        return true;
+      } else {
+        return NextResponse.redirect(new URL('/', request.nextUrl));
       }
     },
   },

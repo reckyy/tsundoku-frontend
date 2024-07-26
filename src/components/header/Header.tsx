@@ -15,7 +15,11 @@ export async function Header() {
         </Link>
         <Group ml="xl" gap={0}>
           {session?.user && (
-            <UserMenu name={session.user.name!} image={session.user.image!} />
+            <UserMenu
+              name={session.user.name!}
+              image={session.user.image!}
+              id={session.user.id!}
+            />
           )}
         </Group>
       </Group>
