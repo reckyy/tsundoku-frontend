@@ -1,15 +1,7 @@
 import { auth } from '@/auth';
 import axios from 'axios';
 import BookItems from './BookItems';
-
-type BookResponse = {
-  id: number;
-  title: string;
-  author: string;
-  cover_image_url: string;
-  created_at: string;
-  updated_at: string;
-};
+import { BookResponse } from '@/types/index';
 
 const AuthenticatedBookItems = async () => {
   const getBooks = async () => {

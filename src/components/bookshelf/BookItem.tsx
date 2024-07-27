@@ -3,17 +3,7 @@
 import { Image } from '@mantine/core';
 import Link from 'next/link';
 import { useSession, SessionProvider } from 'next-auth/react';
-
-type Book = {
-  id: number;
-  title: string;
-  author: string;
-  coverImageUrl: string;
-};
-
-type BookProps = {
-  book: Book;
-};
+import { BookProps } from '@/types/index';
 
 const BookItemContent = ({ book }: BookProps) => {
   const { data: session } = useSession();

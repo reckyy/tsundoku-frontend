@@ -16,7 +16,7 @@ const mockResults = {
           id: 1,
           title: 'テストの書籍',
           author: 'テスト書籍のタイトル',
-          imageUrl: 'https://thumnailtest1.jpg',
+          coverImageUrl: 'https://thumnailtest1.jpg',
         },
       },
     ],

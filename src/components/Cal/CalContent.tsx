@@ -3,17 +3,9 @@
 import { ScrollArea } from '@mantine/core';
 import HeatMap from '@uiw/react-heat-map';
 import Tooltip from '@uiw/react-tooltip';
+import { ReadingLogs } from '@/types/index';
 
-type ReadingLog = {
-  date: string;
-  count: number;
-};
-
-type CalContentProps = {
-  readingLogs: ReadingLog[];
-};
-
-export default function CalContent({ readingLogs }: CalContentProps) {
+export default function CalContent({ readingLogs }: ReadingLogs) {
   const value = readingLogs.map((log) => ({
     date: log.date.replace('-', '/'),
     count: log.count,

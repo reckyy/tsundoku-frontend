@@ -13,12 +13,7 @@ import {
 import { handleSignOut } from '../../feature/SignOut';
 import axios from 'axios';
 import toast from 'react-hot-toast';
-
-type UserInfo = {
-  name: string;
-  image: string;
-  id: string;
-};
+import { UserInfo } from '@/types/index';
 
 export default function UserMenu({ name, image, id }: UserInfo) {
   const [userMenuOpened, setUserMenuOpened] = useState(false);

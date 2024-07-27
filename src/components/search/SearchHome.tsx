@@ -3,25 +3,19 @@
 import SearchForm from './SearchForm';
 import Results from './Results';
 import { useState } from 'react';
-
-type Result = {
-  id: number;
-  title: string;
-  author: string;
-  imageUrl: string;
-};
+import { Book } from '@/types/index';
 
 const SearchHome = () => {
-  const [searchResults, setSearchResults] = useState<Result[]>([]);
+  const [searchResults, setSearchResults] = useState<Book[]>([]);
 
-  const handleResults = (results: Result[]) => {
+  const handleResults = (results: Book[]) => {
     setSearchResults(results);
   };
 
   return (
     <div>
       <SearchForm onResults={handleResults} />
-      <Results results={searchResults} />
+      <Results bookItems={searchResults} />
     </div>
   );
 };
