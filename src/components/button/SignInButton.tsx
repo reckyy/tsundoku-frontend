@@ -9,7 +9,7 @@ const SignInButton = () => {
         await signIn('google', { redirectTo: '/?authenticated=true' });
       }}
     >
-      <GoogleButton type="submit">Signin with Google</GoogleButton>
+      <GoogleButton type="submit">Googleログイン</GoogleButton>
     </form>
   );
 };

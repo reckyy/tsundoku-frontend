@@ -17,11 +17,13 @@ export function Footer() {
         </Link>
         <Group ml="xl" gap={0}>
           <Link href={'/terms'}>
-            <UnstyledButton className={classes.control}>Terms</UnstyledButton>
+            <UnstyledButton className={classes.control}>
+              利用規約
+            </UnstyledButton>
           </Link>
           <Link href={'/privacy'}>
             <UnstyledButton className={classes.control}>
-              Privacy policy
+              プライバシーポリシー
             </UnstyledButton>
           </Link>
         </Group>
