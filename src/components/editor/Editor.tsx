@@ -9,15 +9,19 @@ import TipTapTaskList from '@tiptap/extension-task-list';
 import js from 'highlight.js/lib/languages/javascript';
 import ts from 'highlight.js/lib/languages/typescript';
 import rb from 'highlight.js/lib/languages/ruby';
-import { Button } from '@mantine/core';
-import { useEffect, useRef } from 'react';
+import { Button, Grid, GridCol, TextInput } from '@mantine/core';
+import { useEffect, useRef, useState } from 'react';
 import { EditorProps } from '@/types/index';
+import classes from './Editor.module.css';
 
 const lowlight = createLowlight();
 
 lowlight.register({ js, ts, rb });
 
-export function Editor({ memoBody, handleSave }: EditorProps) {
+export function Editor({ heading, handleSave }: EditorProps) {
+  const memoBody = heading?.memo.body ?? '';
+  const title = heading?.title ?? '';
+
   const editor = useEditor({
     extensions: [
       StarterKit.configure({
@@ -34,37 +38,57 @@ export function Editor({ memoBody, handleSave }: EditorProps) {
       TaskItem.configure({
         nested: true,
       }),
-      Placeholder.configure({ placeholder: 'This is placeholder' }),
+      Placeholder.configure({ placeholder: 'メモを書く' }),
       Link.configure({
         openOnClick: true,
         autolink: true,
       }),
     ],
+    autofocus: true,
     content: memoBody,
   });
 
-  const prevMemoBody = useRef(memoBody);
+  const [headingTitle, setHeadingTitle] = useState<string>(title);
+  const prevHeading = useRef(heading);
 
   useEffect(() => {
-    if (editor && memoBody !== prevMemoBody.current) {
-      editor.commands.setContent(memoBody ?? '');
-      prevMemoBody.current = memoBody;
+    if (editor && heading !== prevHeading.current) {
+      editor?.commands.setContent(memoBody);
+      prevHeading.current = heading;
+      setHeadingTitle(title);
     }
-  }, [editor, memoBody]);
+  }, [editor, heading, memoBody, title]);
 
   const handleSaveClick = async () => {
-    const content = editor?.getHTML();
-    await handleSave(content ?? '');
+    const content = editor?.getHTML() ?? '';
+    const title = headingTitle ?? '';
+    await handleSave(content, title);
   };
 
   return (
     <>
-      <RichTextEditor editor={editor}>
-        <RichTextEditor.Content />
-      </RichTextEditor>
-      <Button variant="light" color="green" onClick={handleSaveClick}>
-        保存
-      </Button>
+      <Grid>
+        <GridCol span={9}>
+          <TextInput
+            variant="unstyled"
+            size="xl"
+            value={headingTitle}
+            onChange={(event) => setHeadingTitle(event.currentTarget.value)}
+          />
+        </GridCol>
+        <GridCol span={3}>
+          <Button variant="light" color="green" onClick={handleSaveClick}>
+            保存
+          </Button>
+        </GridCol>
+      </Grid>
+      <Grid>
+        <GridCol span={12}>
+          <RichTextEditor editor={editor} className={classes.customEditor}>
+            <RichTextEditor.Content />
+          </RichTextEditor>
+        </GridCol>
+      </Grid>
     </>
   );
 }

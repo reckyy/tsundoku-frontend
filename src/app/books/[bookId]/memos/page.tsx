@@ -1,14 +1,22 @@
 'use client';
 
 import { Editor } from '@/components/editor/Editor';
-import { Image, SegmentedControl } from '@mantine/core';
+import {
+  Image,
+  SegmentedControl,
+  Container,
+  Grid,
+  Text,
+  GridCol,
+  Space,
+} from '@mantine/core';
 import { useParams } from 'next/navigation';
 import { useSession, SessionProvider } from 'next-auth/react';
 import { useState } from 'react';
 import useSWR from 'swr';
 import axios from 'axios';
 import toast from 'react-hot-toast';
-import { MemoParams, BookWithMemo } from '@/types/index';
+import { MemoParams, BookWithMemo, HandleSaveType } from '@/types/index';
 
 export default function Page() {
   return (
@@ -21,7 +29,7 @@ export default function Page() {
 function PageContent() {
   const dynamicParams = useParams<{ bookId: string }>();
   const bookId = Number(dynamicParams.bookId);
-  const apiUrl = `http://localhost:3001/api/books/${bookId}/memos`;
+  const apiMemoUrl = `http://localhost:3001/api/books/${bookId}/memos`;
   const { data: session, status } = useSession();
   const params = {
     uid: session?.user?.id,
@@ -44,7 +52,7 @@ function PageContent() {
   }
 
   const { error, isLoading } = useSWR(
-    fetchable ? [apiUrl, params] : null,
+    fetchable ? [apiMemoUrl, params] : null,
     ([url, params]) => fetcher(url, params),
     {
       onSuccess: (data) => {
@@ -53,18 +61,26 @@ function PageContent() {
     },
   );
 
-  const handleSave: (content: string) => Promise<boolean> = async (
-    content: string,
-  ) => {
+  const handleSave: HandleSaveType = async (content, title) => {
     const memoId = bookWithMemos?.headings[Number(heading) - 1].memo.id;
+    const headingId = bookWithMemos?.headings[Number(heading) - 1].id;
     try {
-      const res = await axios.patch(apiUrl, {
+      const headingRes = await axios.patch(
+        'http://localhost:3001/api/headings',
+        {
+          heading: {
+            id: headingId,
+            title: title,
+          },
+        },
+      );
+      const memoRes = await axios.patch(apiMemoUrl, {
         memo: {
           id: memoId,
           body: content,
         },
       });
-      if (res.status === 200) {
+      if (headingRes.status === 200 && memoRes.status === 200) {
         setBookWithMemos((bookWithMemos) => {
           if (!bookWithMemos) return bookWithMemos;
 
@@ -74,6 +90,7 @@ function PageContent() {
               h.number === Number(heading)
                 ? {
                     ...h,
+                    title: title,
                     memo: {
                       ...h.memo,
                       body: content,
@@ -97,27 +114,38 @@ function PageContent() {
   if (isLoading) return <div>loading...</div>;
 
   return (
-    <>
-      <Image
-        radius="md"
-        w={100}
-        h={100}
-        src={bookWithMemos?.book.coverImageUrl}
-        alt={bookWithMemos?.book.title}
-      />
+    <Container my={'md'}>
+      <Grid>
+        <GridCol span={3}>
+          <Image
+            radius="md"
+            w={130}
+            h={130}
+            src={bookWithMemos?.book.coverImageUrl}
+            alt={bookWithMemos?.book.title}
+          />
+        </GridCol>
+        <GridCol offset={1} span={6}>
+          <Text size="md" ta={'center'} mb={7}>
+            章
+          </Text>
+          <SegmentedControl
+            value={heading}
+            onChange={setHeading}
+            fullWidth
+            data={
+              bookWithMemos?.headings.map((heading) =>
+                String(heading.number),
+              ) ?? []
+            }
+          />
+        </GridCol>
+      </Grid>
+      <Space h={50} />
       <Editor
-        memoBody={bookWithMemos?.headings[Number(heading) - 1].memo.body}
+        heading={bookWithMemos?.headings[Number(heading) - 1]}
         handleSave={handleSave}
       />
-      <SegmentedControl
-        value={heading}
-        onChange={setHeading}
-        orientation="vertical"
-        size="md"
-        data={
-          bookWithMemos?.headings.map((heading) => String(heading.number)) ?? []
-        }
-      />
-    </>
+    </Container>
   );
 }
