@@ -1,4 +1,11 @@
+import { Heading } from './heading';
+
+export type HandleSaveType = (
+  content: string,
+  title: string,
+) => Promise<boolean>;
+
 export type EditorProps = {
-  memoBody: string | undefined;
-  handleSave: (content: string) => Promise<boolean>;
+  heading: Heading | undefined;
+  handleSave: HandleSaveType;
 };
