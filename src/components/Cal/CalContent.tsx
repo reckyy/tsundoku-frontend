@@ -17,7 +17,8 @@ export default function CalContent({ readingLogs }: ReadingLogs) {
       <HeatMap
         value={value}
         width={720}
-        weekLabels={['', 'Mon', '', 'Wed', '', 'Fri', '']}
+        weekLabels={false}
+        monthLabels={['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月']}
         startDate={new Date(`${currentYear}/01/01`)}
         endDate={today}
         rectProps={{ rx: 3.5 }}
