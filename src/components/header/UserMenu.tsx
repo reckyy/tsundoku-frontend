@@ -9,11 +9,13 @@ import {
   IconTrash,
   IconChevronDown,
   IconLink,
+  IconBook,
 } from '@tabler/icons-react';
 import { handleSignOut } from '../../feature/SignOut';
 import axios from 'axios';
 import toast from 'react-hot-toast';
 import { UserInfo } from '@/types/index';
+import Link from 'next/link';
 
 export default function UserMenu({ name, image, id }: UserInfo) {
   const [userMenuOpened, setUserMenuOpened] = useState(false);
@@ -83,10 +85,23 @@ export default function UserMenu({ name, image, id }: UserInfo) {
             }
             type="submit"
           >
-            Logout
+            ログアウト
           </Menu.Item>
         </form>
 
+        <Link href={'/search_books'}>
+          <Menu.Item
+            color="green"
+            leftSection={
+              <IconBook
+                style={{ width: rem(16), height: rem(16) }}
+                stroke={1.5}
+              />
+            }
+          >
+            本の追加
+          </Menu.Item>
+        </Link>
         <Menu.Item
           color="blue"
           leftSection={
@@ -97,7 +112,7 @@ export default function UserMenu({ name, image, id }: UserInfo) {
           }
           onClick={handleCopyUrl}
         >
-          Your page
+          公開ページ
         </Menu.Item>
 
         <Menu.Divider />
@@ -113,7 +128,7 @@ export default function UserMenu({ name, image, id }: UserInfo) {
           }
           onClick={handleDeleteUser}
         >
-          Delete account
+          アカウントの削除
         </Menu.Item>
       </Menu.Dropdown>
     </Menu>

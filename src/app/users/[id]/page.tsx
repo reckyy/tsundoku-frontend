@@ -7,6 +7,7 @@ import useSWR from 'swr';
 import axios from 'axios';
 import { useState } from 'react';
 import { BookResponse, Book, Log } from '@/types/index';
+import { Container, Space, Paper, Text } from '@mantine/core';
 
 export default function Page() {
   const dynamicParams = useParams();
@@ -38,9 +39,14 @@ export default function Page() {
   if (isLoading) return <div>loading...</div>;
 
   return (
-    <>
+    <Container my="md">
       <BookItems bookItems={bookItems} />
-      <CalContent readingLogs={readingLogs} />
-    </>
+      <Space h={60} />
+      <Paper withBorder shadow="xs" radius="md" p="xl">
+        <Text ta={'center'}>毎日、コツコツと。</Text>
+        <Space h={20} />
+        <CalContent readingLogs={readingLogs} />
+      </Paper>
+    </Container>
   );
 }

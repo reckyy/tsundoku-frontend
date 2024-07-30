@@ -118,9 +118,9 @@ function PageContent() {
       <Grid>
         <GridCol span={3}>
           <Image
-            radius="md"
-            w={130}
-            h={130}
+            radius="lg"
+            w={141}
+            h={200}
             src={bookWithMemos?.book.coverImageUrl}
             alt={bookWithMemos?.book.title}
           />
