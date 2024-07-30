@@ -35,6 +35,7 @@ const SearchForm = ({ onResults }: SearchFormProps) => {
       <TextInput
         radius={'xl'}
         size="md"
+        label="検索"
         placeholder="本のタイトル"
         rightSectionWidth={42}
         leftSection={

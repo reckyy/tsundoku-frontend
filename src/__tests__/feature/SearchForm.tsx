@@ -32,7 +32,7 @@ describe('SearchHome', () => {
     const textInput = screen.getByRole('textbox', { name: '検索' });
     const value = 'テスト';
     await user.type(textInput, value);
-    await user.click(screen.getByRole('button', { name: 'Submit' }));
+    await user.keyboard('{Enter}');
     const bookTitle = await screen.findByText('テストの書籍');
     expect(bookTitle).toBeInTheDocument();
   });
