@@ -2,6 +2,7 @@ import {
   IconBrandTwitter,
   IconBrandGithub,
   IconArticle,
+  IconQuestionMark,
 } from '@tabler/icons-react';
 import { Group, ActionIcon, UnstyledButton, rem } from '@mantine/core';
 import Image from 'next/image';
@@ -28,6 +29,14 @@ export function Footer() {
           </Link>
         </Group>
         <Group gap="xs" justify="flex-end" wrap="nowrap">
+          <Link href={'/about'}>
+            <ActionIcon size="lg" variant="default" radius="xl">
+              <IconQuestionMark
+                style={{ width: rem(18), height: rem(18) }}
+                stroke={1.5}
+              />
+            </ActionIcon>
+          </Link>
           <ActionIcon size="lg" variant="default" radius="xl">
             <IconBrandTwitter
               style={{ width: rem(18), height: rem(18) }}
