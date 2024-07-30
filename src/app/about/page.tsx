@@ -1,5 +1,13 @@
-import Feature from '@/components/public/Feature';
+import UserMenuFeature from '@/components/public/UserMenuFeature';
+import { Container, Text } from '@mantine/core';
 
 export default function Page() {
-  return <>未完成</>;
+  return (
+    <Container my="md">
+      <Text size="xl" td="underline" ta={'center'}>
+        Tsundokuの使い方
+      </Text>
+      <UserMenuFeature />
+    </Container>
+  );
 }
