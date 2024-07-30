@@ -1,4 +1,5 @@
 import UserMenuFeature from '@/components/public/UserMenuFeature';
+import EditorFeature from '@/components/public/EditorFeature';
 import { Container, Text } from '@mantine/core';
 
 export default function Page() {
@@ -8,6 +9,7 @@ export default function Page() {
         Tsundokuの使い方
       </Text>
       <UserMenuFeature />
+      <EditorFeature />
     </Container>
   );
 }

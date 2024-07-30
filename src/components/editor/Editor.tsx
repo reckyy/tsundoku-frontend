@@ -73,6 +73,7 @@ export function Editor({ heading, handleSave }: EditorProps) {
             variant="unstyled"
             size="xl"
             value={headingTitle}
+            placeholder="章のタイトルを書く"
             onChange={(event) => setHeadingTitle(event.currentTarget.value)}
           />
         </GridCol>

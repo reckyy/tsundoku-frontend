@@ -9,13 +9,15 @@ import {
   Card,
   rem,
   Space,
+  Divider,
 } from '@mantine/core';
 import { IconCircleCheck, IconTrash } from '@tabler/icons-react';
 
 export default function UserMenuFeature() {
   return (
     <>
-      <Title order={2}>メニューについて</Title>
+      <Title order={3}>メニューについて</Title>
+      <Divider my="md" />
       <SimpleGrid
         cols={{ base: 1, sm: 2 }}
         mt={30}
