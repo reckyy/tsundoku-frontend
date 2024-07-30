@@ -35,7 +35,7 @@ export default function UserMenuFeature() {
             size="sm"
             center
             icon={
-              <ThemeIcon color="blue" variant='light' size={24} radius="xl">
+              <ThemeIcon color="blue" variant="light" size={24} radius="xl">
                 <IconCircleCheck style={{ width: rem(16), height: rem(16) }} />
               </ThemeIcon>
             }
@@ -47,7 +47,7 @@ export default function UserMenuFeature() {
             </ListItem>
             <ListItem
               icon={
-                <ThemeIcon color="red" variant='light' size={24} radius="xl">
+                <ThemeIcon color="red" variant="light" size={24} radius="xl">
                   <IconTrash style={{ width: rem(16), height: rem(16) }} />
                 </ThemeIcon>
               }
