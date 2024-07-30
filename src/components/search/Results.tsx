@@ -1,29 +1,49 @@
-import { Image } from '@mantine/core';
+import {
+  Image,
+  Card,
+  SimpleGrid,
+  Text,
+  Grid,
+  GridCol,
+  Flex,
+} from '@mantine/core';
 import AddBookConfirmButton from '../button/AddBookConfirmButton';
 import { BookItemsProps } from '@/types/index';
 
 const Results = ({ bookItems }: BookItemsProps) => {
   return (
-    <div>
+    <Grid justify="center" align="stretch">
       {bookItems.length > 0 ? (
         bookItems.map((book) => (
-          <div key={book.id}>
-            <h3>{book.title}</h3>
-            <h3>{book.author}</h3>
-            <Image
-              radius="md"
-              w={100}
-              h={100}
-              src={book.coverImageUrl}
-              alt={book.title}
-            />
-            <AddBookConfirmButton book={book} />
-          </div>
+          <GridCol span={6} key={book.id}>
+            <Card padding="md" withBorder shadow="sm" radius="md">
+              <SimpleGrid cols={{ base: 1, sm: 2 }}>
+                <Image
+                  radius="lg"
+                  w={141}
+                  h={200}
+                  fit="contain"
+                  src={book.coverImageUrl}
+                  alt={book.title}
+                />
+                <Flex
+                  gap="sm"
+                  justify="center"
+                  align="center"
+                  direction="column"
+                >
+                  <Text lineClamp={2}>{book.title}</Text>
+                  <Text lineClamp={1}>{book.author}</Text>
+                  <AddBookConfirmButton book={book} />
+                </Flex>
+              </SimpleGrid>
+            </Card>
+          </GridCol>
         ))
       ) : (
         <p>検索結果がありません。</p>
       )}
-    </div>
+    </Grid>
   );
 };
 

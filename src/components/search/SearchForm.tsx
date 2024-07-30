@@ -1,9 +1,11 @@
-import { Button, Group, TextInput } from '@mantine/core';
+import { TextInput, useMantineTheme, ActionIcon, rem } from '@mantine/core';
+import { IconSearch, IconArrowRight } from '@tabler/icons-react';
 import { useForm } from '@mantine/form';
 import axios from 'axios';
 import { SearchFormProps, Item } from '@/types/index';
 
 const SearchForm = ({ onResults }: SearchFormProps) => {
+  const theme = useMantineTheme();
   const form = useForm({
     mode: 'uncontrolled',
     initialValues: {
@@ -20,7 +22,7 @@ const SearchForm = ({ onResults }: SearchFormProps) => {
         id: index + 1,
         title: element.Item.title,
         author: element.Item.author,
-        coverImageUrl: element.Item.mediumImageUrl,
+        coverImageUrl: element.Item.largeImageUrl,
       }));
       onResults(books);
     } catch (error) {
@@ -31,15 +33,33 @@ const SearchForm = ({ onResults }: SearchFormProps) => {
   return (
     <form onSubmit={form.onSubmit(handleSubmit)}>
       <TextInput
-        label="検索"
+        radius={'xl'}
+        size="md"
         placeholder="本のタイトル"
+        rightSectionWidth={42}
+        leftSection={
+          <IconSearch
+            style={{ width: rem(18), height: rem(18) }}
+            stroke={1.5}
+          />
+        }
+        rightSection={
+          <ActionIcon
+            size={32}
+            radius="xl"
+            color={theme.primaryColor}
+            variant="filled"
+            onClick={() => form.onSubmit(handleSubmit)()}
+          >
+            <IconArrowRight
+              style={{ width: rem(18), height: rem(18) }}
+              stroke={1.5}
+            />
+          </ActionIcon>
+        }
         key={form.key('searchWord')}
         {...form.getInputProps('searchWord')}
       />
-
-      <Group justify="flex-end" mt="md">
-        <Button type="submit">Submit</Button>
-      </Group>
     </form>
   );
 };

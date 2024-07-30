@@ -1,5 +1,5 @@
 import BookItem from './BookItem';
-import { Grid, GridCol, Space, Center } from '@mantine/core';
+import { Grid, GridCol, Space, Center, Text } from '@mantine/core';
 import { BookItemsProps, Book } from '@/types/index';
 
 const BookItems = ({ bookItems }: BookItemsProps) => {
@@ -19,7 +19,7 @@ const BookItems = ({ bookItems }: BookItemsProps) => {
           ))}
         </Grid>
       ) : (
-        <p>検索結果がありません。</p>
+        <Text>右上メニューの「本を追加」から読む本を追加しましょう！</Text>
       )}
     </div>
   );

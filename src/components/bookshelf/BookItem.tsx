@@ -14,8 +14,8 @@ const BookItemContent = ({ book }: BookProps) => {
         <Link href={`/books/${book.id}/memos`}>
           <Image
             radius="md"
-            w={120}
-            h={130}
+            w={141}
+            h={200}
             src={book.coverImageUrl}
             alt={book.title}
           />
@@ -23,8 +23,8 @@ const BookItemContent = ({ book }: BookProps) => {
       ) : (
         <Image
           radius="md"
-          w={100}
-          h={100}
+          w={141}
+          h={200}
           src={book.coverImageUrl}
           alt={book.title}
         />
