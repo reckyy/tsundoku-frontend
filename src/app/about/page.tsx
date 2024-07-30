@@ -1,14 +1,15 @@
+import ServiceFeature from '@/components/public/ServiceFeature';
 import UserMenuFeature from '@/components/public/UserMenuFeature';
 import EditorFeature from '@/components/public/EditorFeature';
-import { Container, Text } from '@mantine/core';
+import { Container, Space } from '@mantine/core';
 
 export default function Page() {
   return (
     <Container my="md">
-      <Text size="xl" td="underline" ta={'center'}>
-        Tsundokuの使い方
-      </Text>
+      <ServiceFeature />
+      <Space h={60} />
       <UserMenuFeature />
+      <Space h={20} />
       <EditorFeature />
     </Container>
   );
