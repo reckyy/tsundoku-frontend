@@ -36,7 +36,7 @@ export default function HeroBullets() {
         あなたの読書履歴とログを公開することで、モチベーションを維持しながら読書を継続できます。
       </Text>
       <Text size="lg" mb={20}>
-        一緒に読書習慣を築きましょう！
+        一緒に読書習慣を作りましょう！
       </Text>
       <Anchor
         href="http://localhost:3000/about"
