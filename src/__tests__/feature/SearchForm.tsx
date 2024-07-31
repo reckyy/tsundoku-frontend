@@ -29,7 +29,7 @@ mockedAxiosGet.mockResolvedValue(mockResults);
 describe('SearchHome', () => {
   it('show book search results', async () => {
     render(<SearchHome />);
-    const textInput = screen.getByRole('textbox', { name: '検索' });
+    const textInput = screen.getByRole('textbox', { name: 'search' });
     const value = 'テスト';
     await user.type(textInput, value);
     await user.keyboard('{Enter}');
