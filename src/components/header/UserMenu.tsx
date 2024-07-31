@@ -16,10 +16,11 @@ import axios from 'axios';
 import toast from 'react-hot-toast';
 import { UserInfo } from '@/types/index';
 import Link from 'next/link';
+import { useClipboard } from '@mantine/hooks';
 
 export default function UserMenu({ name, image, id }: UserInfo) {
   const [userMenuOpened, setUserMenuOpened] = useState(false);
-  const isBrowser = typeof window !== 'undefined';
+  const clipboard = useClipboard();
 
   const handleDeleteUser = async () => {
     try {
@@ -34,14 +35,13 @@ export default function UserMenu({ name, image, id }: UserInfo) {
     }
   };
 
-  const handleCopyUrl = async () => {
-    if (!isBrowser) return;
+  const handleCopyUrl = () => {
     const url = `http://localhost:3000/users/${id}`;
+    clipboard.copy(url);
 
-    try {
-      await navigator.clipboard.writeText(url);
+    if (!clipboard.error) {
       toast.success('URLのコピーに成功しました');
-    } catch {
+    } else {
       toast.error('URLのコピーに失敗しました');
     }
   };
