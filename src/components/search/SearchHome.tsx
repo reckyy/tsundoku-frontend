@@ -16,7 +16,7 @@ const SearchHome = () => {
   return (
     <Container my="md">
       <Grid>
-        <GridCol offset={2} span={8}>
+        <GridCol>
           <SearchForm onResults={handleResults} />
         </GridCol>
         <GridCol>
