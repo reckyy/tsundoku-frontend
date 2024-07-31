@@ -80,7 +80,17 @@ function PageContent() {
           body: content,
         },
       });
-      if (headingRes.status === 200 && memoRes.status === 200) {
+      const logRes = await axios.patch(
+        'http://localhost:3001/api/reading_logs',
+        {
+          memoId: memoId,
+        },
+      );
+      if (
+        headingRes.status === 200 &&
+        memoRes.status === 200 &&
+        logRes.status === 200
+      ) {
         setBookWithMemos((bookWithMemos) => {
           if (!bookWithMemos) return bookWithMemos;
 
