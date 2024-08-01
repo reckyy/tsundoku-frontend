@@ -8,19 +8,22 @@ import axios from 'axios';
 import { useState } from 'react';
 import { BookResponse, Book, Log } from '@/types/index';
 import { Container, Space, Paper } from '@mantine/core';
+import { UserParams } from '@/types/index';
 
 export default function Page() {
   const dynamicParams = useParams();
+  const params = { uid: dynamicParams.id };
+  const apiUrl = `http://localhost:3001/api/users/${dynamicParams.id}`;
   const [bookItems, setBookItems] = useState<Book[]>([]);
   const [readingLogs, setReadingLogs] = useState<Log[]>([]);
 
-  function fetcher(url: string) {
-    return axios.get(url).then((res) => res.data);
+  function fetcher(url: string, params: UserParams) {
+    return axios.get(url, { params }).then((res) => res.data);
   }
 
   const { error, isLoading } = useSWR(
-    `http://localhost:3001/api/users/${dynamicParams.id}`,
-    fetcher,
+    [apiUrl, params],
+    ([url, params]) => fetcher(url, params),
     {
       onSuccess: (data) => {
         const fetchedBookItems = data.books.map((book: BookResponse) => ({

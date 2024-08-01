@@ -66,7 +66,7 @@ function PageContent() {
     const headingId = bookWithMemos?.headings[Number(heading) - 1].id;
     try {
       const headingRes = await axios.patch(
-        'http://localhost:3001/api/headings',
+        `http://localhost:3001/api/headings/${headingId}`,
         {
           heading: {
             id: headingId,
@@ -74,13 +74,13 @@ function PageContent() {
           },
         },
       );
-      const memoRes = await axios.patch(apiMemoUrl, {
+      const memoRes = await axios.patch(`${apiMemoUrl}/${memoId}`, {
         memo: {
           id: memoId,
           body: content,
         },
       });
-      const logRes = await axios.patch(
+      const logRes = await axios.post(
         'http://localhost:3001/api/reading_logs',
         {
           memoId: memoId,
