@@ -68,10 +68,8 @@ function PageContent() {
       const headingRes = await axios.patch(
         `http://localhost:3001/api/headings/${headingId}`,
         {
-          heading: {
-            id: headingId,
-            title: title,
-          },
+          id: headingId,
+          title: title,
         },
       );
       const memoRes = await axios.patch(`${apiMemoUrl}/${memoId}`, {

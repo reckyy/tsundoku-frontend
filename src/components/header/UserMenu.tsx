@@ -23,8 +23,11 @@ export default function UserMenu({ name, image, id }: UserInfo) {
   const clipboard = useClipboard();
 
   const handleDeleteUser = async () => {
+    const params = { uid: id };
     try {
-      const res = await axios.delete(`http://localhost:3001/api/users/${id}`);
+      const res = await axios.delete(`http://localhost:3001/api/users/${id}`, {
+        params,
+      });
       if (res.status === 204) {
         handleSignOut();
       } else {
