@@ -66,21 +66,29 @@ function PageContent() {
     const headingId = bookWithMemos?.headings[Number(heading) - 1].id;
     try {
       const headingRes = await axios.patch(
-        'http://localhost:3001/api/headings',
+        `http://localhost:3001/api/headings/${headingId}`,
         {
-          heading: {
-            id: headingId,
-            title: title,
-          },
+          id: headingId,
+          title: title,
         },
       );
-      const memoRes = await axios.patch(apiMemoUrl, {
+      const memoRes = await axios.patch(`${apiMemoUrl}/${memoId}`, {
         memo: {
           id: memoId,
           body: content,
         },
       });
-      if (headingRes.status === 200 && memoRes.status === 200) {
+      const logRes = await axios.post(
+        'http://localhost:3001/api/reading_logs',
+        {
+          memoId: memoId,
+        },
+      );
+      if (
+        headingRes.status === 200 &&
+        memoRes.status === 200 &&
+        logRes.status === 200
+      ) {
         setBookWithMemos((bookWithMemos) => {
           if (!bookWithMemos) return bookWithMemos;
 

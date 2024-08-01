@@ -3,3 +3,7 @@ export type UserInfo = {
   image: string;
   id: string;
 };
+
+export type UserParams = {
+  uid: string | string[];
+};

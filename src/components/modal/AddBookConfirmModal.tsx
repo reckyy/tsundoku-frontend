@@ -5,6 +5,15 @@ import { useRouter } from 'next/navigation';
 import toast from 'react-hot-toast';
 import { useRef } from 'react';
 import { BookProps } from '@/types/index';
+import { SessionProvider } from 'next-auth/react';
+
+export default function AddBookConfirmModal({ book }: BookProps) {
+  return (
+    <SessionProvider>
+      <AddBookConfirmContent book={book} />
+    </SessionProvider>
+  );
+}
 
 const AddBookConfirmContent = ({ book }: BookProps) => {
   const { data: session } = useSession();
@@ -52,5 +61,3 @@ const AddBookConfirmContent = ({ book }: BookProps) => {
     </Card>
   );
 };
-
-export default AddBookConfirmContent;

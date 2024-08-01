@@ -1,7 +1,7 @@
 import { screen } from '@testing-library/react';
 import { render } from '@/test-utils/render';
 import Results from '@/components/search/Results';
-import AddBookConfirmContent from '@/components/modal/AddBookConfirmContent';
+import AddBookConfirmModal from '@/components/modal/AddBookConfirmModal';
 import axios from 'axios';
 import userEvent from '@testing-library/user-event';
 import { useRouter } from 'next/navigation';
@@ -40,7 +40,7 @@ describe('AddBookConfirmModal', () => {
   });
 
   it('should call router.push on book addition', async () => {
-    render(<AddBookConfirmContent book={mockBook} />);
+    render(<AddBookConfirmModal book={mockBook} />);
     const value = '追加';
     await user.click(screen.getByText(value));
     expect(useRouter().push).toHaveBeenCalledWith('/');
