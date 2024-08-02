@@ -7,6 +7,16 @@ export type Book = {
   coverImageUrl: string;
 };
 
+export type BookMenuProps = {
+  bookId: number;
+  uid: string | undefined;
+};
+
+export type DeleteBookModalProps = {
+  params: BookMenuProps;
+  close: () => void;
+};
+
 export type BookProps = {
   book: Book;
 };
