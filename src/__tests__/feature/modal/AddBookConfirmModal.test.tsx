@@ -41,6 +41,7 @@ describe('AddBookConfirmModal', () => {
 
   it('should call router.push on book addition', async () => {
     render(<AddBookConfirmModal book={mockBook} />);
+    await user.type(screen.getByLabelText('headingNumber'), '5');
     const value = '追加';
     await user.click(screen.getByText(value));
     expect(useRouter().push).toHaveBeenCalledWith('/');

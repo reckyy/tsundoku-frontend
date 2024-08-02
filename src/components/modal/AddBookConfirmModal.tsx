@@ -67,6 +67,7 @@ const AddBookConfirmContent = ({ book }: BookProps) => {
         <NumberInput
           withAsterisk
           label="章の数"
+          aria-label="headingNumber"
           min={1}
           value={value}
           onChange={setValue}
