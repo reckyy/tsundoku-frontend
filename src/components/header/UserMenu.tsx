@@ -12,7 +12,6 @@ import {
   IconBook,
 } from '@tabler/icons-react';
 import { handleSignOut } from '../../feature/SignOut';
-import axios from 'axios';
 import toast from 'react-hot-toast';
 import { UserInfo } from '@/types/index';
 import Link from 'next/link';
@@ -21,22 +20,6 @@ import { useClipboard } from '@mantine/hooks';
 export default function UserMenu({ name, image, id }: UserInfo) {
   const [userMenuOpened, setUserMenuOpened] = useState(false);
   const clipboard = useClipboard();
-
-  const handleDeleteUser = async () => {
-    const params = { uid: id };
-    try {
-      const res = await axios.delete(`http://localhost:3001/api/users/${id}`, {
-        params,
-      });
-      if (res.status === 204) {
-        handleSignOut();
-      } else {
-        return false;
-      }
-    } catch (error) {
-      return false;
-    }
-  };
 
   const handleCopyUrl = () => {
     const url = `http://localhost:3000/users/${id}`;
@@ -121,18 +104,19 @@ export default function UserMenu({ name, image, id }: UserInfo) {
         <Menu.Divider />
 
         <Menu.Label>Danger zone</Menu.Label>
-        <Menu.Item
-          color="red"
-          leftSection={
-            <IconTrash
-              style={{ width: rem(16), height: rem(16) }}
-              stroke={1.5}
-            />
-          }
-          onClick={handleDeleteUser}
-        >
-          アカウントの削除
-        </Menu.Item>
+        <Link href="confirm_deletion">
+          <Menu.Item
+            color="red"
+            leftSection={
+              <IconTrash
+                style={{ width: rem(16), height: rem(16) }}
+                stroke={1.5}
+              />
+            }
+          >
+            アカウントの削除
+          </Menu.Item>
+        </Link>
       </Menu.Dropdown>
     </Menu>
   );
