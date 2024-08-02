@@ -5,5 +5,6 @@ export type UserInfo = {
 };
 
 export type UserParams = {
-  uid: string | string[];
+  uid: string | string[] | undefined;
+  close?: () => void;
 };
