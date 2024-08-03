@@ -12,7 +12,7 @@ export default function HeroBullets() {
   return (
     <Container my="md">
       <Center>
-        <Image src="/notion.png" alt="Logo" w={120} h={120} />
+        <Image src="Tsundoku.png" alt="Logo" w={120} h={120} />
       </Center>
       <Space h={20} />
       <Title size={'h3'} ta={'center'}>

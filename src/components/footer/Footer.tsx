@@ -4,7 +4,7 @@ import {
   IconArticle,
   IconQuestionMark,
 } from '@tabler/icons-react';
-import { Group, ActionIcon, UnstyledButton, rem } from '@mantine/core';
+import { Group, ActionIcon, UnstyledButton, rem, Text } from '@mantine/core';
 import Image from 'next/image';
 import classes from './Footer.module.css';
 import Link from 'next/link';
@@ -14,7 +14,12 @@ export function Footer() {
     <Group h="100%" px="md">
       <Group justify="space-between" style={{ flex: 1 }}>
         <Link href={'/'}>
-          <Image src="Mantine logo.svg" alt="仮のロゴ" width={28} height={28} />
+          <Group gap="xs">
+            <Image src="/Tsundoku.png" alt="ロゴ" width={28} height={28} />
+            <Text fw={700} size="xl">
+              Tsundoku
+            </Text>
+          </Group>
         </Link>
         <Group ml="xl" gap={0}>
           <Link href={'/terms'}>
