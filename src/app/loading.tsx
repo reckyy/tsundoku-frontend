@@ -1,9 +1,7 @@
-import { Loader, Center } from '@mantine/core';
+import DefaultLoader from '@/components/loading/DefaultLoader'
 
 export default function Loading() {
   return (
-    <Center style={{ width: '100vw', height: '80vh' }}>
-      <Loader color="blue" type="dots" size="xl" />
-    </Center>
+    <DefaultLoader />
   );
 }
