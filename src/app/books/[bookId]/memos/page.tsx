@@ -17,6 +17,7 @@ import useSWR from 'swr';
 import axios from 'axios';
 import toast from 'react-hot-toast';
 import { MemoParams, BookWithMemo, HandleSaveType } from '@/types/index';
+import MemoLoading from '@/components/loading/MemoLoading';
 
 export default function Page() {
   return (
@@ -114,12 +115,18 @@ function PageContent() {
         return false;
       }
     } catch (error) {
+      toast.error('メモの保存に失敗しました。');
       return false;
     }
   };
 
   if (error) return <div>failed to load</div>;
-  if (isLoading) return <div>loading...</div>;
+  if (isLoading)
+    return (
+      <div>
+        <MemoLoading />
+      </div>
+    );
 
   return (
     <Container my={'md'}>
