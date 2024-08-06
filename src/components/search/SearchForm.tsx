@@ -57,7 +57,7 @@ const SearchForm = ({ onResults }: SearchFormProps) => {
       }));
       onResults(books);
     } catch (error) {
-      toast.error('本の検索に失敗しました。')
+      toast.error('本の検索に失敗しました。');
     }
   };
 

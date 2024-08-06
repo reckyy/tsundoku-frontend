@@ -48,7 +48,7 @@ const AddBookConfirmContent = ({ book }: BookProps) => {
         return false;
       }
     } catch (error) {
-      toast.error('本の保存に失敗しました。')
+      toast.error('本の保存に失敗しました。');
     }
   };
 

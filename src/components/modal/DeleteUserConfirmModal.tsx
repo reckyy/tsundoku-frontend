@@ -17,7 +17,7 @@ export default function DeleteUserConfirmModal({ uid, close }: UserParams) {
         return false;
       }
     } catch (error) {
-      toast.error('退会に失敗しました。')
+      toast.error('退会に失敗しました。');
     }
   };
   return (

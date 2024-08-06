@@ -23,7 +23,7 @@ export default function DeleteBookConfirmModal({
         return false;
       }
     } catch (error) {
-      toast.error('本の削除に失敗しました。')
+      toast.error('本の削除に失敗しました。');
     }
   };
 

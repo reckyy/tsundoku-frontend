@@ -11,18 +11,18 @@ const MemoLoading = () => {
           <Text size="md" ta={'center'} mb={7}>
             章
           </Text>
-          <Skeleton height={50}/>
+          <Skeleton height={50} />
         </GridCol>
       </Grid>
       <Space h={50} />
       <Grid>
         <GridCol span={12}>
-          <Skeleton height={50}/>
+          <Skeleton height={50} />
         </GridCol>
       </Grid>
       <Grid>
         <GridCol span={12}>
-          <Skeleton height={200}/>
+          <Skeleton height={200} />
         </GridCol>
       </Grid>
     </Container>

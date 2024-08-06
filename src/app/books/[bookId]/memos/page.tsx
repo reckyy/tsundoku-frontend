@@ -115,13 +115,18 @@ function PageContent() {
         return false;
       }
     } catch (error) {
-      toast.error('メモの保存に失敗しました。')
-      return false
+      toast.error('メモの保存に失敗しました。');
+      return false;
     }
   };
 
   if (error) return <div>failed to load</div>;
-  if (isLoading) return <div><MemoLoading /></div>;
+  if (isLoading)
+    return (
+      <div>
+        <MemoLoading />
+      </div>
+    );
 
   return (
     <Container my={'md'}>
