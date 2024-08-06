@@ -2,6 +2,7 @@ import { Text, Divider, Space, Button, Group } from '@mantine/core';
 import { UserParams } from '@/types/index';
 import axios from 'axios';
 import { handleSignOut } from '@/feature/SignOut';
+import toast from 'react-hot-toast';
 
 export default function DeleteUserConfirmModal({ uid, close }: UserParams) {
   const handleDeleteUser = async () => {
@@ -16,7 +17,7 @@ export default function DeleteUserConfirmModal({ uid, close }: UserParams) {
         return false;
       }
     } catch (error) {
-      return false;
+      toast.error('退会に失敗しました。')
     }
   };
   return (

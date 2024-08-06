@@ -19,6 +19,7 @@ import axios from 'axios';
 import { SearchFormProps, Item } from '@/types/index';
 import { IconChevronDown } from '@tabler/icons-react';
 import { useState } from 'react';
+import toast from 'react-hot-toast';
 
 const SearchForm = ({ onResults }: SearchFormProps) => {
   const theme = useMantineTheme();
@@ -56,7 +57,7 @@ const SearchForm = ({ onResults }: SearchFormProps) => {
       }));
       onResults(books);
     } catch (error) {
-      console.error(error);
+      toast.error('本の検索に失敗しました。')
     }
   };
 

@@ -114,7 +114,7 @@ function PageContent() {
         return false;
       }
     } catch (error) {
-      return false;
+      toast.error('メモの保存に失敗しました。')
     }
   };
 
