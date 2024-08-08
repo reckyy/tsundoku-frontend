@@ -23,6 +23,7 @@ export type BookProps = {
 
 export type BookItemsProps = {
   bookItems: Book[];
+  uid?: string;
 };
 
 export type BookResponse = {

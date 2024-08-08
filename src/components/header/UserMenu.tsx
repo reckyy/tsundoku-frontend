@@ -10,6 +10,7 @@ import {
   IconChevronDown,
   IconLink,
   IconBook,
+  IconSearch,
 } from '@tabler/icons-react';
 import { handleSignOut } from '../../feature/SignOut';
 import toast from 'react-hot-toast';
@@ -77,7 +78,18 @@ export default function UserMenu({ name, image, id }: UserInfo) {
 
         <Link href={'/search_books'}>
           <Menu.Item
-            color="green"
+            leftSection={
+              <IconSearch
+                style={{ width: rem(16), height: rem(16) }}
+                stroke={1.5}
+              />
+            }
+          >
+            本の追加
+          </Menu.Item>
+        </Link>
+        <Link href={`/users/${id}/bookshelf/edit`}>
+          <Menu.Item
             leftSection={
               <IconBook
                 style={{ width: rem(16), height: rem(16) }}
@@ -85,7 +97,7 @@ export default function UserMenu({ name, image, id }: UserInfo) {
               />
             }
           >
-            本の追加
+            本棚の編集
           </Menu.Item>
         </Link>
         <Menu.Item
