@@ -23,6 +23,7 @@ import { IconTrash, IconCheck } from '@tabler/icons-react';
 import { BookItemsProps, Book } from '@/types/index';
 import axios from 'axios';
 import DeleteBookConfirmModal from '../modal/DeleteBookConfirmModal';
+import toast from 'react-hot-toast';
 
 export function DndList({ bookItems, uid }: BookItemsProps) {
   const [state, stateHandlers] = useListState(bookItems);
@@ -31,7 +32,8 @@ export function DndList({ bookItems, uid }: BookItemsProps) {
     position: 0,
     uid: uid,
   });
-  const [disabled, { close: enableButton }] = useDisclosure(true);
+  const [disabled, { open: disableButton, close: enableButton }] =
+    useDisclosure(true);
   const [opened, { open, close }] = useDisclosure(false);
 
   const handleClick = (item: Book) => {
@@ -47,21 +49,22 @@ export function DndList({ bookItems, uid }: BookItemsProps) {
 
   const handleSave = async () => {
     const params = state.map((item, index) => ({
-      bookId: item.id,
-      position: index,
+      id: item.id,
+      position: index + 1,
     }));
     try {
       const res = await axios.patch(
-        'http://localhost:3001/api/user_books',
-        params,
+        'http://localhost:3001/api/user_books/bulk_update',
+        { books: params, uid: uid },
       );
       if (res.status === 200) {
-        return true;
+        disableButton();
+        toast.success('本棚の更新に成功しました！');
       } else {
         return false;
       }
     } catch (error) {
-      console.log(error);
+      toast.error('本棚の更新に失敗しました。');
     }
   };
 
@@ -140,6 +143,7 @@ export function DndList({ bookItems, uid }: BookItemsProps) {
           color="blue"
           rightSection={<IconCheck size={14} />}
           disabled={disabled}
+          onClick={handleSave}
         >
           保存
         </Button>
