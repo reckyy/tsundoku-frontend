@@ -46,8 +46,12 @@ export function DndList({ bookItems, uid }: BookItemsProps) {
     }
 
     stateHandlers.reorder({ from: source.index, to: destination.index });
-    const book = state.find((_element, index) => index === destination.index);
-    const params = { bookId: book?.id, position: destination.index, uid: uid };
+    const book = state.find((_element, index) => index === source.index);
+    const params = {
+      bookId: book?.id,
+      position: destination.index + 1,
+      uid: uid,
+    };
     try {
       const res = await axios.post(
         'http://localhost:3001/api/user_books/move_position',
