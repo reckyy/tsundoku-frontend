@@ -41,7 +41,7 @@ export function DndList({ bookItems, uid }: BookItemsProps) {
 
   const handleDragEnd = async (result: DropResult) => {
     const { destination, source } = result;
-    if (!destination) {
+    if (destination?.index === source.index || !destination) {
       return;
     }
 
