@@ -32,8 +32,6 @@ export function DndList({ bookItems, uid }: BookItemsProps) {
     position: 0,
     uid: uid,
   });
-  const [disabled, { open: disableButton, close: enableButton }] =
-    useDisclosure(true);
   const [opened, { open, close }] = useDisclosure(false);
 
   const handleClick = (item: Book) => {
@@ -63,27 +61,6 @@ export function DndList({ bookItems, uid }: BookItemsProps) {
     } catch (error) {
       stateHandlers.reorder({ from: destination.index, to: source.index });
       toast.error('本の並び替えに失敗しました。');
-    }
-  };
-
-  const handleSave = async () => {
-    const params = state.map((item, index) => ({
-      id: item.id,
-      position: index + 1,
-    }));
-    try {
-      const res = await axios.patch(
-        'http://localhost:3001/api/user_books/bulk_update',
-        { books: params, uid: uid },
-      );
-      if (res.status === 200) {
-        disableButton();
-        toast.success('本棚の更新に成功しました！');
-      } else {
-        return false;
-      }
-    } catch (error) {
-      toast.error('本棚の更新に失敗しました。');
     }
   };
 
@@ -156,17 +133,6 @@ export function DndList({ bookItems, uid }: BookItemsProps) {
           )}
         </Droppable>
       </DragDropContext>
-      <Group justify="flex-end">
-        <Button
-          variant="light"
-          color="blue"
-          rightSection={<IconCheck size={14} />}
-          disabled={disabled}
-          onClick={handleSave}
-        >
-          保存
-        </Button>
-      </Group>
     </>
   );
 }
