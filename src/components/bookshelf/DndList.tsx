@@ -41,10 +41,29 @@ export function DndList({ bookItems, uid }: BookItemsProps) {
     open();
   };
 
-  const handleDragEnd = (result: DropResult) => {
+  const handleDragEnd = async (result: DropResult) => {
     const { destination, source } = result;
-    stateHandlers.reorder({ from: source.index, to: destination?.index || 0 });
-    disabled && enableButton();
+    if (!destination) {
+      return;
+    }
+
+    stateHandlers.reorder({ from: source.index, to: destination.index });
+    const book = state.find((_element, index) => index === destination.index);
+    const params = { bookId: book?.id, position: destination.index, uid: uid };
+    try {
+      const res = await axios.post(
+        'http://localhost:3001/api/user_books/move_position',
+        params,
+      );
+      if (res.status === 200) {
+        toast.success('本の並び替えに成功しました！');
+      } else {
+        return false;
+      }
+    } catch (error) {
+      stateHandlers.reorder({ from: destination.index, to: source.index });
+      toast.error('本の並び替えに失敗しました。');
+    }
   };
 
   const handleSave = async () => {
