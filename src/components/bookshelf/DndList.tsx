@@ -37,13 +37,15 @@ export function DndList({ bookItems, uid }: BookItemsProps) {
     setSource(index);
   };
 
-  const handleDragOver = (e: { dataTransfer: { dropEffect: string; }; preventDefault: () => void; }) => {
+  const handleDragOver = (e: {
+    dataTransfer: { dropEffect: string };
+    preventDefault: () => void;
+  }) => {
     e.dataTransfer.dropEffect = 'move';
     e.preventDefault(); // ドロップを許可するために必要
   };
 
   const handleDragEnd = async (index: number) => {
-
     if (source === index) {
       return;
     }
@@ -73,7 +75,7 @@ export function DndList({ bookItems, uid }: BookItemsProps) {
 
   const items = state.map((item, index) => (
     <div
-      className='cursor-grab'
+      className="cursor-grab"
       draggable
       key={index}
       onDragStart={() => handleDragStart(index)}
