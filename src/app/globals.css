@@ -23,3 +23,10 @@ ul[data-type='taskList'] li {
 a {
   cursor: pointer;
 }
+
+.draggable {
+  cursor: grab;
+}
+.draggable.dragging {
+  cursor: grabbing;
+}
