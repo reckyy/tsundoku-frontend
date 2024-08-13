@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { auth } from '#auth';
 import { BookResponse } from '@/types/index';
-import { Container, Title, Space, Group, Button } from '@mantine/core';
+import { Container, Title, Space } from '@mantine/core';
 import { DndList } from '@/components/bookshelf/DndList';
 
 const Page = async () => {
