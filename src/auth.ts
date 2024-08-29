@@ -36,6 +36,8 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         );
         if (res.status === 200) {
           return true;
+        } else if (res.status === 204) {
+          return 'http://localhost:3000/welcome';
         } else {
           return false;
         }
