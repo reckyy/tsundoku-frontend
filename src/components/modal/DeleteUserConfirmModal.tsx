@@ -6,7 +6,7 @@ import toast from 'react-hot-toast';
 
 export default function DeleteUserConfirmModal({ id, close }: UserParams) {
   const handleDeleteUser = async () => {
-    const params = { id: id };
+    const params = { userId: id };
     try {
       const res = await axios.delete(`http://localhost:3001/api/users/${id}`, {
         params,

@@ -6,7 +6,7 @@ import { BookResponse } from '@/types/index';
 const AuthenticatedBookItems = async () => {
   const getBooks = async () => {
     const session = await auth();
-    const params = { id: session?.user?.id };
+    const params = { userId: session?.user?.id };
     const res = await axios.get('http://localhost:3001/api/books', { params });
     return res.data.map((book: BookResponse) => ({
       id: book.id,
