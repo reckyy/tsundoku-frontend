@@ -91,6 +91,7 @@ function PageContent() {
             label="ハンドルネーム"
             placeholder={session?.user?.handleName}
             value={value}
+            {...(value.includes('User') && { error: 'Userが含まれています。' })}
             onChange={(event) => setValue(event.currentTarget.value)}
           />
         </GridCol>
