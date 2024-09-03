@@ -12,7 +12,7 @@ import { UserParams } from '@/types/index';
 
 export default function Page() {
   const dynamicParams = useParams();
-  const params = { uid: dynamicParams.id };
+  const params = { handleName: dynamicParams.handleName };
   const apiUrl = `http://localhost:3001/api/users/${dynamicParams.id}`;
   const [bookItems, setBookItems] = useState<Book[]>([]);
   const [readingLogs, setReadingLogs] = useState<Log[]>([]);

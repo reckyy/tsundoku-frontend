@@ -4,11 +4,11 @@ import axios from 'axios';
 import { handleSignOut } from '@/feature/SignOut';
 import toast from 'react-hot-toast';
 
-export default function DeleteUserConfirmModal({ uid, close }: UserParams) {
+export default function DeleteUserConfirmModal({ id, close }: UserParams) {
   const handleDeleteUser = async () => {
-    const params = { uid: uid };
+    const params = { id: id };
     try {
-      const res = await axios.delete(`http://localhost:3001/api/users/${uid}`, {
+      const res = await axios.delete(`http://localhost:3001/api/users/${id}`, {
         params,
       });
       if (res.status === 204) {

@@ -18,13 +18,13 @@ import DeleteBookConfirmModal from '../modal/DeleteBookConfirmModal';
 import toast from 'react-hot-toast';
 import { useState } from 'react';
 
-export function DndList({ bookItems, uid }: BookItemsProps) {
+export function DndList({ bookItems, id }: BookItemsProps) {
   const [source, setSource] = useState<number>(0);
   const [state, stateHandlers] = useListState(bookItems);
   const [deleteParamsState, setDeleteParamsState] = useSetState({
     bookId: 0,
     position: 0,
-    uid: uid,
+    id: id,
   });
   const [opened, { open, close }] = useDisclosure(false);
 
@@ -55,7 +55,7 @@ export function DndList({ bookItems, uid }: BookItemsProps) {
     const params = {
       bookId: book?.id,
       destinationBookId: destinationBook?.id,
-      uid: uid,
+      id: id,
     };
     try {
       const res = await axios.post(

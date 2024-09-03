@@ -33,7 +33,7 @@ function PageContent() {
   const apiMemoUrl = `http://localhost:3001/api/books/${bookId}/memos`;
   const { data: session, status } = useSession();
   const params = {
-    uid: session?.user?.id,
+    id: session?.user?.id,
     bookId: bookId,
   };
   const [bookWithMemos, setBookWithMemos] = useState<BookWithMemo>();
