@@ -35,6 +35,10 @@ function PageContent() {
       toast.error('Userが含まれています。');
       return;
     }
+    if (value.includes(' ')) {
+      toast.error('空白が含まれています。');
+      return;
+    }
     try {
       const res = await axios.patch(
         `http://localhost:3001/api/users/${session?.user?.id}`,
@@ -92,6 +96,7 @@ function PageContent() {
             placeholder={session?.user?.handleName}
             value={value}
             {...(value.includes('User') && { error: 'Userが含まれています。' })}
+            {...(value.includes(' ') && { error: '空白が含まれています。' })}
             onChange={(event) => setValue(event.currentTarget.value)}
           />
         </GridCol>
