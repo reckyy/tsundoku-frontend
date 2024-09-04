@@ -41,8 +41,9 @@ function PageContent() {
     }
     try {
       const res = await axios.patch(
-        `http://localhost:3001/api/users/${session?.user?.id}`,
+        `http://localhost:3001/api/users/${session?.user.id}`,
         {
+          user_id: session?.user.id,
           handle_name: value,
         },
       );

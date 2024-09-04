@@ -14,7 +14,7 @@ declare module 'next-auth' {
 export const { handlers, auth, signIn, signOut } = NextAuth({
   providers: [Google],
   callbacks: {
-    async jwt({ token, profile, trigger, session }) {
+    async jwt({ token, trigger, session }) {
       if (!token.handleName || !token.id) {
         try {
           const res = await axios.get(
@@ -31,9 +31,6 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
           console.warn(error);
         }
       }
-      if (profile) {
-        token.sub = profile.sub || undefined;
-      }
       if (trigger === 'update') {
         token.handleName = session.user.handleName;
       }
@@ -49,11 +46,10 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       return session;
     },
 
-    async signIn({ user, profile }) {
+    async signIn({ user }) {
       const name = user.name;
       const email = user.email;
       const avatarUrl = user.image;
-      const uid = profile?.sub;
       try {
         const res = await axios.post(
           'http://localhost:3001/api/auth/callback/google',
@@ -61,7 +57,6 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
             name,
             email,
             avatarUrl,
-            uid,
           },
         );
         if (res.status === 200 || res.status === 201) {
