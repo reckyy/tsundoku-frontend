@@ -24,7 +24,7 @@ export function DndList({ bookItems, id }: BookItemsProps) {
   const [deleteParamsState, setDeleteParamsState] = useSetState({
     bookId: 0,
     position: 0,
-    id: id,
+    userId: id,
   });
   const [opened, { open, close }] = useDisclosure(false);
 
@@ -55,7 +55,7 @@ export function DndList({ bookItems, id }: BookItemsProps) {
     const params = {
       bookId: book?.id,
       destinationBookId: destinationBook?.id,
-      id: id,
+      userId: id,
     };
     try {
       const res = await axios.post(
