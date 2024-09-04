@@ -33,7 +33,7 @@ function PageContent() {
   const apiMemoUrl = `http://localhost:3001/api/books/${bookId}/memos`;
   const { data: session, status } = useSession();
   const params = {
-    uid: session?.user?.id,
+    userId: session?.user?.id,
     bookId: bookId,
   };
   const [bookWithMemos, setBookWithMemos] = useState<BookWithMemo>();
@@ -69,11 +69,13 @@ function PageContent() {
       const headingRes = await axios.patch(
         `http://localhost:3001/api/headings/${headingId}`,
         {
+          userId: session?.user?.id,
           id: headingId,
           title: title,
         },
       );
       const memoRes = await axios.patch(`${apiMemoUrl}/${memoId}`, {
+        userId: session?.user.id,
         memo: {
           id: memoId,
           body: content,
@@ -82,6 +84,7 @@ function PageContent() {
       const logRes = await axios.post(
         'http://localhost:3001/api/reading_logs',
         {
+          userId: session?.user.id,
           memoId: memoId,
         },
       );

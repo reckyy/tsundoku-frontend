@@ -14,7 +14,7 @@ import { useDisclosure } from '@mantine/hooks';
 import { Modal } from '@mantine/core';
 import DeleteBookConfirmModal from '../modal/DeleteBookConfirmModal';
 
-export default function BookMenu({ bookId, uid }: BookMenuProps) {
+export default function BookMenu({ bookId, id }: BookMenuProps) {
   const [opened, { open, close }] = useDisclosure(false);
 
   return (
@@ -27,7 +27,7 @@ export default function BookMenu({ bookId, uid }: BookMenuProps) {
         centered
       >
         <DeleteBookConfirmModal
-          params={{ bookId: bookId, uid: uid }}
+          params={{ bookId: bookId, id: id }}
           close={close}
         />
       </Modal>

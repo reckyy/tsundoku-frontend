@@ -40,7 +40,7 @@ export default async function ConfirmDeletion() {
       </Alert>
       <Space h={30} />
       <Center>
-        <DeleteAccountButton uid={session?.user?.id} />
+        <DeleteAccountButton id={session?.user?.id} />
       </Center>
     </Container>
   );

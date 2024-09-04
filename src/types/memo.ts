@@ -4,6 +4,6 @@ export type Memo = {
 };
 
 export type MemoParams = {
-  uid: string | undefined;
+  userId: string | undefined;
   bookId: number;
 };

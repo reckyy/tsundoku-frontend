@@ -8,7 +8,7 @@ const Page = async () => {
   const session = await auth();
 
   const getBooks = async () => {
-    const params = { uid: session?.user?.id };
+    const params = { userId: session?.user?.id };
     const res = await axios.get('http://localhost:3001/api/books', { params });
     return res.data.map((book: BookResponse) => ({
       id: book.id,
@@ -25,7 +25,7 @@ const Page = async () => {
         {session?.user?.name}さんの本棚
       </Title>
       <Space h={30} />
-      <DndList bookItems={bookItems} uid={session?.user?.id} />
+      <DndList bookItems={bookItems} id={session?.user?.id} />
     </Container>
   );
 };

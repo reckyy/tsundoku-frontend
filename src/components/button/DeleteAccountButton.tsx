@@ -5,7 +5,7 @@ import { UserParams } from '@/types/index';
 import DeleteUserConfirmModal from '../modal/DeleteUserConfirmModal';
 import { useDisclosure } from '@mantine/hooks';
 
-export default function DeleteAccountButton({ uid }: UserParams) {
+export default function DeleteAccountButton({ id }: UserParams) {
   const [opened, { open, close }] = useDisclosure(false);
 
   return (
@@ -17,7 +17,7 @@ export default function DeleteAccountButton({ uid }: UserParams) {
         withCloseButton={false}
         centered
       >
-        <DeleteUserConfirmModal uid={uid} close={close} />
+        <DeleteUserConfirmModal id={id} close={close} />
       </Modal>
       <Button variant="light" radius="lg" color="red" onClick={open}>
         アカウントを削除

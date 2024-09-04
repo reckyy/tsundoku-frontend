@@ -18,12 +18,12 @@ import { UserInfo } from '@/types/index';
 import Link from 'next/link';
 import { useClipboard } from '@mantine/hooks';
 
-export default function UserMenu({ name, image, id }: UserInfo) {
+export default function UserMenu({ handleName, image, id }: UserInfo) {
   const [userMenuOpened, setUserMenuOpened] = useState(false);
   const clipboard = useClipboard();
 
   const handleCopyUrl = () => {
-    const url = `http://localhost:3000/users/${id}`;
+    const url = `http://localhost:3000/users/${handleName}`;
     clipboard.copy(url);
 
     if (!clipboard.error) {
@@ -49,9 +49,9 @@ export default function UserMenu({ name, image, id }: UserInfo) {
           })}
         >
           <Group gap={7}>
-            <Avatar src={image} alt={name} radius="xl" size={20} />
+            <Avatar src={image} alt={handleName} radius="xl" size={20} />
             <Text fw={500} size="sm" lh={1} mr={3}>
-              {name}
+              {handleName}
             </Text>
             <IconChevronDown
               style={{ width: rem(12), height: rem(12) }}

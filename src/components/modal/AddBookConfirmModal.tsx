@@ -29,7 +29,7 @@ const AddBookConfirmContent = ({ book }: BookProps) => {
     const title = book.title;
     const author = book.author;
     const coverImageUrl = book.coverImageUrl;
-    const uid = session?.user?.id;
+    const id = session?.user?.id;
     const headingNumber = value;
 
     try {
@@ -37,7 +37,7 @@ const AddBookConfirmContent = ({ book }: BookProps) => {
         title,
         author,
         coverImageUrl,
-        uid,
+        id,
         headingNumber,
       });
       if (res.status === 200) {

@@ -9,7 +9,7 @@ export type Book = {
 
 export type BookMenuProps = {
   bookId: number;
-  uid: string | undefined;
+  id: string | undefined;
 };
 
 export type DeleteBookModalProps = {
@@ -23,7 +23,7 @@ export type BookProps = {
 
 export type BookItemsProps = {
   bookItems: Book[];
-  uid?: string;
+  id?: string;
 };
 
 export type BookResponse = {

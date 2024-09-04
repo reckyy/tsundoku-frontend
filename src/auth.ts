@@ -1,20 +1,50 @@
-import NextAuth from 'next-auth';
+import NextAuth, { type DefaultSession } from 'next-auth';
 import Google from 'next-auth/providers/google';
 import axios from 'axios';
 import { NextResponse } from 'next/server';
 
+declare module 'next-auth' {
+  interface Session extends DefaultSession {
+    user: {
+      handleName: string;
+    } & DefaultSession['user'];
+  }
+}
+
 export const { handlers, auth, signIn, signOut } = NextAuth({
   providers: [Google],
   callbacks: {
-    async jwt({ token, profile }) {
+    async jwt({ token, profile, trigger, session }) {
+      if (!token.handleName || !token.id) {
+        try {
+          const res = await axios.get(
+            'http://localhost:3001/api/auth/add_session_user_data',
+            {
+              params: { email: token.email },
+            },
+          );
+          if (res.status === 200) {
+            token.id = res.data.id;
+            token.handleName = res.data.handle_name;
+          }
+        } catch (error) {
+          console.warn(error);
+        }
+      }
       if (profile) {
         token.sub = profile.sub || undefined;
+      }
+      if (trigger === 'update') {
+        token.handleName = session.user.handleName;
       }
       return token;
     },
     async session({ session, token }) {
-      if (token.sub) {
-        session.user.id = token.sub;
+      if (token.id) {
+        session.user.id = token.id as string;
+      }
+      if (token.handleName) {
+        session.user.handleName = token.handleName as string;
       }
       return session;
     },
@@ -34,7 +64,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
             uid,
           },
         );
-        if (res.status === 200) {
+        if (res.status === 200 || res.status === 201) {
           return true;
         } else {
           return false;

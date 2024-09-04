@@ -4,7 +4,7 @@ import { auth } from '@/auth';
 
 export default async function Cal() {
   const session = await auth();
-  const params = { uid: session?.user?.id };
+  const params = { userId: session?.user?.id };
   const res = await axios.get('http://localhost:3001/api/reading_logs', {
     params,
   });
