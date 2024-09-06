@@ -4,7 +4,7 @@ import SearchForm from './SearchForm';
 import Results from './Results';
 import { useState } from 'react';
 import { Book } from '@/types/index';
-import { Grid, GridCol, Space, Container } from '@mantine/core';
+import { Grid, GridCol, Space, Container, Text } from '@mantine/core';
 
 const SearchHome = () => {
   const [searchResults, setSearchResults] = useState<Book[]>([]);
@@ -22,8 +22,12 @@ const SearchHome = () => {
         <GridCol>
           <Space h={30} />
         </GridCol>
-        <Results bookItems={searchResults} />
       </Grid>
+      {searchResults.length > 0 ? (
+        <Results bookItems={searchResults} />
+      ) : (
+        <Text ta="center">検索結果がありません。</Text>
+      )}
     </Container>
   );
 };
