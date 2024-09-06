@@ -39,14 +39,14 @@ function PageContent() {
       toast.error('空白が含まれています。');
       return;
     }
+
+    const apiUrl: string = process.env.NEXT_PUBLIC_RAILS_API_URL ?? '';
+
     try {
-      const res = await axios.patch(
-        `http://localhost:3001/api/users/${session?.user.id}`,
-        {
-          user_id: session?.user.id,
-          handle_name: value,
-        },
-      );
+      const res = await axios.patch(`${apiUrl}/users/${session?.user.id}`, {
+        user_id: session?.user.id,
+        handle_name: value,
+      });
       if (res.status === 200) {
         await update({ user: { handleName: value } });
         router.refresh();

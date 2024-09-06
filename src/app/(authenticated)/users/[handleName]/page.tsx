@@ -11,9 +11,10 @@ import { Container, Space, Paper } from '@mantine/core';
 import { UserParams } from '@/types/index';
 
 export default function Page() {
+  const apiUrl: string = process.env.NEXT_PUBLIC_RAILS_API_URL ?? '';
   const dynamicParams = useParams();
   const params = { handleName: dynamicParams.handleName };
-  const apiUrl = `http://localhost:3001/api/users/${dynamicParams.id}`;
+  const apiUserUrl = `${apiUrl}/users/${dynamicParams.id}`;
   const [bookItems, setBookItems] = useState<Book[]>([]);
   const [readingLogs, setReadingLogs] = useState<Log[]>([]);
 
@@ -22,7 +23,7 @@ export default function Page() {
   }
 
   const { error, isLoading } = useSWR(
-    [apiUrl, params],
+    [apiUserUrl, params],
     ([url, params]) => fetcher(url, params),
     {
       onSuccess: (data) => {

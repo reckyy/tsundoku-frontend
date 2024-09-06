@@ -28,9 +28,11 @@ export default function Page() {
 }
 
 function PageContent() {
+  const apiUrl: string = process.env.NEXT_PUBLIC_RAILS_API_URL ?? '';
   const dynamicParams = useParams<{ bookId: string }>();
   const bookId = Number(dynamicParams.bookId);
-  const apiMemoUrl = `http://localhost:3001/api/books/${bookId}/memos`;
+  const apiMemoUrl = `${apiUrl}/books/${bookId}/memos`;
+  console.log(apiMemoUrl);
   const { data: session, status } = useSession();
   const params = {
     userId: session?.user?.id,
@@ -66,14 +68,11 @@ function PageContent() {
     const memoId = bookWithMemos?.headings[Number(heading) - 1].memo.id;
     const headingId = bookWithMemos?.headings[Number(heading) - 1].id;
     try {
-      const headingRes = await axios.patch(
-        `http://localhost:3001/api/headings/${headingId}`,
-        {
-          userId: session?.user?.id,
-          id: headingId,
-          title: title,
-        },
-      );
+      const headingRes = await axios.patch(`${apiUrl}/headings/${headingId}`, {
+        userId: session?.user?.id,
+        id: headingId,
+        title: title,
+      });
       const memoRes = await axios.patch(`${apiMemoUrl}/${memoId}`, {
         userId: session?.user.id,
         memo: {
@@ -81,13 +80,10 @@ function PageContent() {
           body: content,
         },
       });
-      const logRes = await axios.post(
-        'http://localhost:3001/api/reading_logs',
-        {
-          userId: session?.user.id,
-          memoId: memoId,
-        },
-      );
+      const logRes = await axios.post(`${apiUrl}/reading_logs`, {
+        userId: session?.user.id,
+        memoId: memoId,
+      });
       if (
         headingRes.status === 200 &&
         memoRes.status === 200 &&

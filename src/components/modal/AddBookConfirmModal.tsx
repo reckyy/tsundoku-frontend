@@ -25,9 +25,10 @@ const AddBookConfirmContent = ({ book }: BookProps) => {
       toast.error('章の数を入力してください。');
       return;
     }
+    const apiUrl: string = process.env.NEXT_PUBLIC_RAILS_API_URL ?? '';
 
     try {
-      const res = await axios.post('http://localhost:3001/api/books', {
+      const res = await axios.post(`${apiUrl}/books`, {
         title: book.title,
         author: book.author,
         coverImageUrl: book.coverImageUrl,
