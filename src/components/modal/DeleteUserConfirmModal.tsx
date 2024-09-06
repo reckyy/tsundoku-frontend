@@ -12,7 +12,7 @@ export default function DeleteUserConfirmModal({ id, close }: UserParams) {
         params,
       });
       if (res.status === 204) {
-        handleSignOut();
+        handleSignOut(true);
       } else {
         return false;
       }
