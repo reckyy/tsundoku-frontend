@@ -8,8 +8,9 @@ const Page = async () => {
   const session = await auth();
 
   const getBooks = async () => {
+    const apiUrl: string = process.env.NEXT_PUBLIC_RAILS_API_URL ?? '';
     const params = { userId: session?.user?.id };
-    const res = await axios.get('http://localhost:3001/api/books', { params });
+    const res = await axios.get(`${apiUrl}/books`, { params });
     return res.data.map((book: BookResponse) => ({
       id: book.id,
       title: book.title,

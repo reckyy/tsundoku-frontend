@@ -9,6 +9,8 @@ import {
 } from '@mantine/core';
 
 export default function HeroBullets() {
+  const baseUrl: string = process.env.NEXT_PUBLIC_NEXT_URL ?? '';
+
   return (
     <Container my="md">
       <Center>
@@ -38,11 +40,7 @@ export default function HeroBullets() {
       <Text size="lg" mb={20}>
         一緒に読書習慣を作りましょう！
       </Text>
-      <Anchor
-        href="http://localhost:3000/about"
-        underline="always"
-        variant="light"
-      >
+      <Anchor href={`${baseUrl}/about`} underline="always" variant="light">
         何ができるのか？
       </Anchor>
     </Container>

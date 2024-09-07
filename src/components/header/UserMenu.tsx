@@ -21,9 +21,10 @@ import { useClipboard } from '@mantine/hooks';
 export default function UserMenu({ handleName, image, id }: UserInfo) {
   const [userMenuOpened, setUserMenuOpened] = useState(false);
   const clipboard = useClipboard();
+  const baseUrl: string = process.env.NEXT_PUBLIC_NEXT_URL ?? '';
 
   const handleCopyUrl = () => {
-    const url = `http://localhost:3000/users/${handleName}`;
+    const url = `${baseUrl}/users/${handleName}`;
     clipboard.copy(url);
 
     if (!clipboard.error) {

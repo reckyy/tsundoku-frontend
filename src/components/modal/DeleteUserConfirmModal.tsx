@@ -3,16 +3,23 @@ import { UserParams } from '@/types/index';
 import axios from 'axios';
 import { handleSignOut } from '@/feature/SignOut';
 import toast from 'react-hot-toast';
+import { useRouter } from 'next/navigation';
 
 export default function DeleteUserConfirmModal({ id, close }: UserParams) {
+  const router = useRouter();
+
   const handleDeleteUser = async () => {
     const params = { userId: id };
+    const apiUrl: string = process.env.NEXT_PUBLIC_RAILS_API_URL ?? '';
     try {
-      const res = await axios.delete(`http://localhost:3001/api/users/${id}`, {
+      const res = await axios.delete(`${apiUrl}/users/${id}`, {
         params,
       });
       if (res.status === 204) {
         handleSignOut();
+        router.push('/thanks');
+        router.refresh();
+        toast.success('アカウントを削除しました。');
       } else {
         return false;
       }

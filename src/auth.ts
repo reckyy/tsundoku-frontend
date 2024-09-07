@@ -11,18 +11,17 @@ declare module 'next-auth' {
   }
 }
 
+const apiUrl: string = process.env.NEXT_PUBLIC_RAILS_API_URL ?? '';
+
 export const { handlers, auth, signIn, signOut } = NextAuth({
   providers: [Google],
   callbacks: {
     async jwt({ token, trigger, session }) {
       if (!token.handleName || !token.id) {
         try {
-          const res = await axios.get(
-            'http://localhost:3001/api/auth/add_session_user_data',
-            {
-              params: { email: token.email },
-            },
-          );
+          const res = await axios.get(`${apiUrl}/auth/add_session_user_data`, {
+            params: { email: token.email },
+          });
           if (res.status === 200) {
             token.id = res.data.id;
             token.handleName = res.data.handle_name;
@@ -51,14 +50,11 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       const email = user.email;
       const avatarUrl = user.image;
       try {
-        const res = await axios.post(
-          'http://localhost:3001/api/auth/callback/google',
-          {
-            name,
-            email,
-            avatarUrl,
-          },
-        );
+        const res = await axios.post(`${apiUrl}/auth/callback/google`, {
+          name,
+          email,
+          avatarUrl,
+        });
         if (res.status === 200 || res.status === 201) {
           return true;
         } else {

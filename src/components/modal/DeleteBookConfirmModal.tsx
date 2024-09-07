@@ -11,7 +11,8 @@ export default function DeleteBookConfirmModal({
 }: DeleteBookModalProps) {
   const router = useRouter();
   const handleDeleteBook = async () => {
-    const deleteBookApiUrl = `http://localhost:3001/api/user_books/${params.bookId}`;
+    const apiUrl: string = process.env.NEXT_PUBLIC_RAILS_API_URL ?? '';
+    const deleteBookApiUrl = `${apiUrl}/user_books/${params.bookId}`;
     try {
       const res = await axios.delete(deleteBookApiUrl, {
         params,

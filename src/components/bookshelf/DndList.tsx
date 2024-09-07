@@ -57,9 +57,10 @@ export function DndList({ bookItems, id }: BookItemsProps) {
       destinationBookId: destinationBook?.id,
       userId: id,
     };
+    const apiUrl: string = process.env.NEXT_PUBLIC_RAILS_API_URL ?? '';
     try {
       const res = await axios.post(
-        'http://localhost:3001/api/user_books/move_position',
+        `${apiUrl}/user_books/move_position`,
         params,
       );
       if (res.status === 200) {
