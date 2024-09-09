@@ -18,7 +18,7 @@ import { UserInfo } from '@/types/index';
 import Link from 'next/link';
 import { useClipboard } from '@mantine/hooks';
 
-export default function UserMenu({ handleName, image, id }: UserInfo) {
+export default function UserMenu({ handleName, image }: UserInfo) {
   const [userMenuOpened, setUserMenuOpened] = useState(false);
   const clipboard = useClipboard();
   const baseUrl: string = process.env.NEXT_PUBLIC_NEXT_URL ?? '';
@@ -89,7 +89,7 @@ export default function UserMenu({ handleName, image, id }: UserInfo) {
             本の追加
           </Menu.Item>
         </Link>
-        <Link href={`/users/${id}/bookshelf/edit`}>
+        <Link href={`/bookshelf/edit`}>
           <Menu.Item
             leftSection={
               <IconBook
