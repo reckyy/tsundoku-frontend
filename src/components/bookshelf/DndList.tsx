@@ -18,7 +18,7 @@ import DeleteBookConfirmModal from '../modal/DeleteBookConfirmModal';
 import toast from 'react-hot-toast';
 import { useState } from 'react';
 
-export function DndList({ bookItems, id }: BookItemsProps) {
+export default function DndList({ bookItems, id }: BookItemsProps) {
   const [source, setSource] = useState<number>(0);
   const [state, stateHandlers] = useListState(bookItems);
   const [deleteParamsState, setDeleteParamsState] = useSetState({
