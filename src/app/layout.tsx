@@ -6,7 +6,7 @@ import '@mantine/core/styles.css';
 import { MantineProvider } from '@mantine/core';
 import { Toaster } from 'react-hot-toast';
 import { AuthToaster } from '@/components/auth/AuthToaster';
-import { MyAppShell } from '@/components/appShell/MyAppShell';
+import MyAppShell from '@/components/appShell/MyAppShell';
 
 const inter = Inter({ subsets: ['latin'] });
 
