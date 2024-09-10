@@ -24,7 +24,6 @@ export async function Header() {
               <UserMenu
                 handleName={session.user.handleName!}
                 image={session.user.image!}
-                id={session.user.id!}
               />
             )}
           </Group>
