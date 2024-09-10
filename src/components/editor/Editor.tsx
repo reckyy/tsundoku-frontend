@@ -18,7 +18,7 @@ const lowlight = createLowlight();
 
 lowlight.register({ js, ts, rb });
 
-export function Editor({ heading, handleSave }: EditorProps) {
+export default function Editor({ heading, handleSave }: EditorProps) {
   const memoBody = heading?.memo.body ?? '';
   const title = heading?.title ?? '';
 
