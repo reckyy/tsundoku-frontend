@@ -2,6 +2,9 @@ import type { Preview } from '@storybook/react';
 import '@mantine/core/styles.css';
 import React from 'react';
 import { createTheme, MantineProvider } from '@mantine/core';
+import { initialize, mswLoader } from 'msw-storybook-addon';
+
+initialize();
 
 const theme = createTheme({
   breakpoints: {
@@ -29,6 +32,7 @@ const preview: Preview = {
       </MantineProvider>
     ),
   ],
+  loaders: [mswLoader], // 👈 Add the MSW loader to all stories
 };
 
 export default preview;

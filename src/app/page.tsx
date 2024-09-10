@@ -4,7 +4,7 @@ import TopPage from '@/components/top/TopPage';
 import Welcome from '@/components/top/Welcome';
 import axios from 'axios';
 import BookItems from '@/components/bookshelf/BookItems';
-import Cal from '@/components/Cal/Cal';
+import Cal from '@/components/cal/Cal';
 import { BookResponse } from '@/types/index';
 
 export default async function Home() {

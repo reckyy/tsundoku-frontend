@@ -1,7 +1,7 @@
 'use client';
 
 import BookItems from '@/components/bookshelf/BookItems';
-import CalContent from '@/components/Cal/CalContent';
+import CalContent from '@/components/cal/CalContent';
 import { useParams } from 'next/navigation';
 import useSWR from 'swr';
 import axios from 'axios';
