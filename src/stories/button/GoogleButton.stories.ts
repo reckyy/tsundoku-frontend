@@ -6,6 +6,9 @@ const meta: Meta<typeof GoogleButton> = {
   component: GoogleButton,
   parameters: {
     layout: 'centered',
+    nextjs: {
+      appDirectory: true,
+    },
   },
 };
 

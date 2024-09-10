@@ -6,6 +6,9 @@ const meta: Meta<typeof Results> = {
   component: Results,
   parameters: {
     layout: 'centered',
+    nextjs: {
+      appDirectory: true,
+    },
   },
 };
 

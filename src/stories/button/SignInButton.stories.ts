@@ -6,6 +6,9 @@ const meta: Meta<typeof SignInButton> = {
   component: SignInButton,
   parameters: {
     layout: 'centered',
+    nextjs: {
+      appDirectory: true,
+    },
   },
 };
 
