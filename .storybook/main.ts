@@ -11,6 +11,7 @@ const config: StorybookConfig = {
     '@storybook/addon-styling-webpack',
     'storybook-dark-mode',
     'storybook-addon-module-mock',
+    '@storybook/addon-coverage',
   ],
   framework: {
     name: '@storybook/nextjs',
