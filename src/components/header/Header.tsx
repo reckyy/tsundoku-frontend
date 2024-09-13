@@ -1,4 +1,4 @@
-import { auth } from '#auth';
+import { auth } from '@/auth';
 import { Group, Text, Container } from '@mantine/core';
 import Image from 'next/image';
 import UserMenu from './UserMenu';
@@ -24,7 +24,6 @@ export async function Header() {
               <UserMenu
                 handleName={session.user.handleName!}
                 image={session.user.image!}
-                id={session.user.id!}
               />
             )}
           </Group>

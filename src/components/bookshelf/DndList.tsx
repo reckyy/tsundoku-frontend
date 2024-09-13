@@ -18,7 +18,7 @@ import DeleteBookConfirmModal from '../modal/DeleteBookConfirmModal';
 import toast from 'react-hot-toast';
 import { useState } from 'react';
 
-export function DndList({ bookItems, id }: BookItemsProps) {
+export default function DndList({ bookItems, id }: BookItemsProps) {
   const [source, setSource] = useState<number>(0);
   const [state, stateHandlers] = useListState(bookItems);
   const [deleteParamsState, setDeleteParamsState] = useSetState({
@@ -41,7 +41,9 @@ export function DndList({ bookItems, id }: BookItemsProps) {
     dataTransfer: { dropEffect: string };
     preventDefault: () => void;
   }) => {
-    e.dataTransfer.dropEffect = 'move';
+    if (e.dataTransfer) {
+      e.dataTransfer.dropEffect = 'move';
+    }
     e.preventDefault(); // ドロップを許可するために必要
   };
 
@@ -99,7 +101,7 @@ export function DndList({ bookItems, id }: BookItemsProps) {
               <ActionIcon
                 variant="light"
                 color="red"
-                aria-label="Settings"
+                aria-label="deleteBook"
                 onClick={() => handleClick(item)}
               >
                 <IconTrash

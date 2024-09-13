@@ -6,3 +6,6 @@
 next.config.mjs
 tailwind.config.mjs
 tsconfig.json
+
+#msw
+public/mockServiceWorker.js

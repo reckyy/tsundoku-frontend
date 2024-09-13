@@ -6,6 +6,9 @@ const meta: Meta<typeof Footer> = {
   component: Footer,
   parameters: {
     layout: 'centered',
+    nextjs: {
+      appDirectory: true,
+    },
   },
 };
 

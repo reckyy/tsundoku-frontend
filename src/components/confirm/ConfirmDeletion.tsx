@@ -11,7 +11,7 @@ import {
   Center,
 } from '@mantine/core';
 import { IconInfoCircle } from '@tabler/icons-react';
-import { auth } from '#auth';
+import { auth } from '@/auth';
 import DeleteAccountButton from '../button/DeleteAccountButton';
 
 export default async function ConfirmDeletion() {

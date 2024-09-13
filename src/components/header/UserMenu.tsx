@@ -18,7 +18,7 @@ import { UserInfo } from '@/types/index';
 import Link from 'next/link';
 import { useClipboard } from '@mantine/hooks';
 
-export default function UserMenu({ handleName, image, id }: UserInfo) {
+export default function UserMenu({ handleName, image }: UserInfo) {
   const [userMenuOpened, setUserMenuOpened] = useState(false);
   const clipboard = useClipboard();
   const baseUrl: string = process.env.NEXT_PUBLIC_NEXT_URL ?? '';
@@ -27,7 +27,7 @@ export default function UserMenu({ handleName, image, id }: UserInfo) {
     const url = `${baseUrl}/users/${handleName}`;
     clipboard.copy(url);
 
-    if (!clipboard.error) {
+    if (!clipboard.error && handleName !== undefined) {
       toast.success('URLのコピーに成功しました');
     } else {
       toast.error('URLのコピーに失敗しました');
@@ -48,6 +48,7 @@ export default function UserMenu({ handleName, image, id }: UserInfo) {
           className={cx(classes.user, {
             [classes.userActive]: userMenuOpened,
           })}
+          aria-label="userMenu"
         >
           <Group gap={7}>
             <Avatar src={image} alt={handleName} radius="xl" size={20} />
@@ -89,7 +90,7 @@ export default function UserMenu({ handleName, image, id }: UserInfo) {
             本の追加
           </Menu.Item>
         </Link>
-        <Link href={`/users/${id}/bookshelf/edit`}>
+        <Link href={`/bookshelf/edit`}>
           <Menu.Item
             leftSection={
               <IconBook

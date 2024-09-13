@@ -8,7 +8,7 @@ import { Header } from '@/components/header/Header';
 import { Footer } from '@/components/footer/Footer';
 import type { PropsWithChildren } from 'react';
 
-export async function MyAppShell({ children }: PropsWithChildren) {
+export default async function MyAppShell({ children }: PropsWithChildren) {
   return (
     <AppShell
       header={{ height: 60 }}

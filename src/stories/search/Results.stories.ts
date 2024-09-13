@@ -1,15 +1,21 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
-import BookItems from '@/components/bookshelf/BookItems';
+import Results from '@/components/search/Results';
 
-const meta: Meta<typeof BookItems> = {
-  component: BookItems,
+const meta: Meta<typeof Results> = {
+  component: Results,
   parameters: {
-    layout: 'fullscreen',
+    layout: 'padded',
     nextjs: {
       appDirectory: true,
     },
   },
+};
+
+export default meta;
+type Story = StoryObj<typeof Results>;
+
+export const FirstStory: Story = {
   args: {
     bookItems: [
       {
@@ -29,11 +35,4 @@ const meta: Meta<typeof BookItems> = {
       },
     ],
   },
-};
-
-export default meta;
-type Story = StoryObj<typeof BookItems>;
-
-export const AppearenceTest: Story = {
-  args: {},
 };
