@@ -14,9 +14,9 @@ const meta: Meta<typeof DeleteUserConfirmModal> = {
   args: {
     id: '1',
     close: () => {
-      console.log('モーダルを閉じました。')
+      console.log('モーダルを閉じました。');
     },
-  }
+  },
 };
 
 export default meta;
@@ -33,18 +33,17 @@ export const DeleteBookTest: Story = {
     await userEvent.click(button);
 
     await waitFor(() => {
-      expect(canvas.getByText('アカウントを削除しました。')).toBeInTheDocument();
+      expect(
+        canvas.getByText('アカウントを削除しました。'),
+      ).toBeInTheDocument();
     });
   },
   parameters: {
     msw: {
       handlers: [
-        http.delete(
-          `${process.env.NEXT_PUBLIC_RAILS_API_URL}/users/1`,
-          () => {
-            return new HttpResponse(null, { status: 204 });
-          },
-        ),
+        http.delete(`${process.env.NEXT_PUBLIC_RAILS_API_URL}/users/1`, () => {
+          return new HttpResponse(null, { status: 204 });
+        }),
       ],
     },
   },
@@ -63,12 +62,9 @@ export const DeleteUserFailedTest: Story = {
   parameters: {
     msw: {
       handlers: [
-        http.delete(
-          `${process.env.NEXT_PUBLIC_RAILS_API_URL}/users/1`,
-          () => {
-            return new HttpResponse('failed', { status: 420 });
-          },
-        ),
+        http.delete(`${process.env.NEXT_PUBLIC_RAILS_API_URL}/users/1`, () => {
+          return new HttpResponse('failed', { status: 420 });
+        }),
       ],
     },
   },

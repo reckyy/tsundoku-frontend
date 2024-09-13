@@ -2,7 +2,6 @@ import type { Meta, StoryObj } from '@storybook/react';
 
 import ServiceFeature from '@/components/public/ServiceFeature';
 
-
 const meta: Meta<typeof ServiceFeature> = {
   component: ServiceFeature,
   parameters: {

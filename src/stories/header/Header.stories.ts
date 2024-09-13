@@ -4,7 +4,7 @@ import dayjs from 'dayjs';
 
 import { Header } from '@/components/header/Header';
 
-const expiresDate = dayjs().subtract(1, 'm')
+const expiresDate = dayjs().subtract(1, 'm');
 
 const meta: Meta<typeof Header> = {
   component: Header,

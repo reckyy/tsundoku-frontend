@@ -49,7 +49,7 @@ const SearchForm = ({ onResults }: SearchFormProps) => {
         : { applicationId: '1063966721330772407', author: values.searchWord };
     try {
       const res = await axios.get(url, { params });
-      if(res.status === 200){
+      if (res.status === 200) {
         const books = res.data.Items.map((element: Item, index: number) => ({
           id: index + 1,
           title: element.Item.title,
@@ -58,7 +58,7 @@ const SearchForm = ({ onResults }: SearchFormProps) => {
         }));
         onResults(books);
       } else {
-        return false
+        return false;
       }
     } catch (error) {
       toast.error('本の検索に失敗しました。');
@@ -88,7 +88,7 @@ const SearchForm = ({ onResults }: SearchFormProps) => {
                   radius="xl"
                   color={theme.primaryColor}
                   variant="filled"
-                  aria-label='searchIcon'
+                  aria-label="searchIcon"
                   onClick={() => form.onSubmit(handleSubmit)()}
                 >
                   <IconArrowRight

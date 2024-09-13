@@ -4,7 +4,6 @@ import { userEvent, within, expect, waitFor, screen } from '@storybook/test';
 import SearchForm from '@/components/search/SearchForm';
 import toast from 'react-hot-toast';
 
-
 const meta: Meta<typeof SearchForm> = {
   component: SearchForm,
   parameters: {
@@ -15,9 +14,9 @@ const meta: Meta<typeof SearchForm> = {
   },
   args: {
     onResults: () => {
-      toast.success('検索が完了しました。')
-    }
-  }
+      toast.success('検索が完了しました。');
+    },
+  },
 };
 
 export default meta;
@@ -41,7 +40,7 @@ export const LabelAuthorTest: Story = {
     await userEvent.click(authorButton);
 
     await waitFor(() => {
-      expect(canvas.getByRole('button', { name: '著者' }))
+      expect(canvas.getByRole('button', { name: '著者' }));
     });
   },
 };
@@ -50,9 +49,9 @@ export const SearchTest: Story = {
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
     const searchInput = canvas.getByLabelText('search');
-    await userEvent.type(searchInput, '本のタイトル')
-    const searchIcon = canvas.getByLabelText('searchIcon')
-    await userEvent.click(searchIcon)
+    await userEvent.type(searchInput, '本のタイトル');
+    const searchIcon = canvas.getByLabelText('searchIcon');
+    await userEvent.click(searchIcon);
 
     await waitFor(() => {
       expect(canvas.getByText('検索が完了しました。')).toBeInTheDocument();
@@ -64,8 +63,8 @@ export const ErrorTest: Story = {
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
     const searchInput = canvas.getByLabelText('search');
-    await userEvent.type(searchInput, '本のタイトル')
-    await userEvent.type(searchInput, '{enter}')
+    await userEvent.type(searchInput, '本のタイトル');
+    await userEvent.type(searchInput, '{enter}');
 
     await waitFor(() => {
       expect(canvas.getByText('本の検索に失敗しました。')).toBeInTheDocument();
@@ -83,4 +82,4 @@ export const ErrorTest: Story = {
       ],
     },
   },
-}
+};

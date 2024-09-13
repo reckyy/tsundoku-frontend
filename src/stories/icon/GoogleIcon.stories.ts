@@ -16,5 +16,5 @@ export default meta;
 type Story = StoryObj<typeof GoogleIcon>;
 
 export const AppearenceTest: Story = {
-  args: {}
+  args: {},
 };

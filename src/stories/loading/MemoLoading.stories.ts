@@ -2,7 +2,6 @@ import type { Meta, StoryObj } from '@storybook/react';
 
 import MemoLoading from '@/components/loading/MemoLoading';
 
-
 const meta: Meta<typeof MemoLoading> = {
   component: MemoLoading,
   parameters: {

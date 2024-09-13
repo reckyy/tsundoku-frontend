@@ -2,7 +2,6 @@ import type { Meta, StoryObj } from '@storybook/react';
 
 import EditorFeature from '@/components/public/EditorFeature';
 
-
 const meta: Meta<typeof EditorFeature> = {
   component: EditorFeature,
   parameters: {

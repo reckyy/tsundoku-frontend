@@ -12,7 +12,7 @@ const meta: Meta<typeof DeleteAccountButton> = {
   },
   args: {
     id: '1',
-  }
+  },
 };
 
 export default meta;

@@ -2,7 +2,6 @@ import type { Meta, StoryObj } from '@storybook/react';
 
 import UserMenuFeature from '@/components/public/UserMenuFeature';
 
-
 const meta: Meta<typeof UserMenuFeature> = {
   component: UserMenuFeature,
   parameters: {

@@ -11,7 +11,7 @@ const testData = {
     id: 1,
     body: '第1章のメモ',
   },
-}
+};
 
 const meta: Meta<typeof Editor> = {
   component: Editor,
@@ -24,31 +24,33 @@ const meta: Meta<typeof Editor> = {
   args: {
     heading: testData,
     handleSave: async () => {
-      toast.success('メモの保存が完了しました。')
-      return true
-    }
-  }
+      toast.success('メモの保存が完了しました。');
+      return true;
+    },
+  },
 };
 
 export default meta;
 type Story = StoryObj<typeof Editor>;
 
 export const AppearenceTest: Story = {
-  args: {}
+  args: {},
 };
 
 export const SaveMemoTest: Story = {
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
     const searchInput = canvas.getByLabelText('heading-title');
-    await userEvent.clear(searchInput)
-    await userEvent.type(searchInput, '変更後の章のタイトル')
-    const saveButton = canvas.getByRole('button', { name: '保存'})
-    await userEvent.click(saveButton)
+    await userEvent.clear(searchInput);
+    await userEvent.type(searchInput, '変更後の章のタイトル');
+    const saveButton = canvas.getByRole('button', { name: '保存' });
+    await userEvent.click(saveButton);
 
     await waitFor(() => {
-      expect(canvas.getByText('メモの保存が完了しました。')).toBeInTheDocument();
+      expect(
+        canvas.getByText('メモの保存が完了しました。'),
+      ).toBeInTheDocument();
     });
-    expect(canvas.getByDisplayValue('変更後の章のタイトル'))
+    expect(canvas.getByDisplayValue('変更後の章のタイトル'));
   },
 };

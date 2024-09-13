@@ -2,7 +2,6 @@ import type { Meta, StoryObj } from '@storybook/react';
 
 import Thanks from '@/components/public/Thanks';
 
-
 const meta: Meta<typeof Thanks> = {
   component: Thanks,
   parameters: {

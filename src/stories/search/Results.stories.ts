@@ -27,7 +27,8 @@ export const FirstStory: Story = {
       },
       {
         id: 2,
-        title: 'プロを目指す人のためのRuby入門［改訂2版］　言語仕様からテスト駆動開発・デバッグ技法まで',
+        title:
+          'プロを目指す人のためのRuby入門［改訂2版］　言語仕様からテスト駆動開発・デバッグ技法まで',
         author: '伊藤 淳一',
         coverImageUrl:
           'https://thumbnail.image.rakuten.co.jp/@0_mall/book/cabinet/4373/9784297124373_1_5.jpg?_ex=200x200',

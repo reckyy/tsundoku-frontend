@@ -2,7 +2,6 @@ import type { Meta, StoryObj } from '@storybook/react';
 
 import DefaultLoader from '@/components/loading/DefaultLoader';
 
-
 const meta: Meta<typeof DefaultLoader> = {
   component: DefaultLoader,
   parameters: {

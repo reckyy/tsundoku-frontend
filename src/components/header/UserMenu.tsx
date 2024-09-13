@@ -48,7 +48,7 @@ export default function UserMenu({ handleName, image }: UserInfo) {
           className={cx(classes.user, {
             [classes.userActive]: userMenuOpened,
           })}
-          aria-label='userMenu'
+          aria-label="userMenu"
         >
           <Group gap={7}>
             <Avatar src={image} alt={handleName} radius="xl" size={20} />

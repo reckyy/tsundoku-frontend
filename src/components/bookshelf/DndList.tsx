@@ -41,7 +41,7 @@ export default function DndList({ bookItems, id }: BookItemsProps) {
     dataTransfer: { dropEffect: string };
     preventDefault: () => void;
   }) => {
-    if(e.dataTransfer){
+    if (e.dataTransfer) {
       e.dataTransfer.dropEffect = 'move';
     }
     e.preventDefault(); // ドロップを許可するために必要

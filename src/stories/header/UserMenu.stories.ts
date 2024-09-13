@@ -2,7 +2,6 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { userEvent, within, expect, waitFor, screen } from '@storybook/test';
 import UserMenu from '@/components/header/UserMenu';
 
-
 const meta: Meta<typeof UserMenu> = {
   component: UserMenu,
   parameters: {
@@ -19,14 +18,16 @@ type Story = StoryObj<typeof UserMenu>;
 export const AppearenceTest: Story = {
   args: {
     handleName: 'Tsundoku',
-    image: 'https://lh3.google.com/u/2/ogw/AF2bZyjPZdkte2cG3oGzVf5-R-tTOWPRDqkWAaSt3H8vKx4HKg=s64-c-mo',
-  }
+    image:
+      'https://lh3.google.com/u/2/ogw/AF2bZyjPZdkte2cG3oGzVf5-R-tTOWPRDqkWAaSt3H8vKx4HKg=s64-c-mo',
+  },
 };
 
 export const CopyUrlTest: Story = {
   args: {
     handleName: 'Tsundoku',
-    image: 'https://lh3.google.com/u/2/ogw/AF2bZyjPZdkte2cG3oGzVf5-R-tTOWPRDqkWAaSt3H8vKx4HKg=s64-c-mo',
+    image:
+      'https://lh3.google.com/u/2/ogw/AF2bZyjPZdkte2cG3oGzVf5-R-tTOWPRDqkWAaSt3H8vKx4HKg=s64-c-mo',
   },
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
@@ -41,7 +42,7 @@ export const CopyUrlTest: Story = {
     await userEvent.click(copyUrlButton);
 
     await waitFor(() => {
-      expect(canvas.getByText('URLのコピーに成功しました'))
+      expect(canvas.getByText('URLのコピーに成功しました'));
     });
   },
 };
@@ -60,7 +61,7 @@ export const CopyUrlFailedTest: Story = {
     await userEvent.click(copyUrlButton);
 
     await waitFor(() => {
-      expect(canvas.getByText('URLのコピーに失敗しました'))
+      expect(canvas.getByText('URLのコピーに失敗しました'));
     });
   },
 };
