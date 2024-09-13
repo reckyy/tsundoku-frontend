@@ -1,8 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { http, HttpResponse } from 'msw';
-import { fireEvent, within, expect, waitFor, screen } from '@storybook/test'; // userEventではdraganddropができないため、fireEventを採用している。
+import { fireEvent, within, expect, waitFor, screen, userEvent } from '@storybook/test'; // userEventではdraganddropができないため、fireEventを採用している。
 import DndList from '@/components/bookshelf/DndList';
-import userEvent from '@testing-library/user-event';
 
 const meta: Meta<typeof DndList> = {
   component: DndList,
@@ -117,7 +116,7 @@ export const DndFailedTest: Story = {
   },
 };
 
-export const showModalTest: Story = {
+export const ShowModalTest: Story = {
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
     const deleteBookButtons = canvas.getAllByLabelText('deleteBook');

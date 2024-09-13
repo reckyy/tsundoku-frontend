@@ -1,5 +1,4 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { http, HttpResponse } from 'msw';
 import { userEvent, within, expect, waitFor } from '@storybook/test';
 import SearchHome from '@/components/search/SearchHome';
 
