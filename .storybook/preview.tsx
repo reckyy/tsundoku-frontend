@@ -3,6 +3,7 @@ import '@mantine/core/styles.css';
 import React from 'react';
 import { createTheme, MantineProvider } from '@mantine/core';
 import { initialize, mswLoader } from 'msw-storybook-addon';
+import { Toaster } from 'react-hot-toast';
 
 initialize();
 
@@ -28,6 +29,7 @@ const preview: Preview = {
   decorators: [
     (Story) => (
       <MantineProvider theme={theme}>
+        <Toaster />
         <Story />
       </MantineProvider>
     ),

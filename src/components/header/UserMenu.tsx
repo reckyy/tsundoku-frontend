@@ -27,7 +27,7 @@ export default function UserMenu({ handleName, image }: UserInfo) {
     const url = `${baseUrl}/users/${handleName}`;
     clipboard.copy(url);
 
-    if (!clipboard.error) {
+    if (!clipboard.error && handleName !== undefined) {
       toast.success('URLのコピーに成功しました');
     } else {
       toast.error('URLのコピーに失敗しました');
@@ -48,6 +48,7 @@ export default function UserMenu({ handleName, image }: UserInfo) {
           className={cx(classes.user, {
             [classes.userActive]: userMenuOpened,
           })}
+          aria-label='userMenu'
         >
           <Group gap={7}>
             <Avatar src={image} alt={handleName} radius="xl" size={20} />

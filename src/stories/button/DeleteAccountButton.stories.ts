@@ -5,7 +5,7 @@ import DeleteAccountButton from '@/components/button/DeleteAccountButton';
 const meta: Meta<typeof DeleteAccountButton> = {
   component: DeleteAccountButton,
   parameters: {
-    layout: 'centered',
+    layout: 'padded',
     nextjs: {
       appDirectory: true,
     },

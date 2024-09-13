@@ -71,6 +71,7 @@ export default function Editor({ heading, handleSave }: EditorProps) {
         <GridCol span={9}>
           <TextInput
             variant="unstyled"
+            aria-label='heading-title'
             size="xl"
             value={headingTitle}
             placeholder="章のタイトルを書く"

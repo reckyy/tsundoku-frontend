@@ -5,7 +5,7 @@ import Results from '@/components/search/Results';
 const meta: Meta<typeof Results> = {
   component: Results,
   parameters: {
-    layout: 'centered',
+    layout: 'padded',
     nextjs: {
       appDirectory: true,
     },

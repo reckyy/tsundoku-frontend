@@ -5,7 +5,7 @@ import AddBookConfirmButton from '@/components/button/AddBookConfirmButton';
 const meta: Meta<typeof AddBookConfirmButton> = {
   component: AddBookConfirmButton,
   parameters: {
-    layout: 'centered',
+    layout: 'padded',
     nextjs: {
       appDirectory: true,
     },

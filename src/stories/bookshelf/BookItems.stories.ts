@@ -5,7 +5,7 @@ import BookItems from '@/components/bookshelf/BookItems';
 const meta: Meta<typeof BookItems> = {
   component: BookItems,
   parameters: {
-    layout: 'centered',
+    layout: 'fullscreen',
     nextjs: {
       appDirectory: true,
     },

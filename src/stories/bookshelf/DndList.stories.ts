@@ -1,11 +1,13 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { http, HttpResponse } from 'msw';
+import { fireEvent, within, expect, waitFor, screen } from '@storybook/test'; // userEventではdraganddropができないため、fireEventを採用している。
 import DndList from '@/components/bookshelf/DndList';
+import userEvent from '@testing-library/user-event';
 
 const meta: Meta<typeof DndList> = {
   component: DndList,
   parameters: {
-    layout: 'centered',
+    layout: 'padded',
     nextjs: {
       appDirectory: true,
     },
@@ -42,5 +44,75 @@ export const AppearenceTest: Story = {
         }),
       ],
     },
+  },
+};
+
+export const DndTest: Story = {
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    const sourceBook = canvas.getByText('実践Next.js -- App Routerで進化するWebアプリ開発');
+    const targetBook = canvas.getByText(/プロを目指す人のためのRuby入門/i);
+
+    fireEvent.dragStart(sourceBook);
+    fireEvent.dragOver(targetBook);
+    fireEvent.drop(targetBook);
+    fireEvent.dragEnd(sourceBook);
+
+    await waitFor(() => {
+      expect(canvas.getByText('本の並び替えに成功しました！')).toBeInTheDocument();
+    });
+  },
+  parameters: {
+    msw: {
+      handlers: [
+        http.post(
+          `${process.env.NEXT_PUBLIC_RAILS_API_URL}/user_books/move_position`,
+          () => {
+            return new HttpResponse;
+          },
+        ),
+      ],
+    },
+  },
+};
+
+export const DndFailedTest: Story = {
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    const sourceBook = canvas.getByText('実践Next.js -- App Routerで進化するWebアプリ開発');
+    const targetBook = canvas.getByText(/プロを目指す人のためのRuby入門/i);
+
+    fireEvent.dragStart(sourceBook);
+    fireEvent.dragOver(targetBook);
+    fireEvent.drop(targetBook);
+    fireEvent.dragEnd(sourceBook);
+
+    await waitFor(() => {
+      expect(canvas.getByText('本の並び替えに失敗しました。')).toBeInTheDocument();
+    });
+  },
+  parameters: {
+    msw: {
+      handlers: [
+        http.post(
+          `${process.env.NEXT_PUBLIC_RAILS_API_URL}/user_books/move_position`,
+          () => {
+            return new HttpResponse('failed', { status: 420 });
+          },
+        ),
+      ],
+    },
+  },
+};
+
+export const showModalTest: Story = {
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    const deleteBookButtons = canvas.getAllByLabelText('deleteBook');
+    const deleteBookButton = deleteBookButtons[0];
+    userEvent.click(deleteBookButton)
+    await waitFor(() => {
+      expect(screen.getByText('削除しますか？')).toBeInTheDocument();
+    });
   },
 };
