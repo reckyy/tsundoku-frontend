@@ -32,7 +32,7 @@ const AddBookConfirmContent = ({ book }: BookProps) => {
         title: book.title,
         author: book.author,
         coverImageUrl: book.coverImageUrl,
-        userId: session?.user.id,
+        userId: session?.user?.id,
         headingNumber: value,
       });
       if (res.status === 200) {

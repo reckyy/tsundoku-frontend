@@ -1,7 +1,6 @@
 import { auth } from '@/auth';
 import { Container, Space, Paper, Text } from '@mantine/core';
 import TopPage from '@/components/top/TopPage';
-import Welcome from '@/components/top/Welcome';
 import axios from 'axios';
 import BookItems from '@/components/bookshelf/BookItems';
 import Cal from '@/components/cal/Cal';
@@ -9,9 +8,7 @@ import { BookResponse } from '@/types/index';
 
 export default async function Home() {
   const session = await auth();
-  if (session?.user.handleName.includes('User')) {
-    return <Welcome />;
-  } else if (session?.user) {
+  if (session?.user) {
     const getBooks = async () => {
       const apiUrl: string = process.env.NEXT_PUBLIC_RAILS_API_URL ?? '';
       const session = await auth();

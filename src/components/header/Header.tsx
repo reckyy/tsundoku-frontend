@@ -22,7 +22,8 @@ export async function Header() {
           <Group ml="xl" gap={0}>
             {session?.user && (
               <UserMenu
-                handleName={session.user.handleName!}
+                name={session.user.name!}
+                id={session.user.id!}
                 image={session.user.image!}
               />
             )}

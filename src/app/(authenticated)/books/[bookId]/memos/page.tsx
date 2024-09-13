@@ -74,14 +74,14 @@ function PageContent() {
         title: title,
       });
       const memoRes = await axios.patch(`${apiMemoUrl}/${memoId}`, {
-        userId: session?.user.id,
+        userId: session?.user?.id,
         memo: {
           id: memoId,
           body: content,
         },
       });
       const logRes = await axios.post(`${apiUrl}/reading_logs`, {
-        userId: session?.user.id,
+        userId: session?.user?.id,
         memoId: memoId,
       });
       if (

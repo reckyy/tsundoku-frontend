@@ -17,7 +17,8 @@ type Story = StoryObj<typeof UserMenu>;
 
 export const AppearenceTest: Story = {
   args: {
-    handleName: 'Tsundoku',
+    name: 'Tsundoku',
+    id: '1',
     image:
       'https://lh3.google.com/u/2/ogw/AF2bZyjPZdkte2cG3oGzVf5-R-tTOWPRDqkWAaSt3H8vKx4HKg=s64-c-mo',
   },
@@ -25,7 +26,8 @@ export const AppearenceTest: Story = {
 
 export const CopyUrlTest: Story = {
   args: {
-    handleName: 'Tsundoku',
+    name: 'Tsundoku',
+    id: '1',
     image:
       'https://lh3.google.com/u/2/ogw/AF2bZyjPZdkte2cG3oGzVf5-R-tTOWPRDqkWAaSt3H8vKx4HKg=s64-c-mo',
   },
