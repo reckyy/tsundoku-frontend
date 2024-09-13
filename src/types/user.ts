@@ -1,10 +1,10 @@
 export type UserInfo = {
-  handleName: string;
+  name: string;
+  id: string;
   image: string;
 };
 
 export type UserParams = {
-  id?: string;
-  handleName?: string | string[] | undefined;
+  id?: string | string[];
   close?: () => void;
 };

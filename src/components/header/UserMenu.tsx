@@ -18,16 +18,16 @@ import { UserInfo } from '@/types/index';
 import Link from 'next/link';
 import { useClipboard } from '@mantine/hooks';
 
-export default function UserMenu({ handleName, image }: UserInfo) {
+export default function UserMenu({ name, id, image }: UserInfo) {
   const [userMenuOpened, setUserMenuOpened] = useState(false);
   const clipboard = useClipboard();
   const baseUrl: string = process.env.NEXT_PUBLIC_NEXT_URL ?? '';
 
   const handleCopyUrl = () => {
-    const url = `${baseUrl}/users/${handleName}`;
+    const url = `${baseUrl}/users/${id}`;
     clipboard.copy(url);
 
-    if (!clipboard.error && handleName !== undefined) {
+    if (!clipboard.error && id !== undefined) {
       toast.success('URLのコピーに成功しました');
     } else {
       toast.error('URLのコピーに失敗しました');
@@ -51,9 +51,9 @@ export default function UserMenu({ handleName, image }: UserInfo) {
           aria-label="userMenu"
         >
           <Group gap={7}>
-            <Avatar src={image} alt={handleName} radius="xl" size={20} />
+            <Avatar src={image} alt={name} radius="xl" size={20} />
             <Text fw={500} size="sm" lh={1} mr={3}>
-              {handleName}
+              {name}
             </Text>
             <IconChevronDown
               style={{ width: rem(12), height: rem(12) }}

@@ -13,7 +13,7 @@ import { UserParams } from '@/types/index';
 export default function Page() {
   const apiUrl: string = process.env.NEXT_PUBLIC_RAILS_API_URL ?? '';
   const dynamicParams = useParams();
-  const params = { handleName: dynamicParams.handleName };
+  const params = { id: dynamicParams.id };
   const apiUserUrl = `${apiUrl}/users/${dynamicParams.id}`;
   const [bookItems, setBookItems] = useState<Book[]>([]);
   const [readingLogs, setReadingLogs] = useState<Log[]>([]);
