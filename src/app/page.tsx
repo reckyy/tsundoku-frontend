@@ -1,4 +1,4 @@
-import { auth } from '#auth';
+import { auth } from '@/auth';
 import { Container, Space, Paper, Text } from '@mantine/core';
 import TopPage from '@/components/top/TopPage';
 import Welcome from '@/components/top/Welcome';

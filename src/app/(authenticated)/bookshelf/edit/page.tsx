@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { auth } from '#auth';
+import { auth } from '@/auth';
 import { BookResponse } from '@/types/index';
 import { Container, Title, Space } from '@mantine/core';
 import DndList from '@/components/bookshelf/DndList';

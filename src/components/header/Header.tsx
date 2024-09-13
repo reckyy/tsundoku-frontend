@@ -1,4 +1,4 @@
-import { auth } from '#auth';
+import { auth } from '@/auth';
 import { Group, Text, Container } from '@mantine/core';
 import Image from 'next/image';
 import UserMenu from './UserMenu';
