@@ -2,6 +2,7 @@ import { auth } from '@/auth';
 import { Group, Text, Container } from '@mantine/core';
 import Image from 'next/image';
 import UserMenu from './UserMenu';
+import ToggleColorButton from '@/components/button/ToggleColorButton';
 import Link from 'next/link';
 
 export async function Header() {
@@ -19,7 +20,7 @@ export async function Header() {
               </Text>
             </Group>
           </Link>
-          <Group ml="xl" gap={0}>
+          <Group ml="xl">
             {session?.user && (
               <UserMenu
                 name={session.user.name!}
@@ -27,6 +28,7 @@ export async function Header() {
                 image={session.user.image!}
               />
             )}
+            <ToggleColorButton />
           </Group>
         </Group>
       </Group>
