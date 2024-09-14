@@ -3,7 +3,7 @@ import { Container, Space, Paper, Text } from '@mantine/core';
 import TopPage from '@/components/top/TopPage';
 import axios from 'axios';
 import BookItems from '@/components/bookshelf/BookItems';
-import Cal from '@/components/cal/Cal';
+import Calendar from '@/components/calendar/Calendar';
 import { BookResponse } from '@/types/index';
 
 export default async function Home() {
@@ -31,7 +31,7 @@ export default async function Home() {
         <Paper withBorder shadow="xs" radius="md" p="xl">
           <Text ta={'center'}>毎日、コツコツと。</Text>
           <Space h={20} />
-          <Cal />
+          <Calendar />
         </Paper>
       </Container>
     );

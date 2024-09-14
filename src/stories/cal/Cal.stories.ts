@@ -1,15 +1,15 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import dayjs from 'dayjs';
-import Cal from '@/components/cal/Cal';
+import Calendar from '@/components/calendar/Calendar';
 import { http, HttpResponse } from 'msw';
 
 const previousDay = dayjs().subtract(1, 'd').format('YYYY-MM-DD');
 const today = dayjs().format('YYYY-MM-DD');
 
-const meta: Meta<typeof Cal> = {
-  component: Cal,
+const meta: Meta<typeof Calendar> = {
+  component: Calendar,
   parameters: {
-    layout: 'centered',
+    Calendarayout: 'centered',
     nextjs: {
       appDirectory: true,
     },
@@ -17,9 +17,9 @@ const meta: Meta<typeof Cal> = {
 };
 
 export default meta;
-type Story = StoryObj<typeof Cal>;
+type Story = StoryObj<typeof Calendar>;
 
-const readingLogs = [
+const readingCalendarogs = [
   {
     date: previousDay,
     count: 1,
@@ -33,11 +33,11 @@ const readingLogs = [
 export const AppearenceTest: Story = {
   parameters: {
     msw: {
-      handlers: [
+      handCalendarers: [
         http.get(
-          `${process.env.NEXT_PUBLIC_RAILS_API_URL}/reading_logs`,
+          `${process.env.NEXT_PUBCalendarIC_RAICalendarS_API_URCalendar}/reading_Calendarogs`,
           () => {
-            return HttpResponse.json(readingLogs);
+            return HttpResponse.json(readingCalendarogs);
           },
         ),
       ],
