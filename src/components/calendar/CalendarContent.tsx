@@ -5,7 +5,7 @@ import HeatMap from '@uiw/react-heat-map';
 import Tooltip from '@uiw/react-tooltip';
 import { ReadingLogs } from '@/types/index';
 
-export default function CalContent({ readingLogs }: ReadingLogs) {
+export default function CalendarContent({ readingLogs }: ReadingLogs) {
   const value = readingLogs.map((log) => ({
     date: log.date.replace('-', '/'),
     count: log.count,

@@ -1,7 +1,7 @@
 'use client';
 
 import BookItems from '@/components/bookshelf/BookItems';
-import CalContent from '@/components/cal/CalContent';
+import CalendarContent from '@/components/calendar/CalendarContent';
 import { useParams } from 'next/navigation';
 import useSWR from 'swr';
 import axios from 'axios';
@@ -48,7 +48,7 @@ export default function Page() {
       <Space h={60} />
       <Paper withBorder shadow="xs" radius="md" p="xl">
         <Space h={20} />
-        <CalContent readingLogs={readingLogs} />
+        <CalendarContent readingLogs={readingLogs} />
       </Paper>
     </Container>
   );

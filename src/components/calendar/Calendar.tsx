@@ -1,8 +1,8 @@
 import axios from 'axios';
-import CalContent from './CalContent';
+import CalendarContent from './CalendarContent';
 import { auth } from '@/auth';
 
-export default async function Cal() {
+export default async function Calendar() {
   const session = await auth();
   const params = { userId: session?.user?.id };
   const apiUrl: string = process.env.NEXT_PUBLIC_RAILS_API_URL ?? '';
@@ -11,5 +11,5 @@ export default async function Cal() {
   });
   const readingLogs = res.data;
 
-  return <CalContent readingLogs={readingLogs} />;
+  return <CalendarContent readingLogs={readingLogs} />;
 }

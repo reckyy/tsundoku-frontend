@@ -3,7 +3,7 @@ import { http, HttpResponse } from 'msw';
 import dayjs from 'dayjs';
 import MyAppShell from '@/components/appShell/MyAppShell';
 import BookItems from '@/components/bookshelf/BookItems';
-import Cal from '@/components/cal/Cal';
+import Calendar from '@/components/calendar/Calendar';
 
 const mockBooks = [
   {
@@ -63,7 +63,7 @@ export const WithBooksAndCalendar: Story = {
     return (
       <MyAppShell>
         <BookItems bookItems={mockBooks} />
-        <Cal />
+        <Calendar />
       </MyAppShell>
     );
   },
