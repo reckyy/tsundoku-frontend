@@ -7,6 +7,17 @@ const apiUrl: string = process.env.NEXT_PUBLIC_RAILS_API_URL ?? '';
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
   providers: [Google],
+  cookies: {
+    pkceCodeVerifier: {
+      name: "next-auth.pkce.code_verifier",
+      options: {
+        httpOnly: true,
+        sameSite: "none",
+        path: "/",
+        secure: true,
+      },
+    },
+  },
   callbacks: {
     async jwt({ token }) {
       if (!token.id) {
