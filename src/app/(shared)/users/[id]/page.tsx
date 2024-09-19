@@ -43,13 +43,16 @@ export default function Page() {
   if (isLoading) return <div>loading...</div>;
 
   return (
-    <Container my="md">
-      <BookItems bookItems={bookItems} />
-      <Space h={60} />
-      <Paper withBorder shadow="xs" radius="md" p="xl">
-        <Space h={20} />
-        <CalendarContent readingLogs={readingLogs} />
-      </Paper>
-    </Container>
+    <div>
+      <title>公開ページ</title>
+      <Container my="md">
+        <BookItems bookItems={bookItems} />
+        <Space h={60} />
+        <Paper withBorder shadow="xs" radius="md" p="xl">
+          <Space h={20} />
+          <CalendarContent readingLogs={readingLogs} />
+        </Paper>
+      </Container>
+    </div>
   );
 }

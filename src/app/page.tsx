@@ -5,6 +5,13 @@ import axios from 'axios';
 import BookItems from '@/components/bookshelf/BookItems';
 import Calendar from '@/components/calendar/Calendar';
 import { BookResponse } from '@/types/index';
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Tsundoku',
+  description:
+    'Tsundokuは読書が続かない人、積読しがちな人向けの読書管理アプリです。読んできた本の一覧表示と読書ログを公開することにより、外部に読書習慣をアピールできます！',
+};
 
 export default async function Home() {
   const session = await auth();
