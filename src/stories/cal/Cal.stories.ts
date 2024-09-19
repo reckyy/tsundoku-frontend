@@ -33,9 +33,9 @@ const readingCalendarogs = [
 export const AppearenceTest: Story = {
   parameters: {
     msw: {
-      handCalendarers: [
+      handlers: [
         http.get(
-          `${process.env.NEXT_PUBCalendarIC_RAICalendarS_API_URCalendar}/reading_Calendarogs`,
+          `${process.env.NEXT_PUBLIC_RAILS_API_URL}/reading_logs`,
           () => {
             return HttpResponse.json(readingCalendarogs);
           },
