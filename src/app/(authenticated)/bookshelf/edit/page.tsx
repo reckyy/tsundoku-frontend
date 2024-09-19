@@ -3,8 +3,13 @@ import { auth } from '@/auth';
 import { BookResponse } from '@/types/index';
 import { Container, Title, Space } from '@mantine/core';
 import DndList from '@/components/bookshelf/DndList';
+import type { Metadata } from 'next';
 
-const Page = async () => {
+export const metadata: Metadata = {
+  title: '本棚編集',
+};
+
+export default async function Page() {
   const session = await auth();
 
   const getBooks = async () => {
@@ -29,6 +34,4 @@ const Page = async () => {
       <DndList bookItems={bookItems} id={session?.user?.id} />
     </Container>
   );
-};
-
-export default Page;
+}
