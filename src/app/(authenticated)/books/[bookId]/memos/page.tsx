@@ -9,6 +9,8 @@ import {
   Text,
   GridCol,
   Space,
+  Paper,
+  ScrollArea,
 } from '@mantine/core';
 import { useParams } from 'next/navigation';
 import { useSession, SessionProvider } from 'next-auth/react';
@@ -142,19 +144,23 @@ function PageContent() {
             />
           </GridCol>
           <GridCol offset={1} span={6}>
-            <Text size="md" ta={'center'} mb={7}>
-              章
-            </Text>
-            <SegmentedControl
-              value={heading}
-              onChange={setHeading}
-              fullWidth
-              data={
-                bookWithMemos?.headings.map((heading) =>
-                  String(heading.number),
-                ) ?? []
-              }
-            />
+            <Paper withBorder shadow="xs" radius="md" p="xl">
+              <Text size="md" ta={'center'} mb={7}>
+                章
+              </Text>
+              <ScrollArea scrollHideDelay={0}>
+                <SegmentedControl
+                  value={heading}
+                  onChange={setHeading}
+                  fullWidth
+                  data={
+                    bookWithMemos?.headings.map((heading) =>
+                      String(heading.number),
+                    ) ?? []
+                  }
+                />
+              </ScrollArea>
+            </Paper>
           </GridCol>
         </Grid>
         <Space h={50} />
