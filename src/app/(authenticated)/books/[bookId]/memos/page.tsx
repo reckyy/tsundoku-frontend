@@ -128,38 +128,41 @@ function PageContent() {
     );
 
   return (
-    <Container my={'md'}>
-      <Grid>
-        <GridCol span={3}>
-          <Image
-            radius="lg"
-            w={141}
-            h={200}
-            src={bookWithMemos?.book.coverImageUrl}
-            alt={bookWithMemos?.book.title}
-          />
-        </GridCol>
-        <GridCol offset={1} span={6}>
-          <Text size="md" ta={'center'} mb={7}>
-            章
-          </Text>
-          <SegmentedControl
-            value={heading}
-            onChange={setHeading}
-            fullWidth
-            data={
-              bookWithMemos?.headings.map((heading) =>
-                String(heading.number),
-              ) ?? []
-            }
-          />
-        </GridCol>
-      </Grid>
-      <Space h={50} />
-      <Editor
-        heading={bookWithMemos?.headings[Number(heading) - 1]}
-        handleSave={handleSave}
-      />
-    </Container>
+    <div>
+      <title>{`${bookWithMemos?.book.title}のメモページ`}</title>
+      <Container my={'md'}>
+        <Grid>
+          <GridCol span={3}>
+            <Image
+              radius="lg"
+              w={141}
+              h={200}
+              src={bookWithMemos?.book.coverImageUrl}
+              alt={bookWithMemos?.book.title}
+            />
+          </GridCol>
+          <GridCol offset={1} span={6}>
+            <Text size="md" ta={'center'} mb={7}>
+              章
+            </Text>
+            <SegmentedControl
+              value={heading}
+              onChange={setHeading}
+              fullWidth
+              data={
+                bookWithMemos?.headings.map((heading) =>
+                  String(heading.number),
+                ) ?? []
+              }
+            />
+          </GridCol>
+        </Grid>
+        <Space h={50} />
+        <Editor
+          heading={bookWithMemos?.headings[Number(heading) - 1]}
+          handleSave={handleSave}
+        />
+      </Container>
+    </div>
   );
 }
