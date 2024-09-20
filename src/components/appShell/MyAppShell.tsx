@@ -20,7 +20,7 @@ export default async function MyAppShell({ children }: PropsWithChildren) {
       </AppShellHeader>
 
       <AppShellMain>{children}</AppShellMain>
-      <AppShellFooter p="md">
+      <AppShellFooter p="md" visibleFrom="sm">
         <Footer />
       </AppShellFooter>
     </AppShell>
