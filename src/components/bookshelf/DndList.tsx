@@ -12,23 +12,23 @@ import {
 } from '@mantine/core';
 import { useListState, useDisclosure, useSetState } from '@mantine/hooks';
 import { IconTrash } from '@tabler/icons-react';
-import { BookItemsProps, Book } from '@/types/index';
+import { BookItemsProps, UserBook } from '@/types/index';
 import axios from 'axios';
 import DeleteBookConfirmModal from '../modal/DeleteBookConfirmModal';
 import toast from 'react-hot-toast';
 import { useState } from 'react';
 
-export default function DndList({ bookItems, id }: BookItemsProps) {
+export default function DndList({ bookItems, userId }: BookItemsProps) {
   const [source, setSource] = useState<number>(0);
   const [state, stateHandlers] = useListState(bookItems);
   const [deleteParamsState, setDeleteParamsState] = useSetState({
     bookId: 0,
     position: 0,
-    userId: id,
+    userId: userId,
   });
   const [opened, { open, close }] = useDisclosure(false);
 
-  const handleClick = (item: Book) => {
+  const handleClick = (item: UserBook) => {
     setDeleteParamsState({ bookId: item.id, position: state.indexOf(item) });
     open();
   };
@@ -57,7 +57,7 @@ export default function DndList({ bookItems, id }: BookItemsProps) {
     const params = {
       bookId: book?.id,
       destinationBookId: destinationBook?.id,
-      userId: id,
+      userId: userId,
     };
     const apiUrl: string = process.env.NEXT_PUBLIC_RAILS_API_URL ?? '';
     try {

@@ -3,8 +3,16 @@ import { Heading } from './heading';
 export type Book = {
   id: number;
   title: string;
-  author: string;
+  author?: string;
   coverImageUrl: string;
+};
+
+export type UserBook = {
+  id: number;
+  title: string;
+  author?: string;
+  coverImageUrl: string;
+  userId?: number;
 };
 
 export type BookMenuProps = {
@@ -18,12 +26,12 @@ export type DeleteBookModalProps = {
 };
 
 export type BookProps = {
-  book: Book;
+  book: UserBook;
 };
 
 export type BookItemsProps = {
-  bookItems: Book[];
-  id?: string;
+  bookItems: UserBook[];
+  userId?: string;
 };
 
 export type BookResponse = {
@@ -31,8 +39,7 @@ export type BookResponse = {
   title: string;
   author: string;
   cover_image_url: string;
-  created_at: string;
-  updated_at: string;
+  user_id?: number;
 };
 
 export type BookWithMemo = {

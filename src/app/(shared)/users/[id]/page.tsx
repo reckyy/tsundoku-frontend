@@ -30,7 +30,6 @@ export default function Page() {
         const fetchedBookItems = data.books.map((book: BookResponse) => ({
           id: book.id,
           title: book.title,
-          author: book.author,
           coverImageUrl: book.cover_image_url,
         }));
         setBookItems(fetchedBookItems);

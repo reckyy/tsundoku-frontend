@@ -10,7 +10,7 @@ const BookItemContent = ({ book }: BookProps) => {
 
   return (
     <>
-      {session ? (
+      {session && Number(session?.user?.id) === book.userId ? (
         <Link href={`/books/${book.id}/memos`}>
           <Image
             radius="md"

@@ -1,6 +1,6 @@
 import BookItem from './BookItem';
 import { Grid, GridCol, Space, Center, Text } from '@mantine/core';
-import { BookItemsProps, Book } from '@/types/index';
+import { BookItemsProps, UserBook } from '@/types/index';
 
 const BookItems = ({ bookItems }: BookItemsProps) => {
   return (
@@ -10,7 +10,7 @@ const BookItems = ({ bookItems }: BookItemsProps) => {
           <GridCol span={12}>
             <Space h={40} />
           </GridCol>
-          {bookItems.map((book: Book) => (
+          {bookItems.map((book: UserBook) => (
             <GridCol span={{ base: 6, sm: 4 }} key={book.id}>
               <Center>
                 <BookItem book={book} />
