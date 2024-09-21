@@ -12,13 +12,20 @@ import {
   Paper,
   ScrollArea,
 } from '@mantine/core';
+import { useMediaQuery } from '@mantine/hooks';
 import { useParams } from 'next/navigation';
 import { useSession, SessionProvider } from 'next-auth/react';
 import { useState } from 'react';
 import useSWR from 'swr';
 import axios from 'axios';
 import toast from 'react-hot-toast';
-import { MemoParams, BookWithMemo, HandleSaveType } from '@/types/index';
+import {
+  MemoParams,
+  BookWithMemo,
+  HandleSaveType,
+  Heading,
+  GridItemType,
+} from '@/types/index';
 import MemoLoading from '@/components/loading/MemoLoading';
 
 export default function Page() {
@@ -28,8 +35,44 @@ export default function Page() {
     </SessionProvider>
   );
 }
+function GridItem({
+  imageSpan,
+  headingSpan,
+  offset,
+  imageSrc,
+  imageAlt,
+  headings,
+  heading,
+  setHeading,
+}: GridItemType) {
+  return (
+    <>
+      <GridCol span={imageSpan}>
+        <Image radius="lg" w={141} h={200} src={imageSrc} alt={imageAlt} />
+      </GridCol>
+      <GridCol offset={offset} span={headingSpan}>
+        <Paper withBorder shadow="xs" radius="md" p="xl">
+          <Text size="md" ta={'center'} mb={7}>
+            章
+          </Text>
+          <ScrollArea scrollHideDelay={0}>
+            <SegmentedControl
+              value={heading}
+              onChange={setHeading}
+              fullWidth
+              data={
+                headings.map((heading: Heading) => String(heading.number)) ?? []
+              }
+            />
+          </ScrollArea>
+        </Paper>
+      </GridCol>
+    </>
+  );
+}
 
 function PageContent() {
+  const matches = useMediaQuery('(min-width: 48em)');
   const apiUrl: string = process.env.NEXT_PUBLIC_RAILS_API_URL ?? '';
   const dynamicParams = useParams<{ bookId: string }>();
   const bookId = Number(dynamicParams.bookId);
@@ -134,35 +177,18 @@ function PageContent() {
       <title>{`${bookWithMemos?.book.title}のメモページ`}</title>
       <Container my={'md'}>
         <Grid>
-          <GridCol span={3}>
-            <Image
-              radius="lg"
-              w={141}
-              h={200}
-              src={bookWithMemos?.book.coverImageUrl}
-              alt={bookWithMemos?.book.title}
-            />
-          </GridCol>
-          <GridCol offset={1} span={6}>
-            <Paper withBorder shadow="xs" radius="md" p="xl">
-              <Text size="md" ta={'center'} mb={7}>
-                章
-              </Text>
-              <ScrollArea scrollHideDelay={0}>
-                <SegmentedControl
-                  value={heading}
-                  onChange={setHeading}
-                  fullWidth
-                  data={
-                    bookWithMemos?.headings.map((heading) =>
-                      String(heading.number),
-                    ) ?? []
-                  }
-                />
-              </ScrollArea>
-            </Paper>
-          </GridCol>
+          <GridItem
+            imageSpan={matches ? 3 : undefined}
+            headingSpan={matches ? 6 : undefined}
+            offset={matches ? 1 : undefined}
+            imageSrc={bookWithMemos?.book.coverImageUrl}
+            imageAlt={bookWithMemos?.book.title}
+            headings={bookWithMemos?.headings || []}
+            heading={heading}
+            setHeading={setHeading}
+          />
         </Grid>
+
         <Space h={50} />
         <Editor
           heading={bookWithMemos?.headings[Number(heading) - 1]}

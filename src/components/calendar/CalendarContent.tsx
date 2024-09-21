@@ -7,7 +7,7 @@ import { ReadingLogs } from '@/types/index';
 
 export default function CalendarContent({ readingLogs }: ReadingLogs) {
   const value = readingLogs.map((log) => ({
-    date: log.date.replace('-', '/'),
+    date: log.date.replaceAll('-', '/'),
     count: log.count,
   }));
   const today = new Date();
