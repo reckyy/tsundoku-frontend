@@ -24,12 +24,13 @@ export default async function Home() {
       return res.data.map((book: BookResponse) => ({
         id: book.id,
         title: book.title,
-        author: book.author,
         coverImageUrl: book.cover_image_url,
+        userId: book.user_id,
       }));
     };
 
     const bookItems = await getBooks();
+    console.log(bookItems);
 
     return (
       <Container my="md">

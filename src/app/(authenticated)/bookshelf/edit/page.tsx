@@ -21,6 +21,7 @@ export default async function Page() {
       title: book.title,
       author: book.author,
       coverImageUrl: book.cover_image_url,
+      userId: book.user_id,
     }));
   };
 
@@ -31,7 +32,7 @@ export default async function Page() {
         {session?.user?.name}さんの本棚
       </Title>
       <Space h={30} />
-      <DndList bookItems={bookItems} id={session?.user?.id} />
+      <DndList bookItems={bookItems} userId={session?.user?.id} />
     </Container>
   );
 }
