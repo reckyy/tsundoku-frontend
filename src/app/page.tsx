@@ -30,7 +30,6 @@ export default async function Home() {
     };
 
     const bookItems = await getBooks();
-    console.log(bookItems);
 
     return (
       <Container my="md">
