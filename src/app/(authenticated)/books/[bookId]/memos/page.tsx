@@ -76,8 +76,6 @@ function PageContent() {
   const apiUrl: string = process.env.NEXT_PUBLIC_RAILS_API_URL ?? '';
   const dynamicParams = useParams<{ bookId: string }>();
   const bookId = Number(dynamicParams.bookId);
-  const apiMemoUrl = `${apiUrl}/books/${bookId}/memos`;
-  console.log(apiMemoUrl);
   const { data: session, status } = useSession();
   const params = {
     userId: session?.user?.id,
@@ -100,7 +98,7 @@ function PageContent() {
   }
 
   const { error, isLoading } = useSWR(
-    fetchable ? [apiMemoUrl, params] : null,
+    fetchable ? [`${apiUrl}/memos`, params] : null,
     ([url, params]) => fetcher(url, params),
     {
       onSuccess: (data) => {
@@ -119,7 +117,7 @@ function PageContent() {
           id: headingId,
           title,
         }),
-        axios.patch(`${apiMemoUrl}/${memoId}`, {
+        axios.patch(`${apiUrl}/memos/${memoId}`, {
           userId: session?.user?.id,
           memo: {
             id: memoId,
