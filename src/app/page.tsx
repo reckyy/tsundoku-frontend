@@ -6,6 +6,8 @@ import BookItems from '@/components/bookshelf/BookItems';
 import Calendar from '@/components/calendar/Calendar';
 import { BookResponse } from '@/types/index';
 import type { Metadata } from 'next';
+import TopLoading from '@/components/loading/TopLoading';
+import { Suspense } from 'react';
 
 export const metadata: Metadata = {
   title: 'Tsundoku',
@@ -13,7 +15,15 @@ export const metadata: Metadata = {
     'Tsundokuは読書が続かない人、積読しがちな人向けの読書管理アプリです。読んできた本の一覧表示と読書ログを公開することにより、外部に読書習慣をアピールできます！',
 };
 
-export default async function Home() {
+export default function Home() {
+  return (
+    <Suspense fallback={<TopLoading />}>
+      <HomeContent />
+    </Suspense>
+  );
+}
+
+async function HomeContent() {
   const session = await auth();
   if (session?.user) {
     const getBooks = async () => {
