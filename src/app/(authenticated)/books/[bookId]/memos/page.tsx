@@ -117,7 +117,7 @@ function PageContent() {
         axios.patch(`${apiUrl}/headings/${headingId}`, {
           userId: session?.user?.id,
           id: headingId,
-          title: title,
+          title,
         }),
         axios.patch(`${apiMemoUrl}/${memoId}`, {
           userId: session?.user?.id,
@@ -128,7 +128,7 @@ function PageContent() {
         }),
         axios.post(`${apiUrl}/reading_logs`, {
           userId: session?.user?.id,
-          memoId: memoId,
+          memoId,
         }),
       ]);
       setBookWithMemos((bookWithMemos) => {
@@ -140,7 +140,7 @@ function PageContent() {
             h.number === Number(heading)
               ? {
                   ...h,
-                  title: title,
+                  title,
                   memo: {
                     ...h.memo,
                     body: content,

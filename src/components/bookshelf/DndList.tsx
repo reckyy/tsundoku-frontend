@@ -24,7 +24,7 @@ export default function DndList({ bookItems, userId }: BookItemsProps) {
   const [deleteParamsState, setDeleteParamsState] = useSetState({
     bookId: 0,
     position: 0,
-    userId: userId,
+    userId,
   });
   const [opened, { open, close }] = useDisclosure(false);
 
@@ -57,7 +57,7 @@ export default function DndList({ bookItems, userId }: BookItemsProps) {
     const params = {
       bookId: book?.id,
       destinationBookId: destinationBook?.id,
-      userId: userId,
+      userId,
     };
     const apiUrl: string = process.env.NEXT_PUBLIC_RAILS_API_URL ?? '';
     try {
