@@ -113,51 +113,45 @@ function PageContent() {
     const memoId = bookWithMemos?.headings[Number(heading) - 1].memo.id;
     const headingId = bookWithMemos?.headings[Number(heading) - 1].id;
     try {
-      const headingRes = await axios.patch(`${apiUrl}/headings/${headingId}`, {
-        userId: session?.user?.id,
-        id: headingId,
-        title: title,
-      });
-      const memoRes = await axios.patch(`${apiMemoUrl}/${memoId}`, {
-        userId: session?.user?.id,
-        memo: {
-          id: memoId,
-          body: content,
-        },
-      });
-      const logRes = await axios.post(`${apiUrl}/reading_logs`, {
-        userId: session?.user?.id,
-        memoId: memoId,
-      });
-      if (
-        headingRes.status === 200 &&
-        memoRes.status === 200 &&
-        logRes.status === 200
-      ) {
-        setBookWithMemos((bookWithMemos) => {
-          if (!bookWithMemos) return bookWithMemos;
+      await Promise.all([
+        axios.patch(`${apiUrl}/headings/${headingId}`, {
+          userId: session?.user?.id,
+          id: headingId,
+          title: title,
+        }),
+        axios.patch(`${apiMemoUrl}/${memoId}`, {
+          userId: session?.user?.id,
+          memo: {
+            id: memoId,
+            body: content,
+          },
+        }),
+        axios.post(`${apiUrl}/reading_logs`, {
+          userId: session?.user?.id,
+          memoId: memoId,
+        }),
+      ]);
+      setBookWithMemos((bookWithMemos) => {
+        if (!bookWithMemos) return bookWithMemos;
 
-          return {
-            ...bookWithMemos,
-            headings: bookWithMemos.headings.map((h) =>
-              h.number === Number(heading)
-                ? {
-                    ...h,
-                    title: title,
-                    memo: {
-                      ...h.memo,
-                      body: content,
-                    },
-                  }
-                : h,
-            ),
-          };
-        });
-        toast.success('メモの保存に成功しました！');
-        return true;
-      } else {
-        return false;
-      }
+        return {
+          ...bookWithMemos,
+          headings: bookWithMemos.headings.map((h) =>
+            h.number === Number(heading)
+              ? {
+                  ...h,
+                  title: title,
+                  memo: {
+                    ...h.memo,
+                    body: content,
+                  },
+                }
+              : h,
+          ),
+        };
+      });
+      toast.success('メモの保存に成功しました！');
+      return true;
     } catch (error) {
       toast.error('メモの保存に失敗しました。');
       return false;

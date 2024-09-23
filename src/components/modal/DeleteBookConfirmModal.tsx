@@ -21,7 +21,7 @@ export default function DeleteBookConfirmModal({
         router.refresh();
         toast('本を削除しました。');
       } else {
-        return false;
+        throw new Error();
       }
     } catch (error) {
       toast.error('本の削除に失敗しました。');

@@ -61,16 +61,9 @@ export default function DndList({ bookItems, userId }: BookItemsProps) {
     };
     const apiUrl: string = process.env.NEXT_PUBLIC_RAILS_API_URL ?? '';
     try {
-      const res = await axios.post(
-        `${apiUrl}/user_books/move_position`,
-        params,
-      );
-      if (res.status === 200) {
-        stateHandlers.swap({ from: source, to: index });
-        toast.success('本の並び替えに成功しました！');
-      } else {
-        return false;
-      }
+      await axios.post(`${apiUrl}/user_books/move_position`, params);
+      stateHandlers.swap({ from: source, to: index });
+      toast.success('本の並び替えに成功しました！');
     } catch (error) {
       toast.error('本の並び替えに失敗しました。');
     }

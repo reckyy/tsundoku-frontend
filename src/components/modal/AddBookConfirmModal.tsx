@@ -28,20 +28,16 @@ const AddBookConfirmContent = ({ book }: BookProps) => {
     const apiUrl: string = process.env.NEXT_PUBLIC_RAILS_API_URL ?? '';
 
     try {
-      const res = await axios.post(`${apiUrl}/books`, {
+      await axios.post(`${apiUrl}/books`, {
         title: book.title,
         author: book.author,
         coverImageUrl: book.coverImageUrl,
         userId: session?.user?.id,
         headingNumber: value,
       });
-      if (res.status === 200) {
-        router.push('/');
-        router.refresh();
-        toast.success('本を保存しました！');
-      } else {
-        return false;
-      }
+      router.push('/');
+      router.refresh();
+      toast.success('本を保存しました！');
     } catch (error) {
       toast.error('本の保存に失敗しました。');
     }

@@ -21,7 +21,7 @@ export default function DeleteUserConfirmModal({ id, close }: UserParams) {
         router.refresh();
         toast.success('アカウントを削除しました。');
       } else {
-        return false;
+        throw new Error();
       }
     } catch (error) {
       toast.error('退会に失敗しました。');
