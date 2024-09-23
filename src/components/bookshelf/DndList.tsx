@@ -24,7 +24,7 @@ export default function DndList({ bookItems, userId }: BookItemsProps) {
   const [deleteParamsState, setDeleteParamsState] = useSetState({
     bookId: 0,
     position: 0,
-    userId: userId,
+    userId,
   });
   const [opened, { open, close }] = useDisclosure(false);
 
@@ -57,20 +57,13 @@ export default function DndList({ bookItems, userId }: BookItemsProps) {
     const params = {
       bookId: book?.id,
       destinationBookId: destinationBook?.id,
-      userId: userId,
+      userId,
     };
     const apiUrl: string = process.env.NEXT_PUBLIC_RAILS_API_URL ?? '';
     try {
-      const res = await axios.post(
-        `${apiUrl}/user_books/move_position`,
-        params,
-      );
-      if (res.status === 200) {
-        stateHandlers.swap({ from: source, to: index });
-        toast.success('本の並び替えに成功しました！');
-      } else {
-        return false;
-      }
+      await axios.post(`${apiUrl}/user_books/move_position`, params);
+      stateHandlers.swap({ from: source, to: index });
+      toast.success('本の並び替えに成功しました！');
     } catch (error) {
       toast.error('本の並び替えに失敗しました。');
     }

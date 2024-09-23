@@ -24,15 +24,7 @@ export default function Editor({ heading, handleSave }: EditorProps) {
 
   const editor = useEditor({
     extensions: [
-      StarterKit.configure({
-        bulletList: {
-          keepMarks: true,
-          keepAttributes: false,
-        },
-        orderedList: {
-          keepMarks: true,
-        },
-      }),
+      StarterKit.configure({ codeBlock: false }),
       getTaskListExtension(TipTapTaskList),
       CodeBlockLowlight.configure({ lowlight }),
       TaskItem.configure({
