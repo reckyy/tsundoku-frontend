@@ -159,7 +159,7 @@ function PageContent() {
   };
 
   if (error) return <div>failed to load</div>;
-  if (isLoading)
+  if (isLoading || !bookWithMemos)
     return (
       <div>
         <MemoLoading />
