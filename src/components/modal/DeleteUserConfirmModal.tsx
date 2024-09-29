@@ -1,32 +1,10 @@
 import { Text, Divider, Space, Button, Group } from '@mantine/core';
 import { UserParams } from '@/types/index';
-import axios from 'axios';
-import { handleSignOut } from '@/feature/SignOut';
-import toast from 'react-hot-toast';
-import { useRouter } from 'next/navigation';
+import useDeleteUser from '@/hooks/useDeleteUser';
 
 export default function DeleteUserConfirmModal({ id, close }: UserParams) {
-  const router = useRouter();
+  const { handleDeleteUser } = useDeleteUser(id);
 
-  const handleDeleteUser = async () => {
-    const params = { userId: id };
-    const apiUrl: string = process.env.NEXT_PUBLIC_RAILS_API_URL ?? '';
-    try {
-      const res = await axios.delete(`${apiUrl}/users/${id}`, {
-        params,
-      });
-      if (res.status === 204) {
-        handleSignOut();
-        router.push('/thanks');
-        router.refresh();
-        toast.success('アカウントを削除しました。');
-      } else {
-        throw new Error();
-      }
-    } catch (error) {
-      toast.error('退会に失敗しました。');
-    }
-  };
   return (
     <>
       <Text size="lg" fw={700} ta="center">

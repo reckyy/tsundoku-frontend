@@ -1,32 +1,13 @@
 import { Text, Divider, Group, Button, Space } from '@mantine/core';
 import { IconTrash } from '@tabler/icons-react';
-import axios from 'axios';
 import { DeleteBookModalProps } from '@/types/book';
-import toast from 'react-hot-toast';
-import { useRouter } from 'next/navigation';
+import useDeleteBook from '@/hooks/useDeleteBook';
 
 export default function DeleteBookConfirmModal({
   params,
   close,
 }: DeleteBookModalProps) {
-  const router = useRouter();
-  const handleDeleteBook = async () => {
-    const apiUrl: string = process.env.NEXT_PUBLIC_RAILS_API_URL ?? '';
-    const deleteBookApiUrl = `${apiUrl}/user_books/${params.bookId}`;
-    try {
-      const res = await axios.delete(deleteBookApiUrl, {
-        params,
-      });
-      if (res.status === 204) {
-        router.refresh();
-        toast('本を削除しました。');
-      } else {
-        throw new Error();
-      }
-    } catch (error) {
-      toast.error('本の削除に失敗しました。');
-    }
-  };
+  const { handleDeleteBook } = useDeleteBook(params);
 
   return (
     <>

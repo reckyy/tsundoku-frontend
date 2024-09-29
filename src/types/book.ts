@@ -42,7 +42,7 @@ export type BookResponse = {
   user_id?: number;
 };
 
-export type BookWithMemo = {
+export type BookWithMemos = {
   book: {
     title: string;
     coverImageUrl: string;

@@ -1,12 +1,11 @@
 import { auth } from '@/auth';
 import { Container, Space, Paper, Text } from '@mantine/core';
 import TopPage from '@/components/top/TopPage';
-import axios from 'axios';
 import BookItems from '@/components/bookshelf/BookItems';
 import Calendar from '@/components/calendar/Calendar';
-import { BookResponse } from '@/types/index';
 import type { Metadata } from 'next';
 import TopLoading from '@/components/loading/TopLoading';
+import getBooks from '@/utils/getBooks';
 import { Suspense } from 'react';
 
 export const metadata: Metadata = {
@@ -26,19 +25,7 @@ export default function Home() {
 async function HomeContent() {
   const session = await auth();
   if (session?.user) {
-    const getBooks = async () => {
-      const apiUrl: string = process.env.NEXT_PUBLIC_RAILS_API_URL ?? '';
-      const session = await auth();
-      const params = { userId: session?.user?.id };
-      const res = await axios.get(`${apiUrl}/books`, { params });
-      return res.data.map((book: BookResponse) => ({
-        ...book,
-        coverImageUrl: book.cover_image_url,
-        userId: book.user_id,
-      }));
-    };
-
-    const bookItems = await getBooks();
+    const bookItems = await getBooks(session.user.id);
 
     return (
       <Container my="md">

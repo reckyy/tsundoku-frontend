@@ -1,8 +1,7 @@
-import axios from 'axios';
 import { auth } from '@/auth';
-import { BookResponse } from '@/types/index';
 import { Container, Title, Space } from '@mantine/core';
 import DndList from '@/components/bookshelf/DndList';
+import getBooks from '@/utils/getBooks';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
@@ -11,19 +10,8 @@ export const metadata: Metadata = {
 
 export default async function Page() {
   const session = await auth();
+  const bookItems = await getBooks(session?.user?.id);
 
-  const getBooks = async () => {
-    const apiUrl: string = process.env.NEXT_PUBLIC_RAILS_API_URL ?? '';
-    const params = { userId: session?.user?.id };
-    const res = await axios.get(`${apiUrl}/books`, { params });
-    return res.data.map((book: BookResponse) => ({
-      ...book,
-      coverImageUrl: book.cover_image_url,
-      userId: book.user_id,
-    }));
-  };
-
-  const bookItems = await getBooks();
   return (
     <Container my="md">
       <Title order={3} ta="center">

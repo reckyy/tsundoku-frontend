@@ -18,11 +18,10 @@ import { useSession, SessionProvider } from 'next-auth/react';
 import { useState } from 'react';
 import useSWR from 'swr';
 import axios from 'axios';
-import toast from 'react-hot-toast';
+import SaveMemo from '@/utils/saveMemo';
 import {
   MemoParams,
-  BookWithMemo,
-  HandleSaveType,
+  BookWithMemos,
   Heading,
   GridItemType,
 } from '@/types/index';
@@ -72,16 +71,17 @@ function GridItem({
 }
 
 function PageContent() {
-  const matches = useMediaQuery('(min-width: 48em)');
+  const isLargeScreen = useMediaQuery('(min-width: 48em)');
   const apiUrl: string = process.env.NEXT_PUBLIC_RAILS_API_URL ?? '';
   const dynamicParams = useParams<{ bookId: string }>();
   const bookId = Number(dynamicParams.bookId);
   const { data: session, status } = useSession();
+  const userId = session?.user?.id;
   const params = {
-    userId: session?.user?.id,
-    bookId: bookId,
+    userId,
+    bookId,
   };
-  const [bookWithMemos, setBookWithMemos] = useState<BookWithMemo>();
+  const [bookWithMemos, setBookWithMemos] = useState<BookWithMemos>();
   const [heading, setHeading] = useState('1');
 
   const fetchable = status === 'authenticated' && session?.user?.email;
@@ -107,51 +107,15 @@ function PageContent() {
     },
   );
 
-  const handleSave: HandleSaveType = async (content, title) => {
-    const memoId = bookWithMemos?.headings[Number(heading) - 1].memo.id;
-    const headingId = bookWithMemos?.headings[Number(heading) - 1].id;
-    try {
-      await Promise.all([
-        axios.patch(`${apiUrl}/headings/${headingId}`, {
-          userId: session?.user?.id,
-          id: headingId,
-          title,
-        }),
-        axios.patch(`${apiUrl}/memos/${memoId}`, {
-          userId: session?.user?.id,
-          memo: {
-            id: memoId,
-            body: content,
-          },
-        }),
-        axios.post(`${apiUrl}/reading_logs`, {
-          userId: session?.user?.id,
-          memoId,
-        }),
-      ]);
-      setBookWithMemos((bookWithMemos) => {
-        if (!bookWithMemos) return bookWithMemos;
-
-        return {
-          ...bookWithMemos,
-          headings: bookWithMemos.headings.map((h) =>
-            h.number === Number(heading)
-              ? {
-                  ...h,
-                  title,
-                  memo: {
-                    ...h.memo,
-                    body: content,
-                  },
-                }
-              : h,
-          ),
-        };
-      });
-      toast.success('メモの保存に成功しました！');
-    } catch (error) {
-      toast.error('メモの保存に失敗しました。');
-    }
+  const handleSave = async (content: string, title: string) => {
+    SaveMemo({
+      userId,
+      bookWithMemos,
+      setBookWithMemos,
+      heading,
+      content,
+      title,
+    });
   };
 
   if (error) return <div>failed to load</div>;
@@ -168,9 +132,9 @@ function PageContent() {
       <Container my={'md'}>
         <Grid>
           <GridItem
-            imageSpan={matches ? 3 : undefined}
-            headingSpan={matches ? 6 : undefined}
-            offset={matches ? 1 : undefined}
+            imageSpan={isLargeScreen ? 3 : undefined}
+            headingSpan={isLargeScreen ? 6 : undefined}
+            offset={isLargeScreen ? 1 : undefined}
             imageSrc={bookWithMemos?.book.coverImageUrl}
             imageAlt={bookWithMemos?.book.title}
             headings={bookWithMemos?.headings || []}

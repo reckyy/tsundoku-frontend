@@ -1,10 +1,6 @@
 import { Card, Image, Text, Button, Flex, NumberInput } from '@mantine/core';
-import axios from 'axios';
-import { useSession } from 'next-auth/react';
-import { useRouter } from 'next/navigation';
-import toast from 'react-hot-toast';
-import { useState } from 'react';
 import { BookProps } from '@/types/index';
+import useAddBook from '@/hooks/useAddBook';
 import { SessionProvider } from 'next-auth/react';
 
 export default function AddBookConfirmModal({ book }: BookProps) {
@@ -16,32 +12,7 @@ export default function AddBookConfirmModal({ book }: BookProps) {
 }
 
 const AddBookConfirmContent = ({ book }: BookProps) => {
-  const { data: session } = useSession();
-  const router = useRouter();
-  const [value, setValue] = useState<string | number>('');
-
-  const handleSubmit = async () => {
-    if (value === '') {
-      toast.error('章の数を入力してください。');
-      return;
-    }
-    const apiUrl: string = process.env.NEXT_PUBLIC_RAILS_API_URL ?? '';
-
-    try {
-      await axios.post(`${apiUrl}/books`, {
-        title: book.title,
-        author: book.author,
-        coverImageUrl: book.coverImageUrl,
-        userId: session?.user?.id,
-        headingNumber: value,
-      });
-      router.push('/');
-      router.refresh();
-      toast.success('本を保存しました！');
-    } catch (error) {
-      toast.error('本の保存に失敗しました。');
-    }
-  };
+  const { value, setValue, handleSubmit } = useAddBook(book);
 
   return (
     <Card shadow="sm" padding="sm" radius="md" withBorder>

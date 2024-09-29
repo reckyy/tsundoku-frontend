@@ -1,4 +1,6 @@
 import { Heading } from './heading';
+import { BookWithMemos } from './book';
+
 export type Memo = {
   id: number;
   body: string;
@@ -18,4 +20,15 @@ export type GridItemType = {
   headings: Heading[];
   heading: string;
   setHeading: React.Dispatch<React.SetStateAction<string>>;
+};
+
+export type HandleSaveType = {
+  userId: string | undefined;
+  bookWithMemos: BookWithMemos | undefined;
+  heading: string;
+  content: string;
+  title: string;
+  setBookWithMemos: React.Dispatch<
+    React.SetStateAction<BookWithMemos | undefined>
+  >;
 };
