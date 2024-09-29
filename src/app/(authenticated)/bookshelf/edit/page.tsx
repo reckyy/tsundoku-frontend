@@ -17,9 +17,7 @@ export default async function Page() {
     const params = { userId: session?.user?.id };
     const res = await axios.get(`${apiUrl}/books`, { params });
     return res.data.map((book: BookResponse) => ({
-      id: book.id,
-      title: book.title,
-      author: book.author,
+      ...book,
       coverImageUrl: book.cover_image_url,
       userId: book.user_id,
     }));
