@@ -22,7 +22,7 @@ export type GridItemType = {
   setHeading: React.Dispatch<React.SetStateAction<string>>;
 };
 
-export type HandleSaveType = {
+export type saveMemoType = {
   userId: string | undefined;
   bookWithMemos: BookWithMemos | undefined;
   heading: string;

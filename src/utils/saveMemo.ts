@@ -1,6 +1,6 @@
 import axios from 'axios';
 import toast from 'react-hot-toast';
-import { HandleSaveType } from '@/types/index';
+import { saveMemoType } from '@/types/index';
 
 export default async function SaveMemo({
   userId,
@@ -9,7 +9,7 @@ export default async function SaveMemo({
   heading,
   content,
   title,
-}: HandleSaveType) {
+}: saveMemoType) {
   const apiUrl: string = process.env.NEXT_PUBLIC_RAILS_API_URL ?? '';
   const currentHeading = bookWithMemos?.headings[Number(heading) - 1];
   const memoId = currentHeading?.memo.id;
