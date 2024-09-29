@@ -3,7 +3,7 @@ import { Heading } from './heading';
 export type HandleSaveType = (
   content: string,
   title: string,
-) => Promise<boolean>;
+) => void;
 
 export type EditorProps = {
   heading: Heading | undefined;

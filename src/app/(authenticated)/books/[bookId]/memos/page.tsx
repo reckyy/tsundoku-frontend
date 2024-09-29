@@ -149,10 +149,8 @@ function PageContent() {
         };
       });
       toast.success('メモの保存に成功しました！');
-      return true;
     } catch (error) {
       toast.error('メモの保存に失敗しました。');
-      return false;
     }
   };
 
