@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import toast from 'react-hot-toast';
-import { handleSignOut } from '@/feature/SignOut';
+import { signOut } from 'next-auth/react';
 import { API_CONSTS } from '@/consts/apiConsts';
 
 const useDeleteUser = (userId: string | string[] | undefined) => {
@@ -14,7 +14,7 @@ const useDeleteUser = (userId: string | string[] | undefined) => {
         params: { userId },
       });
       if (res.status === 204) {
-        handleSignOut();
+        signOut();
         router.push('/thanks');
         router.refresh();
         toast.success('アカウントを削除しました。');

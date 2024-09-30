@@ -12,7 +12,7 @@ import {
   IconBook,
   IconSearch,
 } from '@tabler/icons-react';
-import { handleSignOut } from '../../feature/SignOut';
+import { signOut } from 'next-auth/react';
 import toast from 'react-hot-toast';
 import { UserInfo } from '@/types/index';
 import Link from 'next/link';
@@ -65,19 +65,17 @@ export default function UserMenu({ name, id, image }: UserInfo) {
       </Menu.Target>
       <Menu.Dropdown>
         <Menu.Label>Menu</Menu.Label>
-        <form action={handleSignOut}>
-          <Menu.Item
-            leftSection={
-              <IconLogout
-                style={{ width: rem(16), height: rem(16) }}
-                stroke={1.5}
-              />
-            }
-            type="submit"
-          >
-            ログアウト
-          </Menu.Item>
-        </form>
+        <Menu.Item
+          onClick={() => signOut()}
+          leftSection={
+            <IconLogout
+              style={{ width: rem(16), height: rem(16) }}
+              stroke={1.5}
+            />
+          }
+        >
+          ログアウト
+        </Menu.Item>
 
         <Link href={'/search_books'}>
           <Menu.Item
