@@ -4,12 +4,13 @@ import toast from 'react-hot-toast';
 import { useSession } from 'next-auth/react';
 import { useState } from 'react';
 import { UserBook } from '@/types/index';
+import { API_CONSTS } from '@/consts/apiConsts';
 
 const useAddBook = (book: UserBook) => {
+  const { RAILS_API_URL } = API_CONSTS;
   const { data: session } = useSession();
   const userId = session?.user?.id;
   const router = useRouter();
-  const apiUrl = process.env.NEXT_PUBLIC_RAILS_API_URL;
   const [value, setValue] = useState<string | number>('');
 
   const handleSubmit = async () => {
@@ -19,7 +20,7 @@ const useAddBook = (book: UserBook) => {
     }
 
     try {
-      await axios.post(`${apiUrl}/books`, {
+      await axios.post(`${RAILS_API_URL}/books`, {
         title: book.title,
         author: book.author,
         coverImageUrl: book.coverImageUrl,

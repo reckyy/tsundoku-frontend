@@ -26,6 +26,7 @@ import {
   GridItemType,
 } from '@/types/index';
 import MemoLoading from '@/components/loading/MemoLoading';
+import { API_CONSTS } from '@/consts/apiConsts';
 
 function GridItem({
   imageSpan,
@@ -64,8 +65,8 @@ function GridItem({
 }
 
 export default function MemoPageContent() {
+  const { RAILS_API_URL } = API_CONSTS;
   const isLargeScreen = useMediaQuery('(min-width: 48em)');
-  const apiUrl: string = process.env.NEXT_PUBLIC_RAILS_API_URL ?? '';
   const dynamicParams = useParams<{ bookId: string }>();
   const bookId = Number(dynamicParams.bookId);
   const { data: session, status } = useSession();
@@ -91,7 +92,7 @@ export default function MemoPageContent() {
   }
 
   const { error, isLoading } = useSWR(
-    fetchable ? [`${apiUrl}/memos`, params] : null,
+    fetchable ? [`${RAILS_API_URL}/memos`, params] : null,
     ([url, params]) => fetcher(url, params),
     {
       onSuccess: (data) => {

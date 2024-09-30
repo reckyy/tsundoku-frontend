@@ -17,8 +17,10 @@ import axios from 'axios';
 import DeleteBookConfirmModal from '../modal/DeleteBookConfirmModal';
 import toast from 'react-hot-toast';
 import { useState } from 'react';
+import { API_CONSTS } from '@/consts/apiConsts';
 
 export default function DndList({ bookItems, userId }: BookItemsProps) {
+  const { RAILS_API_URL } = API_CONSTS;
   const [source, setSource] = useState<number>(0);
   const [state, stateHandlers] = useListState(bookItems);
   const [deleteParamsState, setDeleteParamsState] = useSetState({
@@ -59,9 +61,8 @@ export default function DndList({ bookItems, userId }: BookItemsProps) {
       destinationBookId: destinationBook?.id,
       userId,
     };
-    const apiUrl: string = process.env.NEXT_PUBLIC_RAILS_API_URL ?? '';
     try {
-      await axios.post(`${apiUrl}/user_books/move_position`, params);
+      await axios.post(`${RAILS_API_URL}/user_books/move_position`, params);
       stateHandlers.swap({ from: source, to: index });
       toast.success('本の並び替えに成功しました！');
     } catch (error) {

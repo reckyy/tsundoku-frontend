@@ -9,12 +9,13 @@ import { useState } from 'react';
 import { BookResponse, Book, Log } from '@/types/index';
 import { Container, Space, Paper } from '@mantine/core';
 import { UserParams } from '@/types/index';
+import { API_CONSTS } from '@/consts/apiConsts';
 
 export default function UserPageContent() {
-  const apiUrl: string = process.env.NEXT_PUBLIC_RAILS_API_URL ?? '';
+  const { RAILS_API_URL } = API_CONSTS;
   const dynamicParams = useParams();
   const params = { id: dynamicParams.id };
-  const apiUserUrl = `${apiUrl}/users/${dynamicParams.id}`;
+  const apiUserUrl = `${RAILS_API_URL}/users/${dynamicParams.id}`;
   const [bookItems, setBookItems] = useState<Book[]>([]);
   const [readingLogs, setReadingLogs] = useState<Log[]>([]);
 
@@ -39,7 +40,7 @@ export default function UserPageContent() {
   );
 
   if (error) return <div>failed to load</div>;
-  if (isLoading) return <div>loading...</div>;
+  if (isLoading) return <div></div>;
 
   return (
     <div>

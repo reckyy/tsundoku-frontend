@@ -2,8 +2,9 @@ import NextAuth from 'next-auth';
 import Google from 'next-auth/providers/google';
 import axios from 'axios';
 import { NextResponse } from 'next/server';
+import { API_CONSTS } from '@/consts/apiConsts';
 
-const apiUrl: string = process.env.NEXT_PUBLIC_RAILS_API_URL ?? '';
+const { RAILS_API_URL } = API_CONSTS;
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
   providers: [Google],
@@ -11,9 +12,12 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     async jwt({ token }) {
       if (!token.id) {
         try {
-          const res = await axios.get(`${apiUrl}/auth/add_session_user_data`, {
-            params: { email: token.email },
-          });
+          const res = await axios.get(
+            `${RAILS_API_URL}/auth/add_session_user_data`,
+            {
+              params: { email: token.email },
+            },
+          );
           if (res.status === 200) {
             token.id = res.data.id;
           }
@@ -35,7 +39,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       const email = user.email;
       const avatarUrl = user.image;
       try {
-        const res = await axios.post(`${apiUrl}/auth/callback/google`, {
+        const res = await axios.post(`${RAILS_API_URL}/auth/callback/google`, {
           name,
           email,
           avatarUrl,

@@ -2,6 +2,9 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { http, HttpResponse } from 'msw';
 import { userEvent, within, expect, waitFor } from '@storybook/test';
 import DeleteUserConfirmModal from '@/components/modal/DeleteUserConfirmModal';
+import { API_CONSTS } from '@/consts/apiConsts';
+
+const { RAILS_API_URL } = API_CONSTS;
 
 const meta: Meta<typeof DeleteUserConfirmModal> = {
   component: DeleteUserConfirmModal,
@@ -41,7 +44,7 @@ export const DeleteBookTest: Story = {
   parameters: {
     msw: {
       handlers: [
-        http.delete(`${process.env.NEXT_PUBLIC_RAILS_API_URL}/users/1`, () => {
+        http.delete(`${RAILS_API_URL}/users/1`, () => {
           return new HttpResponse(null, { status: 204 });
         }),
       ],
@@ -62,7 +65,7 @@ export const DeleteUserFailedTest: Story = {
   parameters: {
     msw: {
       handlers: [
-        http.delete(`${process.env.NEXT_PUBLIC_RAILS_API_URL}/users/1`, () => {
+        http.delete(`${RAILS_API_URL}/users/1`, () => {
           return new HttpResponse('failed', { status: 420 });
         }),
       ],

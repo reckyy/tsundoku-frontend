@@ -9,6 +9,9 @@ import {
   userEvent,
 } from '@storybook/test'; // userEventではdraganddropができないため、fireEventを採用している。
 import DndList from '@/components/bookshelf/DndList';
+import { API_CONSTS } from '@/consts/apiConsts';
+
+const { RAILS_API_URL } = API_CONSTS;
 
 const meta: Meta<typeof DndList> = {
   component: DndList,
@@ -46,12 +49,9 @@ export const AppearenceTest: Story = {
   parameters: {
     msw: {
       handlers: [
-        http.post(
-          `${process.env.NEXT_PUBLIC_RAILS_API_URL}/user_books/move_position`,
-          () => {
-            return new HttpResponse();
-          },
-        ),
+        http.post(`${RAILS_API_URL}/user_books/move_position`, () => {
+          return new HttpResponse();
+        }),
       ],
     },
   },
@@ -79,12 +79,9 @@ export const DndTest: Story = {
   parameters: {
     msw: {
       handlers: [
-        http.post(
-          `${process.env.NEXT_PUBLIC_RAILS_API_URL}/user_books/move_position`,
-          () => {
-            return new HttpResponse();
-          },
-        ),
+        http.post(`${RAILS_API_URL}/user_books/move_position`, () => {
+          return new HttpResponse();
+        }),
       ],
     },
   },
@@ -112,12 +109,9 @@ export const DndFailedTest: Story = {
   parameters: {
     msw: {
       handlers: [
-        http.post(
-          `${process.env.NEXT_PUBLIC_RAILS_API_URL}/user_books/move_position`,
-          () => {
-            return new HttpResponse('failed', { status: 420 });
-          },
-        ),
+        http.post(`${RAILS_API_URL}/user_books/move_position`, () => {
+          return new HttpResponse('failed', { status: 420 });
+        }),
       ],
     },
   },
