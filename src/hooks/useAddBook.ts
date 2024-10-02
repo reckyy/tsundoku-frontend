@@ -1,13 +1,11 @@
 import { useRouter } from 'next/navigation';
-import axios from 'axios';
 import toast from 'react-hot-toast';
 import { useSession } from 'next-auth/react';
 import { useState } from 'react';
 import { UserBook } from '@/types/index';
-import { API_CONSTS } from '@/consts/apiConsts';
+import axiosInstance from '@/lib/axios';
 
 const useAddBook = (book: UserBook) => {
-  const { RAILS_API_URL } = API_CONSTS;
   const { data: session } = useSession();
   const userId = session?.user?.id;
   const router = useRouter();
@@ -20,7 +18,7 @@ const useAddBook = (book: UserBook) => {
     }
 
     try {
-      await axios.post(`${RAILS_API_URL}/books`, {
+      await axiosInstance.post('/books', {
         title: book.title,
         author: book.author,
         coverImageUrl: book.coverImageUrl,

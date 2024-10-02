@@ -17,7 +17,6 @@ import { useParams } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 import { useState } from 'react';
 import useSWR from 'swr';
-import axios from 'axios';
 import SaveMemo from '@/utils/saveMemo';
 import {
   MemoParams,
@@ -26,7 +25,7 @@ import {
   GridItemType,
 } from '@/types/index';
 import MemoLoading from '@/components/loading/MemoLoading';
-import { API_CONSTS } from '@/consts/apiConsts';
+import axiosInstance from '@/lib/axios';
 
 function GridItem({
   imageSpan,
@@ -65,7 +64,6 @@ function GridItem({
 }
 
 export default function MemoPageContent() {
-  const { RAILS_API_URL } = API_CONSTS;
   const isLargeScreen = useMediaQuery('(min-width: 48em)');
   const dynamicParams = useParams<{ bookId: string }>();
   const bookId = Number(dynamicParams.bookId);
@@ -81,7 +79,7 @@ export default function MemoPageContent() {
   const fetchable = status === 'authenticated' && session?.user?.email;
 
   async function fetcher(url: string, params: MemoParams) {
-    const res = await axios.get(url, { params });
+    const res = await axiosInstance.get(url, { params });
     return {
       book: {
         title: res.data.book.title,
@@ -92,7 +90,7 @@ export default function MemoPageContent() {
   }
 
   const { error, isLoading } = useSWR(
-    fetchable ? [`${RAILS_API_URL}/memos`, params] : null,
+    fetchable ? ['/memos', params] : null,
     ([url, params]) => fetcher(url, params),
     {
       onSuccess: (data) => {

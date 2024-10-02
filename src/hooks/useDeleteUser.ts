@@ -1,16 +1,14 @@
-import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import toast from 'react-hot-toast';
 import { signOut } from 'next-auth/react';
-import { API_CONSTS } from '@/consts/apiConsts';
+import axiosInstance from '@/lib/axios';
 
 const useDeleteUser = (userId: string | string[] | undefined) => {
-  const { RAILS_API_URL } = API_CONSTS;
   const router = useRouter();
 
   const handleDeleteUser = async () => {
     try {
-      const res = await axios.delete(`${RAILS_API_URL}/users/${userId}`, {
+      const res = await axiosInstance.delete(`/users/${userId}`, {
         params: { userId },
       });
       if (res.status === 204) {

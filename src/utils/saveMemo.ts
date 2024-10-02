@@ -1,7 +1,6 @@
-import axios from 'axios';
 import toast from 'react-hot-toast';
 import { saveMemoType } from '@/types/index';
-import { API_CONSTS } from '@/consts/apiConsts';
+import axiosInstance from '@/lib/axios';
 
 export default async function SaveMemo({
   userId,
@@ -11,26 +10,25 @@ export default async function SaveMemo({
   content,
   title,
 }: saveMemoType) {
-  const { RAILS_API_URL } = API_CONSTS;
   const currentHeading = bookWithMemos?.headings[Number(heading) - 1];
   const memoId = currentHeading?.memo.id;
   const headingId = currentHeading?.id;
 
   try {
     await Promise.all([
-      axios.patch(`${RAILS_API_URL}/headings/${headingId}`, {
+      axiosInstance.patch(`/headings/${headingId}`, {
         userId,
         id: headingId,
         title,
       }),
-      axios.patch(`${RAILS_API_URL}/memos/${memoId}`, {
+      axiosInstance.patch(`/memos/${memoId}`, {
         userId,
         memo: {
           id: memoId,
           body: content,
         },
       }),
-      axios.post(`${RAILS_API_URL}/reading_logs`, {
+      axiosInstance.post(`/reading_logs`, {
         userId,
         memoId,
       }),

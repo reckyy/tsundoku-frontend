@@ -1,21 +1,16 @@
-import axios from 'axios';
 import toast from 'react-hot-toast';
 import { useRouter } from 'next/navigation';
 import { BookMenuProps } from '@/types/index';
-import { API_CONSTS } from '@/consts/apiConsts';
+import axiosInstance from '@/lib/axios';
 
 const useDeleteBook = (params: BookMenuProps) => {
-  const { RAILS_API_URL } = API_CONSTS;
   const router = useRouter();
 
   const handleDeleteBook = async () => {
     try {
-      const res = await axios.delete(
-        `${RAILS_API_URL}/user_books/${params.bookId}`,
-        {
-          params,
-        },
-      );
+      const res = await axiosInstance.delete(`/user_books/${params.bookId}`, {
+        params,
+      });
       if (res.status === 204) {
         router.refresh();
         toast('本を削除しました。');

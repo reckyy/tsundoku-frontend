@@ -13,14 +13,12 @@ import {
 import { useListState, useDisclosure, useSetState } from '@mantine/hooks';
 import { IconTrash } from '@tabler/icons-react';
 import { BookItemsProps, UserBook } from '@/types/index';
-import axios from 'axios';
 import DeleteBookConfirmModal from '../modal/DeleteBookConfirmModal';
 import toast from 'react-hot-toast';
 import { useState } from 'react';
-import { API_CONSTS } from '@/consts/apiConsts';
+import axiosInstance from '@/lib/axios';
 
 export default function DndList({ bookItems, userId }: BookItemsProps) {
-  const { RAILS_API_URL } = API_CONSTS;
   const [source, setSource] = useState<number>(0);
   const [state, stateHandlers] = useListState(bookItems);
   const [deleteParamsState, setDeleteParamsState] = useSetState({
@@ -62,7 +60,7 @@ export default function DndList({ bookItems, userId }: BookItemsProps) {
       userId,
     };
     try {
-      await axios.post(`${RAILS_API_URL}/user_books/move_position`, params);
+      await axiosInstance.post('/user_books/move_position', params);
       stateHandlers.swap({ from: source, to: index });
       toast.success('本の並び替えに成功しました！');
     } catch (error) {

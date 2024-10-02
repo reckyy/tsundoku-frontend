@@ -17,15 +17,14 @@ import toast from 'react-hot-toast';
 import { UserInfo } from '@/types/index';
 import Link from 'next/link';
 import { useClipboard } from '@mantine/hooks';
-import { API_CONSTS } from '@/consts/apiConsts';
 
 export default function UserMenu({ name, id, image }: UserInfo) {
-  const { NEXT_URL } = API_CONSTS;
   const [userMenuOpened, setUserMenuOpened] = useState(false);
   const clipboard = useClipboard();
+  const rootUrl = process.env.NEXT_PUBLIC_NEXT_URL;
 
   const handleCopyUrl = () => {
-    const url = `${NEXT_URL}/users/${id}`;
+    const url = `${rootUrl}/users/${id}`;
     clipboard.copy(url);
 
     if (!clipboard.error && id !== undefined) {

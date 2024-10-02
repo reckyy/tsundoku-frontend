@@ -7,10 +7,9 @@ import {
   Space,
   Title,
 } from '@mantine/core';
-import { API_CONSTS } from '@/consts/apiConsts';
 
 export default function HeroBullets() {
-  const { NEXT_URL } = API_CONSTS;
+  const rootUrl = process.env.NEXT_PUBLIC_NEXT_URL;
 
   return (
     <Container my="md">
@@ -41,7 +40,7 @@ export default function HeroBullets() {
       <Text size="lg" mb={20}>
         一緒に読書習慣を作りましょう！
       </Text>
-      <Anchor href={`${NEXT_URL}/about`} underline="always" variant="light">
+      <Anchor href={`${rootUrl}/about`} underline="always" variant="light">
         何ができるのか？
       </Anchor>
     </Container>

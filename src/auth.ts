@@ -1,10 +1,7 @@
 import NextAuth from 'next-auth';
 import Google from 'next-auth/providers/google';
-import axios from 'axios';
 import { NextResponse } from 'next/server';
-import { API_CONSTS } from '@/consts/apiConsts';
-
-const { RAILS_API_URL } = API_CONSTS;
+import axiosInstance from '@/lib/axios';
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
   providers: [Google],
@@ -12,12 +9,9 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     async jwt({ token }) {
       if (!token.id) {
         try {
-          const res = await axios.get(
-            `${RAILS_API_URL}/auth/add_session_user_data`,
-            {
-              params: { email: token.email },
-            },
-          );
+          const res = await axiosInstance.get('/auth/add_session_user_data', {
+            params: { email: token.email },
+          });
           if (res.status === 200) {
             token.id = res.data.id;
           }
@@ -39,7 +33,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       const email = user.email;
       const avatarUrl = user.image;
       try {
-        const res = await axios.post(`${RAILS_API_URL}/auth/callback/google`, {
+        const res = await axiosInstance.post('/auth/callback/google', {
           name,
           email,
           avatarUrl,
