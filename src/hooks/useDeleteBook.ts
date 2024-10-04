@@ -1,15 +1,17 @@
 import toast from 'react-hot-toast';
 import { useRouter } from 'next/navigation';
-import { BookMenuProps } from '@/types/index';
-import axiosInstance from '@/lib/axios';
+import { axiosInstance, setHeader } from '@/lib/axios';
 
-const useDeleteBook = (params: BookMenuProps) => {
+const useDeleteBook = (bookId: number, token: string) => {
   const router = useRouter();
 
   const handleDeleteBook = async () => {
+    await setHeader(token!);
     try {
-      const res = await axiosInstance.delete(`/user_books/${params.bookId}`, {
-        params,
+      const res = await axiosInstance.delete(`/user_books/${bookId}`, {
+        params: {
+          bookId,
+        },
       });
       if (res.status === 204) {
         router.refresh();

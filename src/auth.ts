@@ -1,29 +1,28 @@
 import NextAuth from 'next-auth';
 import Google from 'next-auth/providers/google';
 import { NextResponse } from 'next/server';
-import axiosInstance from '@/lib/axios';
+import { axiosInstance } from '@/lib/axios';
+
+declare module 'next-auth' {
+  interface User {
+    accessToken: string;
+  }
+}
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
   providers: [Google],
   callbacks: {
-    async jwt({ token }) {
-      if (!token.id) {
-        try {
-          const res = await axiosInstance.get('/auth/add_session_user_data', {
-            params: { email: token.email },
-          });
-          if (res.status === 200) {
-            token.id = res.data.id;
-          }
-        } catch (error) {
-          console.warn(error);
-        }
+    async jwt({ token, user }) {
+      if (user?.id && user?.accessToken) {
+        token.id = user.id;
+        token.accessToken = user.accessToken;
       }
       return token;
     },
     async session({ session, token }) {
-      if (token.id) {
+      if (token.accessToken && token.id) {
         session.user.id = token.id as string;
+        session.user.accessToken = token.accessToken as string;
       }
       return session;
     },
@@ -39,6 +38,8 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
           avatarUrl,
         });
         if (res.status === 200) {
+          user.id = res.data.id;
+          user.accessToken = res.data.token;
           return true;
         } else {
           return false;

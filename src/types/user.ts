@@ -5,6 +5,7 @@ export type UserInfo = {
 };
 
 export type UserParams = {
-  id?: string | string[];
+  id: string;
+  token?: string;
   close?: () => void;
 };

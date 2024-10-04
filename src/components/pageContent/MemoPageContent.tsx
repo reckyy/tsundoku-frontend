@@ -25,7 +25,7 @@ import {
   GridItemType,
 } from '@/types/index';
 import MemoLoading from '@/components/loading/MemoLoading';
-import axiosInstance from '@/lib/axios';
+import { axiosInstance, setHeader } from '@/lib/axios';
 
 function GridItem({
   imageSpan,
@@ -68,9 +68,8 @@ export default function MemoPageContent() {
   const dynamicParams = useParams<{ bookId: string }>();
   const bookId = Number(dynamicParams.bookId);
   const { data: session, status } = useSession();
-  const userId = session?.user?.id;
+  const token = session?.user?.accessToken;
   const params = {
-    userId,
     bookId,
   };
   const [bookWithMemos, setBookWithMemos] = useState<BookWithMemos>();
@@ -79,6 +78,7 @@ export default function MemoPageContent() {
   const fetchable = status === 'authenticated' && session?.user?.email;
 
   async function fetcher(url: string, params: MemoParams) {
+    await setHeader(token!);
     const res = await axiosInstance.get(url, { params });
     return {
       book: {
@@ -101,7 +101,7 @@ export default function MemoPageContent() {
 
   const handleSave = async (content: string, title: string) => {
     SaveMemo({
-      userId,
+      token,
       bookWithMemos,
       setBookWithMemos,
       heading,
@@ -110,7 +110,10 @@ export default function MemoPageContent() {
     });
   };
 
-  if (error) return <div>failed to load</div>;
+  if (error) {
+    console.log(error);
+    return <div>failed to load</div>;
+  }
   if (isLoading || !bookWithMemos)
     return (
       <div>

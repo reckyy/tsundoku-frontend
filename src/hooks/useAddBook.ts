@@ -3,11 +3,11 @@ import toast from 'react-hot-toast';
 import { useSession } from 'next-auth/react';
 import { useState } from 'react';
 import { UserBook } from '@/types/index';
-import axiosInstance from '@/lib/axios';
+import { axiosInstance, setHeader } from '@/lib/axios';
 
 const useAddBook = (book: UserBook) => {
   const { data: session } = useSession();
-  const userId = session?.user?.id;
+  const token = session?.user?.accessToken;
   const router = useRouter();
   const [value, setValue] = useState<string | number>('');
 
@@ -17,12 +17,12 @@ const useAddBook = (book: UserBook) => {
       return;
     }
 
+    await setHeader(token!);
     try {
       await axiosInstance.post('/books', {
         title: book.title,
         author: book.author,
         coverImageUrl: book.coverImageUrl,
-        userId,
         headingNumber: value,
       });
       router.push('/');

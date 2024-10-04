@@ -8,7 +8,7 @@ import getBooks from '@/utils/getBooks';
 export default async function TopPageContent() {
   const session = await auth();
   if (session?.user) {
-    const bookItems = await getBooks(session.user.id);
+    const bookItems = await getBooks(session.user.accessToken);
 
     return (
       <Container my="md">

@@ -8,11 +8,11 @@ import { useState } from 'react';
 import { BookResponse, Book, Log } from '@/types/index';
 import { Container, Space, Paper } from '@mantine/core';
 import { UserParams } from '@/types/index';
-import axiosInstance from '@/lib/axios';
+import { axiosInstance } from '@/lib/axios';
 
 export default function UserPageContent() {
   const dynamicParams = useParams();
-  const params = { id: dynamicParams.id };
+  const params = { id: dynamicParams.id as string };
   const apiUserUrl = `/users/${dynamicParams.id}`;
   const [bookItems, setBookItems] = useState<Book[]>([]);
   const [readingLogs, setReadingLogs] = useState<Log[]>([]);

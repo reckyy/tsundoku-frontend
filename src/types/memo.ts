@@ -7,7 +7,6 @@ export type Memo = {
 };
 
 export type MemoParams = {
-  userId: string | undefined;
   bookId: number;
 };
 
@@ -23,7 +22,7 @@ export type GridItemType = {
 };
 
 export type saveMemoType = {
-  userId: string | undefined;
+  token: string | undefined;
   bookWithMemos: BookWithMemos | undefined;
   heading: string;
   content: string;

@@ -2,8 +2,12 @@ import { Text, Divider, Space, Button, Group } from '@mantine/core';
 import { UserParams } from '@/types/index';
 import useDeleteUser from '@/hooks/useDeleteUser';
 
-export default function DeleteUserConfirmModal({ id, close }: UserParams) {
-  const { handleDeleteUser } = useDeleteUser(id);
+export default function DeleteUserConfirmModal({
+  id,
+  token,
+  close,
+}: UserParams) {
+  const { handleDeleteUser } = useDeleteUser(id, token!);
 
   return (
     <>

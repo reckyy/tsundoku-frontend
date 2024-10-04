@@ -17,11 +17,12 @@ export type UserBook = {
 
 export type BookMenuProps = {
   bookId: number;
-  userId: string | undefined;
+  token: string;
 };
 
 export type DeleteBookModalProps = {
-  params: BookMenuProps;
+  bookId: number;
+  token: string;
   close: () => void;
 };
 
@@ -31,7 +32,7 @@ export type BookProps = {
 
 export type BookItemsProps = {
   bookItems: UserBook[];
-  userId?: string;
+  token?: string;
 };
 
 export type BookResponse = {

@@ -16,15 +16,15 @@ import { BookItemsProps, UserBook } from '@/types/index';
 import DeleteBookConfirmModal from '../modal/DeleteBookConfirmModal';
 import toast from 'react-hot-toast';
 import { useState } from 'react';
-import axiosInstance from '@/lib/axios';
+import { axiosInstance, setHeader } from '@/lib/axios';
 
-export default function DndList({ bookItems, userId }: BookItemsProps) {
+export default function DndList({ bookItems, token }: BookItemsProps) {
   const [source, setSource] = useState<number>(0);
   const [state, stateHandlers] = useListState(bookItems);
   const [deleteParamsState, setDeleteParamsState] = useSetState({
     bookId: 0,
     position: 0,
-    userId,
+    token,
   });
   const [opened, { open, close }] = useDisclosure(false);
 
@@ -57,8 +57,8 @@ export default function DndList({ bookItems, userId }: BookItemsProps) {
     const params = {
       bookId: book?.id,
       destinationBookId: destinationBook?.id,
-      userId,
     };
+    await setHeader(token!);
     try {
       await axiosInstance.post('/user_books/move_position', params);
       stateHandlers.swap({ from: source, to: index });
@@ -117,7 +117,11 @@ export default function DndList({ bookItems, userId }: BookItemsProps) {
         withCloseButton={false}
         centered
       >
-        <DeleteBookConfirmModal params={deleteParamsState} close={close} />
+        <DeleteBookConfirmModal
+          bookId={deleteParamsState.bookId}
+          token={token!}
+          close={close}
+        />
       </Modal>
       {items}
     </>

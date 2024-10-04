@@ -5,7 +5,8 @@ import getBooks from '@/utils/getBooks';
 
 export default async function BookShelfPageContent() {
   const session = await auth();
-  const bookItems = await getBooks(session?.user?.id);
+  const token = session?.user?.accessToken;
+  const bookItems = await getBooks(token!);
 
   return (
     <Container my="md">
@@ -13,7 +14,7 @@ export default async function BookShelfPageContent() {
         {session?.user?.name}さんの本棚
       </Title>
       <Space h={30} />
-      <DndList bookItems={bookItems} userId={session?.user?.id} />
+      <DndList bookItems={bookItems} token={token} />
     </Container>
   );
 }

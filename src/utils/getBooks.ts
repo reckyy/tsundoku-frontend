@@ -1,9 +1,9 @@
 import { BookResponse } from '@/types/index';
-import axiosInstance from '@/lib/axios';
+import { axiosInstance, setHeader } from '@/lib/axios';
 
-export default async function getBooks(userId: string | undefined) {
-  const params = { userId };
-  const res = await axiosInstance.get('/books', { params });
+export default async function getBooks(token: string) {
+  await setHeader(token);
+  const res = await axiosInstance.get('/books');
   return res.data.map((book: BookResponse) => ({
     ...book,
     coverImageUrl: book.cover_image_url,

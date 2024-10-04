@@ -1,9 +1,9 @@
 import toast from 'react-hot-toast';
 import { saveMemoType } from '@/types/index';
-import axiosInstance from '@/lib/axios';
+import { axiosInstance, setHeader } from '@/lib/axios';
 
 export default async function SaveMemo({
-  userId,
+  token,
   bookWithMemos,
   setBookWithMemos,
   heading,
@@ -14,22 +14,21 @@ export default async function SaveMemo({
   const memoId = currentHeading?.memo.id;
   const headingId = currentHeading?.id;
 
+  await setHeader(token!);
+
   try {
     await Promise.all([
       axiosInstance.patch(`/headings/${headingId}`, {
-        userId,
         id: headingId,
         title,
       }),
       axiosInstance.patch(`/memos/${memoId}`, {
-        userId,
         memo: {
           id: memoId,
           body: content,
         },
       }),
       axiosInstance.post(`/reading_logs`, {
-        userId,
         memoId,
       }),
     ]);
