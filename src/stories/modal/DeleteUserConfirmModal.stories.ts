@@ -2,9 +2,8 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { http, HttpResponse } from 'msw';
 import { userEvent, within, expect, waitFor } from '@storybook/test';
 import DeleteUserConfirmModal from '@/components/modal/DeleteUserConfirmModal';
-import { API_CONSTS } from '@/consts/apiConsts';
 
-const { RAILS_API_URL } = API_CONSTS;
+const RAILS_API_URL = process.env.STORYBOOK_NEXT_PUBLIC_RAILS_API_URL;
 
 const meta: Meta<typeof DeleteUserConfirmModal> = {
   component: DeleteUserConfirmModal,
@@ -16,6 +15,7 @@ const meta: Meta<typeof DeleteUserConfirmModal> = {
   },
   args: {
     id: '1',
+    token: 'hogehoge',
     close: () => {
       console.log('モーダルを閉じました。');
     },

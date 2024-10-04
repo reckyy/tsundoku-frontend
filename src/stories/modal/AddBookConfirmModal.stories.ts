@@ -2,9 +2,8 @@ import type { Meta, StoryObj } from '@storybook/react';
 import AddBookConfirmModal from '@/components/modal/AddBookConfirmModal';
 import { http, HttpResponse } from 'msw';
 import { userEvent, within, expect, waitFor } from '@storybook/test';
-import { API_CONSTS } from '@/consts/apiConsts';
 
-const { RAILS_API_URL } = API_CONSTS;
+const RAILS_API_URL = process.env.STORYBOOK_NEXT_PUBLIC_RAILS_API_URL;
 
 const meta: Meta<typeof AddBookConfirmModal> = {
   component: AddBookConfirmModal,

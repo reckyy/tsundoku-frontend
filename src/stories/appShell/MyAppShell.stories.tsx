@@ -4,9 +4,6 @@ import dayjs from 'dayjs';
 import MyAppShell from '@/components/appShell/MyAppShell';
 import BookItems from '@/components/bookshelf/BookItems';
 import Calendar from '@/components/calendar/Calendar';
-import { API_CONSTS } from '@/consts/apiConsts';
-
-const { RAILS_API_URL } = API_CONSTS;
 
 const mockBooks = [
   {
@@ -73,9 +70,12 @@ export const WithBooksAndCalendar: Story = {
   parameters: {
     msw: {
       handlers: [
-        http.get(`${RAILS_API_URL}/reading_logs`, () => {
-          return HttpResponse.json(readingLogs);
-        }),
+        http.get(
+          `${process.env.STORYBOOK_NEXT_PUBLIC_RAILS_API_URL}/reading_logs`,
+          () => {
+            return HttpResponse.json(readingLogs);
+          },
+        ),
       ],
     },
   },

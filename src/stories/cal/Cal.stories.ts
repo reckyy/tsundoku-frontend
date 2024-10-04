@@ -2,9 +2,6 @@ import type { Meta, StoryObj } from '@storybook/react';
 import dayjs from 'dayjs';
 import Calendar from '@/components/calendar/Calendar';
 import { http, HttpResponse } from 'msw';
-import { API_CONSTS } from '@/consts/apiConsts';
-
-const { RAILS_API_URL } = API_CONSTS;
 
 const previousDay = dayjs().subtract(1, 'd').format('YYYY-MM-DD');
 const today = dayjs().format('YYYY-MM-DD');
@@ -37,9 +34,12 @@ export const AppearenceTest: Story = {
   parameters: {
     msw: {
       handlers: [
-        http.get(`${RAILS_API_URL}/reading_logs`, () => {
-          return HttpResponse.json(readingCalendarogs);
-        }),
+        http.get(
+          `${process.env.STORYBOOK_NEXT_PUBLIC_RAILS_API_URL}/reading_logs`,
+          () => {
+            return HttpResponse.json(readingCalendarogs);
+          },
+        ),
       ],
     },
   },

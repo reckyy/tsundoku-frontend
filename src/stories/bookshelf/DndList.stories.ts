@@ -9,9 +9,8 @@ import {
   userEvent,
 } from '@storybook/test'; // userEventではdraganddropができないため、fireEventを採用している。
 import DndList from '@/components/bookshelf/DndList';
-import { API_CONSTS } from '@/consts/apiConsts';
 
-const { RAILS_API_URL } = API_CONSTS;
+const RAILS_API_URL = process.env.STORYBOOK_NEXT_PUBLIC_RAILS_API_URL;
 
 const meta: Meta<typeof DndList> = {
   component: DndList,
