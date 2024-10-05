@@ -28,6 +28,7 @@ const meta: Meta<typeof BookItems> = {
           'https://thumbnail.image.rakuten.co.jp/@0_mall/book/cabinet/4373/9784297124373_1_5.jpg?_ex=200x200',
       },
     ],
+    isPublic: false,
   },
 };
 

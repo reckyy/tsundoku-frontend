@@ -1,6 +1,17 @@
 import toast from 'react-hot-toast';
-import { saveMemoType } from '@/types/index';
 import { axiosInstance, setHeader } from '@/lib/axios';
+import { BookWithMemos } from '@/types/index';
+
+export type saveMemoType = {
+  token: string | undefined;
+  bookWithMemos: BookWithMemos | undefined;
+  heading: string;
+  content: string;
+  title: string;
+  setBookWithMemos: React.Dispatch<
+    React.SetStateAction<BookWithMemos | undefined>
+  >;
+};
 
 export default async function SaveMemo({
   token,

@@ -12,13 +12,18 @@ import {
 } from '@mantine/core';
 import { useListState, useDisclosure, useSetState } from '@mantine/hooks';
 import { IconTrash } from '@tabler/icons-react';
-import { BookItemsProps, UserBook } from '@/types/index';
+import { Book } from '@/types/index';
 import DeleteBookConfirmModal from '../modal/DeleteBookConfirmModal';
 import toast from 'react-hot-toast';
 import { useState } from 'react';
 import { axiosInstance, setHeader } from '@/lib/axios';
 
-export default function DndList({ bookItems, token }: BookItemsProps) {
+export type DndListProps = {
+  bookItems: Book[];
+  token: string;
+};
+
+export default function DndList({ bookItems, token }: DndListProps) {
   const [source, setSource] = useState<number>(0);
   const [state, stateHandlers] = useListState(bookItems);
   const [deleteParamsState, setDeleteParamsState] = useSetState({
@@ -28,7 +33,7 @@ export default function DndList({ bookItems, token }: BookItemsProps) {
   });
   const [opened, { open, close }] = useDisclosure(false);
 
-  const handleClick = (item: UserBook) => {
+  const handleClick = (item: Book) => {
     setDeleteParamsState({ bookId: item.id, position: state.indexOf(item) });
     open();
   };

@@ -2,10 +2,10 @@ import { useRouter } from 'next/navigation';
 import toast from 'react-hot-toast';
 import { useSession } from 'next-auth/react';
 import { useState } from 'react';
-import { UserBook } from '@/types/index';
+import { Book } from '@/types/index';
 import { axiosInstance, setHeader } from '@/lib/axios';
 
-const useAddBook = (book: UserBook) => {
+const useAddBook = (book: Book) => {
   const { data: session } = useSession();
   const token = session?.user?.accessToken;
   const router = useRouter();

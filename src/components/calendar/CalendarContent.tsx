@@ -3,7 +3,11 @@
 import { ScrollArea, Center } from '@mantine/core';
 import HeatMap from '@uiw/react-heat-map';
 import Tooltip from '@uiw/react-tooltip';
-import { ReadingLogs } from '@/types/index';
+import { Log } from '@/types/index';
+
+type ReadingLogs = {
+  readingLogs: Log[];
+};
 
 export default function CalendarContent({ readingLogs }: ReadingLogs) {
   const value = readingLogs.map((log) => ({

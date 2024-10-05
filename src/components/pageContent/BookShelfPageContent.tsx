@@ -14,7 +14,7 @@ export default async function BookShelfPageContent() {
         {session?.user?.name}さんの本棚
       </Title>
       <Space h={30} />
-      <DndList bookItems={bookItems} token={token} />
+      <DndList bookItems={bookItems} token={token!} />
     </Container>
   );
 }

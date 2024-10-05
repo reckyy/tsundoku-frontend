@@ -1,9 +1,9 @@
 import { Card, Image, Text, Button, Flex, NumberInput } from '@mantine/core';
-import { BookProps } from '@/types/index';
+import { Book } from '@/types/index';
 import useAddBook from '@/hooks/useAddBook';
 import { SessionProvider } from 'next-auth/react';
 
-export default function AddBookConfirmModal({ book }: BookProps) {
+export default function AddBookConfirmModal({ book }: { book: Book }) {
   return (
     <SessionProvider>
       <AddBookConfirmContent book={book} />
@@ -11,7 +11,7 @@ export default function AddBookConfirmModal({ book }: BookProps) {
   );
 }
 
-const AddBookConfirmContent = ({ book }: BookProps) => {
+const AddBookConfirmContent = ({ book }: { book: Book }) => {
   const { value, setValue, handleSubmit } = useAddBook(book);
 
   return (

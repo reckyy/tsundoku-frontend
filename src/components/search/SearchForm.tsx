@@ -15,10 +15,14 @@ import {
 } from '@mantine/core';
 import { IconSearch, IconArrowRight } from '@tabler/icons-react';
 import { useForm } from '@mantine/form';
-import { SearchFormProps } from '@/types/index';
 import { IconChevronDown } from '@tabler/icons-react';
 import { useState } from 'react';
 import { searchBooks } from '@/utils/searchBooks';
+import { Book } from '@/types/index';
+
+type SearchFormProps = {
+  onResults: (results: Book[]) => void;
+};
 
 const SearchForm = ({ onResults }: SearchFormProps) => {
   const theme = useMantineTheme();

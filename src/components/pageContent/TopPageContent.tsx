@@ -12,7 +12,7 @@ export default async function TopPageContent() {
 
     return (
       <Container my="md">
-        <BookItems bookItems={bookItems} />
+        <BookItems bookItems={bookItems} isPublic={false} />
         <Space h={60} />
         <Paper withBorder shadow="xs" radius="md" p="xl">
           <Text ta={'center'}>毎日、コツコツと。</Text>

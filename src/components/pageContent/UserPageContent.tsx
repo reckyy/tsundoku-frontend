@@ -5,9 +5,8 @@ import CalendarContent from '@/components/calendar/CalendarContent';
 import { useParams } from 'next/navigation';
 import useSWR from 'swr';
 import { useState } from 'react';
-import { BookResponse, Book, Log } from '@/types/index';
+import { Book, Log } from '@/types/index';
 import { Container, Space, Paper } from '@mantine/core';
-import { UserParams } from '@/types/index';
 import { axiosInstance } from '@/lib/axios';
 
 export default function UserPageContent() {
@@ -17,7 +16,7 @@ export default function UserPageContent() {
   const [bookItems, setBookItems] = useState<Book[]>([]);
   const [readingLogs, setReadingLogs] = useState<Log[]>([]);
 
-  function fetcher(url: string, params: UserParams) {
+  function fetcher(url: string, params: { id: string }) {
     return axiosInstance.get(url, { params }).then((res) => res.data);
   }
 
@@ -26,10 +25,10 @@ export default function UserPageContent() {
     ([url, params]) => fetcher(url, params),
     {
       onSuccess: (data) => {
-        const fetchedBookItems = data.books.map((book: BookResponse) => ({
+        const fetchedBookItems = data.books.map((book: Book) => ({
           id: book.id,
           title: book.title,
-          coverImageUrl: book.cover_image_url,
+          coverImageUrl: book.coverImageUrl,
         }));
         setBookItems(fetchedBookItems);
         setReadingLogs(data.logs);
@@ -44,7 +43,7 @@ export default function UserPageContent() {
     <div>
       <title>公開ページ</title>
       <Container my="md">
-        <BookItems bookItems={bookItems} />
+        <BookItems bookItems={bookItems} isPublic={true} />
         <Space h={60} />
         <Paper withBorder shadow="xs" radius="md" p="xl">
           <Space h={20} />

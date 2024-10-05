@@ -1,7 +1,12 @@
 import { Text, Divider, Group, Button, Space } from '@mantine/core';
 import { IconTrash } from '@tabler/icons-react';
-import { DeleteBookModalProps } from '@/types/book';
 import useDeleteBook from '@/hooks/useDeleteBook';
+
+type DeleteBookModalProps = {
+  bookId: number;
+  token: string;
+  close: () => void;
+};
 
 export default function DeleteBookConfirmModal({
   bookId,

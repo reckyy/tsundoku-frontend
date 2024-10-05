@@ -18,14 +18,20 @@ import { useSession } from 'next-auth/react';
 import { useState } from 'react';
 import useSWR from 'swr';
 import SaveMemo from '@/utils/saveMemo';
-import {
-  MemoParams,
-  BookWithMemos,
-  Heading,
-  GridItemType,
-} from '@/types/index';
+import { BookWithMemos, Heading } from '@/types/index';
 import MemoLoading from '@/components/loading/MemoLoading';
 import { axiosInstance, setHeader } from '@/lib/axios';
+
+type GridItemType = {
+  imageSpan: number | undefined;
+  headingSpan: number | undefined;
+  offset: number | undefined;
+  imageSrc: string | undefined;
+  imageAlt: string | undefined;
+  headings: Heading[];
+  heading: string;
+  setHeading: React.Dispatch<React.SetStateAction<string>>;
+};
 
 function GridItem({
   imageSpan,
@@ -77,7 +83,7 @@ export default function MemoPageContent() {
 
   const fetchable = status === 'authenticated' && session?.user?.email;
 
-  async function fetcher(url: string, params: MemoParams) {
+  async function fetcher(url: string, params: { bookId: number }) {
     await setHeader(token!);
     const res = await axiosInstance.get(url, { params });
     return {

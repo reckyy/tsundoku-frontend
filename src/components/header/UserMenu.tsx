@@ -14,11 +14,16 @@ import {
 } from '@tabler/icons-react';
 import { signOut } from 'next-auth/react';
 import toast from 'react-hot-toast';
-import { UserInfo } from '@/types/index';
 import Link from 'next/link';
 import { useClipboard } from '@mantine/hooks';
 
-export default function UserMenu({ name, id, image }: UserInfo) {
+type UserMenuProps = {
+  name: string;
+  id: string;
+  image: string;
+};
+
+export default function UserMenu({ name, id, image }: UserMenuProps) {
   const [userMenuOpened, setUserMenuOpened] = useState(false);
   const clipboard = useClipboard();
   const rootUrl = process.env.NEXT_PUBLIC_NEXT_URL;

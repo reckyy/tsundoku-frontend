@@ -1,10 +1,10 @@
 import { useDisclosure } from '@mantine/hooks';
 import { Modal, Button } from '@mantine/core';
 import AddBookConfirmModal from '../modal/AddBookConfirmModal';
-import { BookProps } from '@/types/index';
+import { Book } from '@/types/index';
 import { IconBookUpload } from '@tabler/icons-react';
 
-const AddBookConfirmButton = ({ book }: BookProps) => {
+const AddBookConfirmButton = ({ book }: { book: Book }) => {
   const [opened, { open, close }] = useDisclosure(false);
 
   return (
