@@ -86,13 +86,7 @@ export default function MemoPageContent() {
   async function fetcher(url: string, params: { bookId: number }) {
     await setHeader(token!);
     const res = await axiosInstance.get(url, { params });
-    return {
-      book: {
-        title: res.data.book.title,
-        coverImageUrl: res.data.book.cover_image_url,
-      },
-      headings: res.data.headings,
-    };
+    return res.data;
   }
 
   const { error, isLoading } = useSWR(
@@ -116,10 +110,7 @@ export default function MemoPageContent() {
     });
   };
 
-  if (error) {
-    console.log(error);
-    return <div>failed to load</div>;
-  }
+  if (error) return <div>failed to load</div>;
   if (isLoading || !bookWithMemos)
     return (
       <div>

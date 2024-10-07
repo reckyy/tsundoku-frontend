@@ -7,7 +7,7 @@ export default async function Calendar() {
   const token = session?.user?.accessToken;
   await setHeader(token!);
   const res = await axiosInstance.get('/reading_logs', {});
-  const readingLogs = res.data;
+  const readingLogs = res.data.logs;
 
   return <CalendarContent readingLogs={readingLogs} />;
 }
