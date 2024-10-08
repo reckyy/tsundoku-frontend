@@ -34,10 +34,8 @@ export default async function SaveMemo({
         title,
       }),
       axiosInstance.patch(`/memos/${memoId}`, {
-        memo: {
-          id: memoId,
-          body: content,
-        },
+        id: memoId,
+        body: content,
       }),
       axiosInstance.post(`/reading_logs`, {
         memoId,
