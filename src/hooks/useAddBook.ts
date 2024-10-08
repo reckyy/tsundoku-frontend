@@ -19,12 +19,19 @@ const useAddBook = (book: Book) => {
 
     await setHeader(token!);
     try {
-      await axiosInstance.post('/books', {
-        title: book.title,
-        author: book.author,
-        coverImageUrl: book.coverImageUrl,
-        headingNumber: value,
-      });
+      await Promise.all([
+        axiosInstance.post('/books', {
+          title: book.title,
+          author: book.author,
+          coverImageUrl: book.coverImageUrl,
+        }),
+        axiosInstance.post('/user_books', {
+          title: book.title,
+          author: book.author,
+          coverImageUrl: book.coverImageUrl,
+          headingNumber: value,
+        }),
+      ]);
       router.push('/');
       router.refresh();
       toast.success('本を保存しました！');
