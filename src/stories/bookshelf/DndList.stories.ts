@@ -24,18 +24,24 @@ const meta: Meta<typeof DndList> = {
     bookItems: [
       {
         id: 1,
-        title: '実践Next.js -- App Routerで進化するWebアプリ開発',
-        author: '吉井 健文',
-        coverImageUrl:
-          'https://thumbnail.image.rakuten.co.jp/@0_mall/book/cabinet/0618/9784297140618_1_2.jpg?_ex=200x200',
+        book: {
+          id: 1,
+          title: '実践Next.js -- App Routerで進化するWebアプリ開発',
+          author: '吉井 健文',
+          coverImageUrl:
+            'https://thumbnail.image.rakuten.co.jp/@0_mall/book/cabinet/0618/9784297140618_1_2.jpg?_ex=200x200',
+        },
       },
       {
         id: 2,
-        title:
-          'プロを目指す人のためのRuby入門［改訂2版］　言語仕様からテスト駆動開発・デバッグ技法まで',
-        author: '伊藤 淳一',
-        coverImageUrl:
-          'https://thumbnail.image.rakuten.co.jp/@0_mall/book/cabinet/4373/9784297124373_1_5.jpg?_ex=200x200',
+        book: {
+          id: 2,
+          title:
+            'プロを目指す人のためのRuby入門［改訂2版］　言語仕様からテスト駆動開発・デバッグ技法まで',
+          author: '伊藤 淳一',
+          coverImageUrl:
+            'https://thumbnail.image.rakuten.co.jp/@0_mall/book/cabinet/4373/9784297124373_1_5.jpg?_ex=200x200',
+        },
       },
     ],
     token: 'hogehoge',
@@ -49,7 +55,7 @@ export const AppearenceTest: Story = {
   parameters: {
     msw: {
       handlers: [
-        http.post(`${RAILS_API_URL}/user_books/move_position`, () => {
+        http.patch(`${RAILS_API_URL}/user_books/1/position`, () => {
           return new HttpResponse();
         }),
       ],
@@ -79,7 +85,7 @@ export const DndTest: Story = {
   parameters: {
     msw: {
       handlers: [
-        http.post(`${RAILS_API_URL}/user_books/move_position`, () => {
+        http.patch(`${RAILS_API_URL}/user_books/1/position`, () => {
           return new HttpResponse();
         }),
       ],
@@ -109,7 +115,7 @@ export const DndFailedTest: Story = {
   parameters: {
     msw: {
       handlers: [
-        http.post(`${RAILS_API_URL}/user_books/move_position`, () => {
+        http.patch(`${RAILS_API_URL}/user_books/1/position`, () => {
           return new HttpResponse('failed', { status: 420 });
         }),
       ],

@@ -14,7 +14,7 @@ const meta: Meta<typeof DeleteBookConfirmModal> = {
     },
   },
   args: {
-    bookId: 1,
+    userBookId: 1,
     token: 'hogehoge',
     close: () => {
       console.log('モーダルを閉じました。');

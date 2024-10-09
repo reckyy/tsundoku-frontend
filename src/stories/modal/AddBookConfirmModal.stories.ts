@@ -61,6 +61,9 @@ export const AddBookTest: Story = {
         http.post(`${RAILS_API_URL}/books`, () => {
           return new HttpResponse();
         }),
+        http.post(`${RAILS_API_URL}/user_books`, () => {
+          return new HttpResponse();
+        }),
       ],
     },
   },
