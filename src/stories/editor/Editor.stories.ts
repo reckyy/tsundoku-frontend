@@ -25,7 +25,6 @@ const meta: Meta<typeof Editor> = {
     heading: testData,
     handleSave: async () => {
       toast.success('メモの保存が完了しました。');
-      return true;
     },
   },
 };

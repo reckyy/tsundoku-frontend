@@ -18,6 +18,7 @@ const meta: Meta<typeof BookItem> = {
       coverImageUrl:
         'https://thumbnail.image.rakuten.co.jp/@0_mall/book/cabinet/0618/9784297140618_1_2.jpg?_ex=200x200',
     },
+    isPublic: false,
   },
 };
 

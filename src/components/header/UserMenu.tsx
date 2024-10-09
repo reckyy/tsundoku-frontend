@@ -12,19 +12,24 @@ import {
   IconBook,
   IconSearch,
 } from '@tabler/icons-react';
-import { handleSignOut } from '../../feature/SignOut';
+import { signOut } from 'next-auth/react';
 import toast from 'react-hot-toast';
-import { UserInfo } from '@/types/index';
 import Link from 'next/link';
 import { useClipboard } from '@mantine/hooks';
 
-export default function UserMenu({ name, id, image }: UserInfo) {
+type UserMenuProps = {
+  name: string;
+  id: string;
+  image: string;
+};
+
+export default function UserMenu({ name, id, image }: UserMenuProps) {
   const [userMenuOpened, setUserMenuOpened] = useState(false);
   const clipboard = useClipboard();
-  const baseUrl: string = process.env.NEXT_PUBLIC_NEXT_URL ?? '';
+  const rootUrl = process.env.NEXT_PUBLIC_NEXT_URL;
 
   const handleCopyUrl = () => {
-    const url = `${baseUrl}/users/${id}`;
+    const url = `${rootUrl}/users/${id}`;
     clipboard.copy(url);
 
     if (!clipboard.error && id !== undefined) {
@@ -64,19 +69,17 @@ export default function UserMenu({ name, id, image }: UserInfo) {
       </Menu.Target>
       <Menu.Dropdown>
         <Menu.Label>Menu</Menu.Label>
-        <form action={handleSignOut}>
-          <Menu.Item
-            leftSection={
-              <IconLogout
-                style={{ width: rem(16), height: rem(16) }}
-                stroke={1.5}
-              />
-            }
-            type="submit"
-          >
-            ログアウト
-          </Menu.Item>
-        </form>
+        <Menu.Item
+          onClick={() => signOut()}
+          leftSection={
+            <IconLogout
+              style={{ width: rem(16), height: rem(16) }}
+              stroke={1.5}
+            />
+          }
+        >
+          ログアウト
+        </Menu.Item>
 
         <Link href={'/search_books'}>
           <Menu.Item

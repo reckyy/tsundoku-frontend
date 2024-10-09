@@ -11,8 +11,13 @@ import ts from 'highlight.js/lib/languages/typescript';
 import rb from 'highlight.js/lib/languages/ruby';
 import { Button, Grid, GridCol, TextInput } from '@mantine/core';
 import { useEffect, useRef, useState } from 'react';
-import { EditorProps } from '@/types/index';
+import { Heading } from '@/types/index';
 import classes from './Editor.module.css';
+
+type EditorProps = {
+  heading: Heading | undefined;
+  handleSave: (content: string, title: string) => void;
+};
 
 const lowlight = createLowlight();
 

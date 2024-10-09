@@ -9,9 +9,9 @@ import {
   Center,
 } from '@mantine/core';
 import AddBookConfirmButton from '../button/AddBookConfirmButton';
-import { BookItemsProps } from '@/types/index';
+import { Book } from '@/types/index';
 
-const Results = ({ bookItems }: BookItemsProps) => {
+const Results = ({ bookItems }: { bookItems: Book[] }) => {
   return (
     <>
       {bookItems.length > 1 ? (
