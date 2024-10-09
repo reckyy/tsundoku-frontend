@@ -7,6 +7,11 @@ export type Book = {
   coverImageUrl: string;
 };
 
+export type UserBook = {
+  id: number;
+  book: Book;
+};
+
 export type BookWithMemos = {
   book: {
     title: string;

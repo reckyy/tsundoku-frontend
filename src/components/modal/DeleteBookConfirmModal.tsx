@@ -3,17 +3,17 @@ import { IconTrash } from '@tabler/icons-react';
 import useDeleteBook from '@/hooks/useDeleteBook';
 
 type DeleteBookModalProps = {
-  bookId: number;
+  userBookId: number;
   token: string;
   close: () => void;
 };
 
 export default function DeleteBookConfirmModal({
-  bookId,
+  userBookId,
   token,
   close,
 }: DeleteBookModalProps) {
-  const { handleDeleteBook } = useDeleteBook(bookId, token);
+  const { handleDeleteBook } = useDeleteBook(userBookId, token);
 
   return (
     <>

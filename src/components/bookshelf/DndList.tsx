@@ -12,14 +12,14 @@ import {
 } from '@mantine/core';
 import { useListState, useDisclosure, useSetState } from '@mantine/hooks';
 import { IconTrash } from '@tabler/icons-react';
-import { Book } from '@/types/index';
+import { UserBook } from '@/types/index';
 import DeleteBookConfirmModal from '../modal/DeleteBookConfirmModal';
 import toast from 'react-hot-toast';
 import { useState } from 'react';
 import { axiosInstance, setHeader } from '@/lib/axios';
 
 export type DndListProps = {
-  bookItems: Book[];
+  bookItems: UserBook[];
   token: string;
 };
 
@@ -27,14 +27,17 @@ export default function DndList({ bookItems, token }: DndListProps) {
   const [source, setSource] = useState<number>(0);
   const [state, stateHandlers] = useListState(bookItems);
   const [deleteParamsState, setDeleteParamsState] = useSetState({
-    bookId: 0,
+    userBookId: 0,
     position: 0,
     token,
   });
   const [opened, { open, close }] = useDisclosure(false);
 
-  const handleClick = (item: Book) => {
-    setDeleteParamsState({ bookId: item.id, position: state.indexOf(item) });
+  const handleClick = (item: UserBook) => {
+    setDeleteParamsState({
+      userBookId: item.id,
+      position: state.indexOf(item),
+    });
     open();
   };
 
@@ -57,15 +60,15 @@ export default function DndList({ bookItems, token }: DndListProps) {
       return;
     }
 
-    const book = state.find((_element, idx) => idx === source);
+    const userBook = state.find((_element, idx) => idx === source);
     const destinationBook = state.find((_element, idx) => idx === index);
     const params = {
-      bookId: book?.id,
+      userBookId: userBook?.id,
       destinationBookId: destinationBook?.id,
     };
     await setHeader(token!);
     try {
-      await axiosInstance.post('/user_books/move_position', params);
+      await axiosInstance.patch(`/user_books/${userBook?.id}/position`, params);
       stateHandlers.swap({ from: source, to: index });
       toast.success('本の並び替えに成功しました！');
     } catch (error) {
@@ -85,12 +88,16 @@ export default function DndList({ bookItems, token }: DndListProps) {
       <Paper withBorder shadow="xs" radius="md" p="lg" my="md">
         <Grid>
           <Grid.Col span={2}>
-            <Image w={rem(60)} src={item.coverImageUrl} alt={item.title} />
+            <Image
+              w={rem(60)}
+              src={item.book.coverImageUrl}
+              alt={item.book.title}
+            />
           </Grid.Col>
           <Grid.Col span={8}>
-            <Text>{item.title}</Text>
+            <Text>{item.book.title}</Text>
             <Text c="dimmed" size="sm">
-              {item.author}
+              {item.book.author}
             </Text>
           </Grid.Col>
           <Grid.Col offset={1} span={1}>
@@ -123,7 +130,7 @@ export default function DndList({ bookItems, token }: DndListProps) {
         centered
       >
         <DeleteBookConfirmModal
-          bookId={deleteParamsState.bookId}
+          userBookId={deleteParamsState.userBookId}
           token={token!}
           close={close}
         />

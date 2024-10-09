@@ -1,9 +1,9 @@
 import BookItem from './BookItem';
 import { Grid, GridCol, Space, Center, Text } from '@mantine/core';
-import { Book } from '@/types/index';
+import { UserBook } from '@/types/index';
 
 export type BookItemsProps = {
-  bookItems: Book[];
+  bookItems: UserBook[];
   isPublic: boolean;
 };
 
@@ -15,10 +15,10 @@ const BookItems = ({ bookItems, isPublic }: BookItemsProps) => {
           <GridCol span={12}>
             <Space h={40} />
           </GridCol>
-          {bookItems.map((book: Book) => (
-            <GridCol span={{ base: 6, sm: 4 }} key={book.id}>
+          {bookItems.map((userBook: UserBook) => (
+            <GridCol span={{ base: 6, sm: 4 }} key={userBook.book.id}>
               <Center>
-                <BookItem book={book} isPublic={isPublic} />
+                <BookItem book={userBook.book} isPublic={isPublic} />
               </Center>
             </GridCol>
           ))}
