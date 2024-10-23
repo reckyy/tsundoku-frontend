@@ -1,15 +1,13 @@
-import axios from 'axios';
 import CalendarContent from './CalendarContent';
 import { auth } from '@/auth';
+import { axiosInstance, setHeader } from '@/lib/axios';
 
 export default async function Calendar() {
   const session = await auth();
-  const params = { userId: session?.user?.id };
-  const apiUrl: string = process.env.NEXT_PUBLIC_RAILS_API_URL ?? '';
-  const res = await axios.get(`${apiUrl}/reading_logs`, {
-    params,
-  });
-  const readingLogs = res.data;
+  const token = session?.user?.accessToken;
+  await setHeader(token!);
+  const res = await axiosInstance.get('/reading_logs', {});
+  const readingLogs = res.data.logs;
 
   return <CalendarContent readingLogs={readingLogs} />;
 }

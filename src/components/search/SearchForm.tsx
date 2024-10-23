@@ -15,11 +15,14 @@ import {
 } from '@mantine/core';
 import { IconSearch, IconArrowRight } from '@tabler/icons-react';
 import { useForm } from '@mantine/form';
-import axios from 'axios';
-import { SearchFormProps, Item } from '@/types/index';
 import { IconChevronDown } from '@tabler/icons-react';
 import { useState } from 'react';
-import toast from 'react-hot-toast';
+import { searchBooks } from '@/utils/searchBooks';
+import { Book } from '@/types/index';
+
+type SearchFormProps = {
+  onResults: (results: Book[]) => void;
+};
 
 const SearchForm = ({ onResults }: SearchFormProps) => {
   const theme = useMantineTheme();
@@ -41,24 +44,8 @@ const SearchForm = ({ onResults }: SearchFormProps) => {
     </MenuItem>
   ));
 
-  const handleSubmit = async (values: { searchWord: string }) => {
-    const url = `https://app.rakuten.co.jp/services/api/BooksBook/Search/20170404`;
-    const params =
-      selected.label === 'title'
-        ? { applicationId: '1063966721330772407', title: values.searchWord }
-        : { applicationId: '1063966721330772407', author: values.searchWord };
-    try {
-      const res = await axios.get(url, { params });
-      const books = res.data.Items.map((element: Item, index: number) => ({
-        id: index + 1,
-        title: element.Item.title,
-        author: element.Item.author,
-        coverImageUrl: element.Item.largeImageUrl,
-      }));
-      onResults(books);
-    } catch (error) {
-      toast.error('本の検索に失敗しました。');
-    }
+  const handleSubmit = (values: { searchWord: string }) => {
+    searchBooks({ searchWord: values.searchWord, selected, onResults });
   };
 
   return (

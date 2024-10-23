@@ -1,16 +1,18 @@
 'use client';
 
 import { Image } from '@mantine/core';
-import { useSession, SessionProvider } from 'next-auth/react';
-import { BookProps } from '@/types/index';
+import { Book } from '@/types/index';
 import Link from 'next/link';
 
-const BookItemContent = ({ book }: BookProps) => {
-  const { data: session } = useSession();
+export type BookItemProps = {
+  book: Book;
+  isPublic: boolean;
+};
 
+export default function BookItem({ book, isPublic }: BookItemProps) {
   return (
     <>
-      {session && Number(session?.user?.id) === book.userId ? (
+      {!isPublic ? (
         <Link href={`/books/${book.id}/memos`}>
           <Image
             radius="md"
@@ -31,14 +33,4 @@ const BookItemContent = ({ book }: BookProps) => {
       )}
     </>
   );
-};
-
-const BookItem = ({ book }: BookProps) => {
-  return (
-    <SessionProvider>
-      <BookItemContent book={book} />
-    </SessionProvider>
-  );
-};
-
-export default BookItem;
+}

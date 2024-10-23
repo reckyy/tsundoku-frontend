@@ -35,7 +35,7 @@ export const AppearenceTest: Story = {
     msw: {
       handlers: [
         http.get(
-          `${process.env.NEXT_PUBLIC_RAILS_API_URL}/reading_logs`,
+          `${process.env.STORYBOOK_NEXT_PUBLIC_RAILS_API_URL}/reading_logs`,
           () => {
             return HttpResponse.json(readingCalendarogs);
           },
