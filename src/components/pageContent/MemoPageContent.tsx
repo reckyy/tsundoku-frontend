@@ -74,7 +74,7 @@ export default function MemoPageContent() {
   const dynamicParams = useParams<{ bookId: string }>();
   const bookId = Number(dynamicParams.bookId);
   const { data: session, status } = useSession();
-  const token = session?.user?.accessToken;
+  const token = session?.user?.idToken;
   const params = {
     bookId,
   };
