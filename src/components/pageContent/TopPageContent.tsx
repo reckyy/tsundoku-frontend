@@ -1,24 +1,42 @@
 import { auth } from '@/auth';
-import { Container, Space, Paper, Text } from '@mantine/core';
+import { Container, Space, Title, Button, Group } from '@mantine/core';
 import TopPage from '@/components/top/TopPage';
 import BookItems from '@/components/bookshelf/BookItems';
 import Calendar from '@/components/calendar/Calendar';
 import getBooks from '@/utils/getBooks';
+import { IconPlus, IconBook } from '@tabler/icons-react';
+import Link from 'next/link';
 
 export default async function TopPageContent() {
   const session = await auth();
   if (session?.user) {
-    const bookItems = await getBooks(session.user.idToken);
+    const bookItems = await getBooks(session.user.idToken!);
 
     return (
       <Container my="md">
+        <Title size={'h2'} ta={'center'}>
+          読書記録
+        </Title>
+        <Space h={20} />
+        <Calendar />
+        <Space h={20} />
+        <Title size={'h2'} ta={'center'}>
+          本棚
+        </Title>
         <BookItems bookItems={bookItems} isPublic={false} />
         <Space h={60} />
-        <Paper withBorder shadow="xs" radius="md" p="xl">
-          <Text ta={'center'}>毎日、コツコツと。</Text>
-          <Space h={20} />
-          <Calendar />
-        </Paper>
+        <Group justify="center">
+          <Link href="/search_books">
+            <Button rightSection={<IconPlus size={14} />} variant="light">
+              本の追加
+            </Button>
+          </Link>
+          <Link href="/bookshelf/edit">
+            <Button rightSection={<IconBook size={14} />} variant="light">
+              本棚の編集
+            </Button>
+          </Link>
+        </Group>
       </Container>
     );
   } else {
