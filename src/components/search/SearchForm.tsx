@@ -59,6 +59,11 @@ const SearchForm = ({ onResults }: SearchFormProps) => {
               aria-label="search"
               placeholder="本のタイトルや著者"
               rightSectionWidth={42}
+              styles={{
+                input: {
+                  color: '#37352f',
+                },
+              }}
               leftSection={
                 <IconSearch
                   style={{ width: rem(18), height: rem(18) }}

@@ -6,6 +6,8 @@ import CodeBlockLowlight from '@tiptap/extension-code-block-lowlight';
 import { createLowlight } from 'lowlight';
 import TaskItem from '@tiptap/extension-task-item';
 import TipTapTaskList from '@tiptap/extension-task-list';
+import TextStyle from '@tiptap/extension-text-style';
+import { Color } from '@tiptap/extension-color';
 import js from 'highlight.js/lib/languages/javascript';
 import ts from 'highlight.js/lib/languages/typescript';
 import rb from 'highlight.js/lib/languages/ruby';
@@ -40,10 +42,14 @@ export default function Editor({ heading, handleSave }: EditorProps) {
         openOnClick: true,
         autolink: true,
       }),
+      TextStyle,
+      Color,
     ],
     autofocus: true,
     content: memoBody,
   });
+
+  editor?.commands.setColor('#37352f');
 
   const [headingTitle, setHeadingTitle] = useState<string>(title);
   const prevHeading = useRef(heading);
@@ -72,6 +78,11 @@ export default function Editor({ heading, handleSave }: EditorProps) {
             size="xl"
             value={headingTitle}
             placeholder="章のタイトルを書く"
+            styles={{
+              input: {
+                color: '#37352f',
+              },
+            }}
             onChange={(event) => setHeadingTitle(event.currentTarget.value)}
           />
         </GridCol>
