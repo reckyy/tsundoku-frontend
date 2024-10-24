@@ -4,7 +4,7 @@ import { axiosInstance, setHeader } from '@/lib/axios';
 
 export default async function Calendar() {
   const session = await auth();
-  const token = session?.user?.accessToken;
+  const token = session?.user?.idToken;
   await setHeader(token!);
   const res = await axiosInstance.get('/reading_logs', {});
   const readingLogs = res.data.logs;

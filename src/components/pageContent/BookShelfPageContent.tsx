@@ -5,7 +5,7 @@ import getBooks from '@/utils/getBooks';
 
 export default async function BookShelfPageContent() {
   const session = await auth();
-  const token = session?.user?.accessToken;
+  const token = session?.user?.idToken;
   const bookItems = await getBooks(token!);
 
   return (

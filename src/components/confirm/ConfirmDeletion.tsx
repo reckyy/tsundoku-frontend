@@ -17,7 +17,7 @@ import DeleteAccountButton from '../button/DeleteAccountButton';
 export default async function ConfirmDeletion() {
   const session = await auth();
   const id = session?.user?.id;
-  const token = session?.user?.accessToken;
+  const token = session?.user?.idToken;
   return (
     <Container my="md">
       <Title order={3} ta="center">
