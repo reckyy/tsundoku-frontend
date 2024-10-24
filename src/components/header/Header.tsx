@@ -2,7 +2,6 @@ import { auth } from '@/auth';
 import { Group, Text, Container } from '@mantine/core';
 import Image from 'next/image';
 import UserMenu from './UserMenu';
-import ToggleColorButton from '@/components/button/ToggleColorButton';
 import Link from 'next/link';
 
 export async function Header() {
@@ -28,7 +27,6 @@ export async function Header() {
                 image={session.user.image!}
               />
             )}
-            <ToggleColorButton />
           </Group>
         </Group>
       </Group>
