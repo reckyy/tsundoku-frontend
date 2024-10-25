@@ -13,36 +13,21 @@ export default function HeroBullets() {
 
   return (
     <Container my="md">
+      <Space h={40} />
       <Center>
-        <Image src="Tsundoku.png" alt="Logo" w={120} h={120} />
+        <Image src="TopPageTsundoku.png" alt="Logo" w={300} h={300} />
       </Center>
       <Space h={20} />
-      <Title size={'h3'} ta={'center'}>
-        Tsundoku
+      <Title ta="center" size={'h2'}>
+        読書習慣を身につけよう
       </Title>
-      <Space h={20} />
-      <Space h={20} />
-      <Text size="lg" ta={'center'} mb={5}>
-        「読書はしたいと思っているが、先延ばししがちで読書習慣を継続できない、、」
+      <Space h={40} />
+      <Text size="md" ta="center" mb={5}>
+        読書を通じて得た気づきや感想を簡単にメモし、読書ログを作成。
       </Text>
-      <Text size="lg" ta={'center'} mb={5}>
-        「読書習慣をアウトプットしたいけど、方法がない、、」
+      <Text size="md" ta="center" mb={5}>
+        読書ログを公開することで、モチベーションを維持しながら読書を継続できます。
       </Text>
-      <Text size="lg" ta={'center'} mb={40}>
-        Tsundokuはそんなあなたのためのサービスです。
-      </Text>
-      <Text size="lg" mb={5}>
-        Tsundokuでは、読書を通じて得た気づきや感想を簡単にメモし、読書ログを作成できます。
-      </Text>
-      <Text size="lg" mb={5}>
-        あなたの読書履歴とログを公開することで、モチベーションを維持しながら読書を継続できます。
-      </Text>
-      <Text size="lg" mb={20}>
-        一緒に読書習慣を作りましょう！
-      </Text>
-      <Anchor href={`${rootUrl}/about`} underline="always" variant="light">
-        何ができるのか？
-      </Anchor>
     </Container>
   );
 }

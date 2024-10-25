@@ -6,10 +6,11 @@ export default function TopPage() {
   return (
     <>
       <HeroBullets />
+      <Space h={10} />
       <Center>
         <SignInButton />
       </Center>
-      <Space h={10} />
+      <Space h={20} />
       <Center>
         <Text size="sm" c="dimmed">
           ログインすることで、
