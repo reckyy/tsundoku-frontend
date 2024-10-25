@@ -1,6 +1,6 @@
 'use client';
 
-import { Image } from '@mantine/core';
+import { Image, Center, Text } from '@mantine/core';
 import { Book } from '@/types/index';
 import Link from 'next/link';
 
@@ -14,22 +14,40 @@ export default function BookItem({ book, isPublic }: BookItemProps) {
     <>
       {!isPublic ? (
         <Link href={`/books/${book.id}/memos`}>
-          <Image
-            radius="md"
-            w={141}
-            h={200}
-            src={book.coverImageUrl}
-            alt={book.title}
-          />
+          <Center>
+            <Image
+              radius="md"
+              w={141}
+              h={200}
+              src={book.coverImageUrl}
+              alt={book.title}
+            />
+          </Center>
+          <Text size="sm" fw="700" mt="2" ta="center">
+            {book.title}
+          </Text>
+          <Text size="sm" mt="2" ta="center">
+            著者 : {book.author}
+          </Text>
         </Link>
       ) : (
-        <Image
-          radius="md"
-          w={141}
-          h={200}
-          src={book.coverImageUrl}
-          alt={book.title}
-        />
+        <>
+          <Center>
+            <Image
+              radius="md"
+              w={141}
+              h={200}
+              src={book.coverImageUrl}
+              alt={book.title}
+            />
+          </Center>
+          <Text size="sm" fw="700" mt="2" ta="center">
+            {book.title}
+          </Text>
+          <Text size="sm" mt="2" ta="center">
+            著者 : {book.author}
+          </Text>
+        </>
       )}
     </>
   );

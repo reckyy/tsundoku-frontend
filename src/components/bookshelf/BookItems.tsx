@@ -17,9 +17,7 @@ const BookItems = ({ bookItems, isPublic }: BookItemsProps) => {
           </GridCol>
           {bookItems.map((userBook: UserBook) => (
             <GridCol span={{ base: 6, sm: 4 }} key={userBook.book.id}>
-              <Center>
-                <BookItem book={userBook.book} isPublic={isPublic} />
-              </Center>
+              <BookItem book={userBook.book} isPublic={isPublic} />
             </GridCol>
           ))}
         </Grid>
