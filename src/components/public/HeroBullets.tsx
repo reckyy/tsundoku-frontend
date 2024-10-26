@@ -1,16 +1,6 @@
-import {
-  Container,
-  Text,
-  Image,
-  Center,
-  Anchor,
-  Space,
-  Title,
-} from '@mantine/core';
+import { Container, Text, Image, Center, Space, Title } from '@mantine/core';
 
 export default function HeroBullets() {
-  const rootUrl = process.env.NEXT_PUBLIC_NEXT_URL;
-
   return (
     <Container my="md">
       <Space h={40} />

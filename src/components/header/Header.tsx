@@ -20,11 +20,13 @@ export async function Header() {
             </Group>
           </Link>
           <Group ml="xl">
-            <UserMenu
-              name={session?.user?.name!}
-              id={session?.user?.id!}
-              image={session?.user?.image!}
-            />
+            {session?.user && (
+              <UserMenu
+                name={session.user.name!}
+                id={session.user.id!}
+                image={session.user.image!}
+              />
+            )}
           </Group>
         </Group>
       </Group>

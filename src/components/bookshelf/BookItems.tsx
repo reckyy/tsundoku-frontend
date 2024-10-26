@@ -1,5 +1,5 @@
 import BookItem from './BookItem';
-import { Grid, GridCol, Space, Center, Text } from '@mantine/core';
+import { Grid, GridCol, Space, Text } from '@mantine/core';
 import { UserBook } from '@/types/index';
 
 export type BookItemsProps = {
