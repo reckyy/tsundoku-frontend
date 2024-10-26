@@ -18,7 +18,17 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <main>
-          <MantineProvider>
+          <MantineProvider
+            theme={{
+              components: {
+                Text: {
+                  defaultProps: {
+                    color: '#37352f',
+                  },
+                },
+              },
+            }}
+          >
             <MyAppShell>
               <Toaster />
               <AuthToaster />

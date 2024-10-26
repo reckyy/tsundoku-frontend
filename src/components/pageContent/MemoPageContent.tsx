@@ -9,8 +9,8 @@ import {
   Text,
   GridCol,
   Space,
-  Paper,
   ScrollArea,
+  Title,
 } from '@mantine/core';
 import { useMediaQuery } from '@mantine/hooks';
 import { useParams } from 'next/navigation';
@@ -24,46 +24,33 @@ import { axiosInstance, setHeader } from '@/lib/axios';
 
 type GridItemType = {
   imageSpan: number | undefined;
-  headingSpan: number | undefined;
+  bookInfoSpan: number | undefined;
   offset: number | undefined;
   imageSrc: string | undefined;
   imageAlt: string | undefined;
-  headings: Heading[];
-  heading: string;
-  setHeading: React.Dispatch<React.SetStateAction<string>>;
+  title: string | undefined;
+  author: string | undefined;
 };
 
 function GridItem({
   imageSpan,
-  headingSpan,
+  bookInfoSpan,
   offset,
   imageSrc,
   imageAlt,
-  headings,
-  heading,
-  setHeading,
+  title,
+  author,
 }: GridItemType) {
   return (
     <>
       <GridCol span={imageSpan}>
         <Image radius="lg" w={141} h={200} src={imageSrc} alt={imageAlt} />
       </GridCol>
-      <GridCol offset={offset} span={headingSpan}>
-        <Paper withBorder shadow="xs" radius="md" p="xl">
-          <Text size="md" ta={'center'} mb={7}>
-            章
-          </Text>
-          <ScrollArea scrollHideDelay={0}>
-            <SegmentedControl
-              value={heading}
-              onChange={setHeading}
-              fullWidth
-              data={
-                headings.map((heading: Heading) => String(heading.number)) ?? []
-              }
-            />
-          </ScrollArea>
-        </Paper>
+      <GridCol offset={offset} span={bookInfoSpan}>
+        <Title size="h2">{title}</Title>
+        <Text size="md" mt="10">
+          著者 : {author}
+        </Text>
       </GridCol>
     </>
   );
@@ -125,16 +112,29 @@ export default function MemoPageContent() {
         <Grid>
           <GridItem
             imageSpan={isLargeScreen ? 3 : undefined}
-            headingSpan={isLargeScreen ? 6 : undefined}
+            bookInfoSpan={isLargeScreen ? 8 : undefined}
             offset={isLargeScreen ? 1 : undefined}
             imageSrc={bookWithMemos?.book.coverImageUrl}
             imageAlt={bookWithMemos?.book.title}
-            headings={bookWithMemos?.headings || []}
-            heading={heading}
-            setHeading={setHeading}
+            title={bookWithMemos.book.title}
+            author={bookWithMemos.book.author}
           />
         </Grid>
-
+        <Space h="20" />
+        <ScrollArea scrollHideDelay={0}>
+          <SegmentedControl
+            value={heading}
+            onChange={setHeading}
+            fullWidth
+            size="md"
+            data={
+              bookWithMemos.headings.map((heading: Heading) => ({
+                label: `${heading.number}章`,
+                value: String(heading.number),
+              })) ?? []
+            }
+          />
+        </ScrollArea>
         <Space h={50} />
         <Editor
           heading={bookWithMemos?.headings[Number(heading) - 1]}

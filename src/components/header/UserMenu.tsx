@@ -2,20 +2,24 @@
 
 import cx from 'clsx';
 import { useState } from 'react';
-import { Group, Menu, rem, UnstyledButton, Text, Avatar } from '@mantine/core';
+import {
+  Group,
+  Menu,
+  rem,
+  UnstyledButton,
+  Text,
+  Avatar,
+  Anchor,
+} from '@mantine/core';
 import classes from './HeaderTabs.module.css';
 import {
   IconLogout,
   IconTrash,
   IconChevronDown,
   IconLink,
-  IconBook,
-  IconSearch,
 } from '@tabler/icons-react';
 import { signOut } from 'next-auth/react';
-import toast from 'react-hot-toast';
 import Link from 'next/link';
-import { useClipboard } from '@mantine/hooks';
 
 type UserMenuProps = {
   name: string;
@@ -25,19 +29,6 @@ type UserMenuProps = {
 
 export default function UserMenu({ name, id, image }: UserMenuProps) {
   const [userMenuOpened, setUserMenuOpened] = useState(false);
-  const clipboard = useClipboard();
-  const rootUrl = process.env.NEXT_PUBLIC_NEXT_URL;
-
-  const handleCopyUrl = () => {
-    const url = `${rootUrl}/users/${id}`;
-    clipboard.copy(url);
-
-    if (!clipboard.error && id !== undefined) {
-      toast.success('URLのコピーに成功しました');
-    } else {
-      toast.error('URLのコピーに失敗しました');
-    }
-  };
 
   return (
     <Menu
@@ -81,42 +72,19 @@ export default function UserMenu({ name, id, image }: UserMenuProps) {
           ログアウト
         </Menu.Item>
 
-        <Link href={'/search_books'}>
+        <Anchor href={`/users/${id}`} target="_blank" underline="never">
           <Menu.Item
+            color="blue"
             leftSection={
-              <IconSearch
+              <IconLink
                 style={{ width: rem(16), height: rem(16) }}
                 stroke={1.5}
               />
             }
           >
-            本の追加
+            公開ページ
           </Menu.Item>
-        </Link>
-        <Link href={`/bookshelf/edit`}>
-          <Menu.Item
-            leftSection={
-              <IconBook
-                style={{ width: rem(16), height: rem(16) }}
-                stroke={1.5}
-              />
-            }
-          >
-            本棚の編集
-          </Menu.Item>
-        </Link>
-        <Menu.Item
-          color="blue"
-          leftSection={
-            <IconLink
-              style={{ width: rem(16), height: rem(16) }}
-              stroke={1.5}
-            />
-          }
-          onClick={handleCopyUrl}
-        >
-          公開ページ
-        </Menu.Item>
+        </Anchor>
 
         <Menu.Divider />
 

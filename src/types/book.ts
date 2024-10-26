@@ -15,6 +15,7 @@ export type UserBook = {
 export type BookWithMemos = {
   book: {
     title: string;
+    author: string;
     coverImageUrl: string;
   };
   headings: Heading[];
