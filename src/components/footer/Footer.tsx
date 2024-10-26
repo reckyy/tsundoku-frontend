@@ -1,46 +1,40 @@
+import { Anchor, Group, ActionIcon, rem, Text, Container } from '@mantine/core';
 import {
   IconBrandTwitter,
   IconBrandGithub,
   IconArticle,
   IconQuestionMark,
 } from '@tabler/icons-react';
-import {
-  Group,
-  ActionIcon,
-  UnstyledButton,
-  rem,
-  Text,
-  Container,
-} from '@mantine/core';
-import Image from 'next/image';
-import classes from './Footer.module.css';
 import Link from 'next/link';
+import Image from 'next/image';
+
+import classes from './Footer.module.css';
+
+const links = [
+  { link: '/terms', label: '利用規約' },
+  { link: '/privacy', label: 'プライバシーポリシー' },
+];
 
 export function Footer() {
+  const items = links.map((link) => (
+    <Anchor c="dimmed" key={link.label} href={link.link} lh={1} size="sm">
+      {link.label}
+    </Anchor>
+  ));
+
   return (
     <Container size="md">
-      <Group h="100%" px="md">
-        <Group justify="center" style={{ flex: 1 }}>
-          <Link href={'/'}>
-            <Group gap="xs">
-              <Image src="/Tsundoku.png" alt="ロゴ" width={28} height={28} />
-              <Text fw={700} size="xl">
-                Tsundoku
-              </Text>
-            </Group>
-          </Link>
-          <Group ml="xl" gap={0}>
-            <Link href={'/terms'}>
-              <UnstyledButton className={classes.control}>
-                利用規約
-              </UnstyledButton>
-            </Link>
-            <Link href={'/privacy'}>
-              <UnstyledButton className={classes.control}>
-                プライバシーポリシー
-              </UnstyledButton>
-            </Link>
+      <div className={classes.footer}>
+        <div className={classes.inner}>
+          <Group gap="xs">
+            <Image src="/Tsundoku.png" alt="ロゴ" width={28} height={28} />
+            <Text fw={700} size="xl">
+              Tsundoku
+            </Text>
           </Group>
+
+          <Group className={classes.links}>{items}</Group>
+
           <Group gap="xs" justify="flex-end" wrap="nowrap">
             <Link href={'/about'}>
               <ActionIcon size="lg" variant="default" radius="xl">
@@ -69,8 +63,8 @@ export function Footer() {
               />
             </ActionIcon>
           </Group>
-        </Group>
-      </Group>
+        </div>
+      </div>
     </Container>
   );
 }
