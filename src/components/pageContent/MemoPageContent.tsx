@@ -11,6 +11,7 @@ import {
   Space,
   ScrollArea,
   Title,
+  Button,
 } from '@mantine/core';
 import { useMediaQuery } from '@mantine/hooks';
 import { useParams } from 'next/navigation';
@@ -21,6 +22,7 @@ import SaveMemo from '@/utils/saveMemo';
 import { BookWithMemos, Heading } from '@/types/index';
 import MemoLoading from '@/components/loading/MemoLoading';
 import { axiosInstance, setHeader } from '@/lib/axios';
+import useAddHeading from '@/hooks/useAddHeading';
 
 type GridItemType = {
   imageSpan: number | undefined;
@@ -62,6 +64,7 @@ export default function MemoPageContent() {
   const bookId = Number(dynamicParams.bookId);
   const { data: session, status } = useSession();
   const token = session?.user?.idToken;
+  const { handleAddHeading } = useAddHeading();
   const params = {
     bookId,
   };
@@ -97,6 +100,20 @@ export default function MemoPageContent() {
     });
   };
 
+  const handleAddNewHeading = async () => {
+    const newHeading = await handleAddHeading(
+      bookWithMemos!,
+      bookWithMemos!.headings.length + 1,
+    );
+
+    if (newHeading) {
+      setBookWithMemos((prev) => ({
+        ...prev!,
+        headings: [...prev!.headings, newHeading],
+      }));
+    }
+  };
+
   if (error) return <div>failed to load</div>;
   if (isLoading || !bookWithMemos)
     return (
@@ -121,20 +138,35 @@ export default function MemoPageContent() {
           />
         </Grid>
         <Space h="20" />
-        <ScrollArea scrollHideDelay={0}>
-          <SegmentedControl
-            value={heading}
-            onChange={setHeading}
-            fullWidth
-            size="md"
-            data={
-              bookWithMemos.headings.map((heading: Heading) => ({
-                label: `${heading.number}章`,
-                value: String(heading.number),
-              })) ?? []
-            }
-          />
-        </ScrollArea>
+        <Grid>
+          <GridCol span={9}>
+            <ScrollArea scrollHideDelay={0}>
+              <SegmentedControl
+                value={heading}
+                onChange={setHeading}
+                fullWidth
+                size="md"
+                data={
+                  bookWithMemos.headings.map((heading: Heading) => ({
+                    label: `${heading.number}章`,
+                    value: String(heading.number),
+                  })) ?? []
+                }
+              />
+            </ScrollArea>
+          </GridCol>
+          <GridCol offset={1} span={2}>
+            <Button
+              size="md"
+              variant="light"
+              color="green"
+              fullWidth
+              onClick={handleAddNewHeading}
+            >
+              追加
+            </Button>
+          </GridCol>
+        </Grid>
         <Space h={50} />
         <Editor
           heading={bookWithMemos?.headings[Number(heading) - 1]}

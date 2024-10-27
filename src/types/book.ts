@@ -12,11 +12,4 @@ export type UserBook = {
   book: Book;
 };
 
-export type BookWithMemos = {
-  book: {
-    title: string;
-    author: string;
-    coverImageUrl: string;
-  };
-  headings: Heading[];
-};
+export type BookWithMemos = UserBook & { headings: Heading[] };
