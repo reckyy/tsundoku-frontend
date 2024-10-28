@@ -18,11 +18,12 @@ import { useParams } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 import { useState } from 'react';
 import useSWR from 'swr';
-import SaveMemo from '@/utils/saveMemo';
 import { BookWithMemos, Heading } from '@/types/index';
 import MemoLoading from '@/components/loading/MemoLoading';
 import { axiosInstance, setHeader } from '@/lib/axios';
 import useAddHeading from '@/hooks/useAddHeading';
+import toast from 'react-hot-toast';
+import SaveData from '@/utils/saveData';
 
 type GridItemType = {
   imageSpan: number | undefined;
@@ -89,15 +90,54 @@ export default function MemoPageContent() {
     },
   );
 
-  const handleSave = async (content: string, title: string) => {
-    SaveMemo({
+  const handleSave = async (
+    type: 'heading' | 'memo',
+    id: number,
+    data: string,
+  ): Promise<boolean> => {
+    if (!token) {
+      return false;
+    }
+    const saved = await SaveData({
       token,
-      bookWithMemos,
-      setBookWithMemos,
-      heading,
-      content,
-      title,
+      id,
+      data,
+      type,
     });
+    return saved;
+  };
+
+  const handleSaveHeading = async (title: string, headingId: number) => {
+    const headingSaved = await handleSave('heading', headingId, title);
+
+    if (headingSaved) {
+      setBookWithMemos((prev) => {
+        if (!prev) return prev;
+        return {
+          ...prev,
+          headings: prev.headings.map((h) =>
+            h.id === headingId ? { ...h, title } : h,
+          ),
+        };
+      });
+    }
+  };
+
+  const handleSaveMemo = async (content: string, memoId: number) => {
+    const memoSaved = await handleSave('memo', memoId, content);
+
+    if (memoSaved) {
+      setBookWithMemos((prev) => {
+        return {
+          ...prev!,
+          headings: prev!.headings.map((h) =>
+            h.memo.id === memoId
+              ? { ...h, memo: { ...h.memo, body: content } }
+              : h,
+          ),
+        };
+      });
+    }
   };
 
   const handleAddNewHeading = async () => {
@@ -170,7 +210,9 @@ export default function MemoPageContent() {
         <Space h={50} />
         <Editor
           heading={bookWithMemos?.headings[Number(heading) - 1]}
-          handleSave={handleSave}
+          headingId={bookWithMemos?.headings[Number(heading) - 1].id}
+          handleSaveHeading={handleSaveHeading}
+          handleSaveMemo={handleSaveMemo}
         />
       </Container>
     </div>
