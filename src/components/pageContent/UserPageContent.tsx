@@ -29,6 +29,7 @@ export default function UserPageContent() {
   const userPageUrl = `${process.env.NEXT_PUBLIC_NEXT_URL}/users/${dynamicParams.id}`;
   const [bookItems, setBookItems] = useState<UserBook[]>([]);
   const [readingLogs, setReadingLogs] = useState<Log[]>([]);
+  const [userName, setUserName] = useState<string>('');
   const clipboard = useClipboard();
 
   const handleCopyUrl = () => {
@@ -58,6 +59,7 @@ export default function UserPageContent() {
             coverImageUrl: userBook.book.coverImageUrl,
           },
         }));
+        setUserName(data.name);
         setBookItems(fetchedBookItems);
         setReadingLogs(data.logs);
       },
@@ -69,7 +71,7 @@ export default function UserPageContent() {
 
   return (
     <div>
-      <title>公開ページ</title>
+      <title>{`${userName}さんの公開ページ`}</title>
       {String(session?.user?.id) === dynamicParams.id && (
         <Container bg={'var(--mantine-color-blue-light'} h={150} mt="md">
           <Stack pt="md" align="center" justify="center">
