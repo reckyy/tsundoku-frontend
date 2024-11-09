@@ -12,48 +12,114 @@ import {
   ScrollArea,
   Title,
   Button,
+  Tooltip,
+  Modal,
 } from '@mantine/core';
 import { useMediaQuery } from '@mantine/hooks';
 import { useParams } from 'next/navigation';
 import { useSession } from 'next-auth/react';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import useSWR from 'swr';
 import { BookWithMemos, Heading } from '@/types/index';
 import MemoLoading from '@/components/loading/MemoLoading';
 import { axiosInstance, setHeader } from '@/lib/axios';
 import useAddHeading from '@/hooks/useAddHeading';
-import toast from 'react-hot-toast';
 import SaveData from '@/utils/saveData';
+import { IconPlayerPlay, IconCheck, IconHourglass } from '@tabler/icons-react';
+import ChangeToReadingModal from '@/components/modal/ChangeToReadingModal';
+import ChangeToFinishedModal from '@/components/modal/ChangeToFinishedModal';
 
 type GridItemType = {
   imageSpan: number | undefined;
   bookInfoSpan: number | undefined;
   offset: number | undefined;
-  imageSrc: string | undefined;
-  imageAlt: string | undefined;
-  title: string | undefined;
-  author: string | undefined;
+  bookWithMemos: BookWithMemos;
+  setBookWithMemos: React.Dispatch<
+    React.SetStateAction<BookWithMemos | undefined>
+  >;
 };
 
 function GridItem({
   imageSpan,
   bookInfoSpan,
   offset,
-  imageSrc,
-  imageAlt,
-  title,
-  author,
+  bookWithMemos,
+  setBookWithMemos,
 }: GridItemType) {
+  const [readingButtonModalOpened, setReadingButtonModalOpened] =
+    useState(false);
+  const [finishedButtonModalOpened, setFinishedButtonModalOpened] =
+    useState(false);
+  const isUnread = bookWithMemos.status === 'unread';
+  const isReading = bookWithMemos.status === 'reading';
+
+  const handleButtonClick = () => {
+    if (isUnread) {
+      setReadingButtonModalOpened(true);
+    } else if (isReading) {
+      setFinishedButtonModalOpened(true);
+    }
+  };
+
   return (
     <>
+      <Modal
+        opened={readingButtonModalOpened}
+        radius="md"
+        onClose={() => setReadingButtonModalOpened(false)}
+        centered
+      >
+        <ChangeToReadingModal
+          userBookId={bookWithMemos.id}
+          setBookWithMemos={setBookWithMemos}
+          setModalOpened={setReadingButtonModalOpened}
+        />
+      </Modal>
+      <Modal
+        opened={finishedButtonModalOpened}
+        radius="md"
+        onClose={() => setFinishedButtonModalOpened(false)}
+        centered
+      >
+        <ChangeToFinishedModal
+          userBookId={bookWithMemos.id}
+          setBookWithMemos={setBookWithMemos}
+          setModalOpened={setFinishedButtonModalOpened}
+        />
+      </Modal>
       <GridCol span={imageSpan}>
-        <Image radius="lg" w={141} h={200} src={imageSrc} alt={imageAlt} />
+        <Image
+          radius="lg"
+          w={141}
+          h={200}
+          src={bookWithMemos.book.coverImageUrl}
+          alt={bookWithMemos.book.title}
+        />
       </GridCol>
       <GridCol offset={offset} span={bookInfoSpan}>
-        <Title size="h2">{title}</Title>
-        <Text size="md" mt="10">
-          著者 : {author}
+        <Title size="h2">{bookWithMemos.book.title}</Title>
+        <Text size="lg" mt="10">
+          著者 : {bookWithMemos.book.author}
         </Text>
+        <Tooltip label="読書ステータスを変更できます。" position="bottom">
+          <Button
+            color="green"
+            mt="md"
+            rightSection={
+              isUnread ? (
+                <IconPlayerPlay size={14} />
+              ) : isReading ? (
+                <IconHourglass size={14} />
+              ) : (
+                <IconCheck size={14} />
+              )
+            }
+            disabled={!isUnread && !isReading}
+            onClick={handleButtonClick}
+          >
+            {isUnread ? '未読' : isReading ? '読書中' : '読了'}
+          </Button>
+        </Tooltip>
       </GridCol>
     </>
   );
@@ -163,7 +229,7 @@ export default function MemoPageContent() {
     );
 
   return (
-    <div>
+    <>
       <title>{`${bookWithMemos?.book.title}のメモページ`}</title>
       <Container my={'md'}>
         <Grid>
@@ -171,10 +237,8 @@ export default function MemoPageContent() {
             imageSpan={isLargeScreen ? 3 : undefined}
             bookInfoSpan={isLargeScreen ? 8 : undefined}
             offset={isLargeScreen ? 1 : undefined}
-            imageSrc={bookWithMemos?.book.coverImageUrl}
-            imageAlt={bookWithMemos?.book.title}
-            title={bookWithMemos.book.title}
-            author={bookWithMemos.book.author}
+            bookWithMemos={bookWithMemos}
+            setBookWithMemos={setBookWithMemos}
           />
         </Grid>
         <Space h="20" />
@@ -215,6 +279,6 @@ export default function MemoPageContent() {
           handleSaveMemo={handleSaveMemo}
         />
       </Container>
-    </div>
+    </>
   );
 }

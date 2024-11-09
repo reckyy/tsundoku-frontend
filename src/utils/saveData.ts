@@ -26,7 +26,7 @@ export default async function SaveData({
       ]);
       return true;
     } else {
-      const res = await axiosInstance.patch(url, params);
+      await axiosInstance.patch(url, params);
       return true;
     }
   } catch (error) {

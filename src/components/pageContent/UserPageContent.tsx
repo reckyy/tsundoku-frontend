@@ -51,16 +51,8 @@ export default function UserPageContent() {
     ([url, params]) => fetcher(url, params),
     {
       onSuccess: (data) => {
-        const fetchedBookItems = data.user_books.map((userBook: UserBook) => ({
-          book: {
-            id: userBook.book.id,
-            title: userBook.book.title,
-            author: userBook.book.author,
-            coverImageUrl: userBook.book.coverImageUrl,
-          },
-        }));
         setUserName(data.name);
-        setBookItems(fetchedBookItems);
+        setBookItems(data.user_books);
         setReadingLogs(data.logs);
       },
     },
@@ -70,7 +62,7 @@ export default function UserPageContent() {
   if (isLoading) return <div></div>;
 
   return (
-    <div>
+    <>
       <title>{`${userName}さんの公開ページ`}</title>
       {String(session?.user?.id) === dynamicParams.id && (
         <Container bg={'var(--mantine-color-blue-light'} h={150} mt="md">
@@ -100,6 +92,6 @@ export default function UserPageContent() {
         <BookItems bookItems={bookItems} isPublic={true} />
         <Space h={60} />
       </Container>
-    </div>
+    </>
   );
 }

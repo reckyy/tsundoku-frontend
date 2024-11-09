@@ -9,6 +9,7 @@ export type Book = {
 
 export type UserBook = {
   id: number;
+  status: string;
   book: Book;
 };
 

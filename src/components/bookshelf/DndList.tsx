@@ -9,6 +9,8 @@ import {
   Grid,
   rem,
   Modal,
+  Space,
+  SegmentedControl,
 } from '@mantine/core';
 import { useListState, useDisclosure, useSetState } from '@mantine/hooks';
 import { IconTrash } from '@tabler/icons-react';
@@ -19,24 +21,47 @@ import { useState } from 'react';
 import { axiosInstance, setHeader } from '@/lib/axios';
 
 export type DndListProps = {
-  bookItems: UserBook[];
+  bookItems: Record<Filter, UserBook[]>;
   token: string;
 };
 
+export type Filter = 'unread' | 'reading' | 'finished';
+
 export default function DndList({ bookItems, token }: DndListProps) {
   const [source, setSource] = useState<number>(0);
-  const [state, stateHandlers] = useListState(bookItems);
+  const [unreadBooks, unreadBooksHandlers] = useListState<UserBook>(
+    bookItems['unread'],
+  );
+  const [readingBooks, readingBooksHandlers] = useListState<UserBook>(
+    bookItems['reading'],
+  );
+  const [finishedBooks, finishedBooksHandlers] = useListState<UserBook>(
+    bookItems['finished'],
+  );
   const [deleteParamsState, setDeleteParamsState] = useSetState({
     userBookId: 0,
     position: 0,
     token,
   });
   const [opened, { open, close }] = useDisclosure(false);
+  const [filter, setFilter] = useState<Filter>('unread');
+  const filteredBooks =
+    filter === 'unread'
+      ? unreadBooks
+      : filter === 'reading'
+        ? readingBooks
+        : finishedBooks;
+
+  const emptyMessages: Record<Filter, string> = {
+    unread: '「本を追加」から読む本を追加しましょう！',
+    reading: '今読んでいる本はありません。',
+    finished: '読み終わった本はありません。',
+  };
 
   const handleClick = (item: UserBook) => {
     setDeleteParamsState({
       userBookId: item.id,
-      position: state.indexOf(item),
+      position: filteredBooks.indexOf(item),
     });
     open();
   };
@@ -60,8 +85,10 @@ export default function DndList({ bookItems, token }: DndListProps) {
       return;
     }
 
-    const userBook = state.find((_element, idx) => idx === source);
-    const destinationBook = state.find((_element, idx) => idx === index);
+    const userBook = filteredBooks.find((_element, idx) => idx === source);
+    const destinationBook = filteredBooks.find(
+      (_element, idx) => idx === index,
+    );
     const params = {
       userBookId: userBook?.id,
       destinationBookId: destinationBook?.id,
@@ -69,14 +96,20 @@ export default function DndList({ bookItems, token }: DndListProps) {
     await setHeader(token!);
     try {
       await axiosInstance.patch(`/user_books/${userBook?.id}/position`, params);
-      stateHandlers.swap({ from: source, to: index });
+      const handler =
+        filter === 'unread'
+          ? unreadBooksHandlers
+          : filter === 'reading'
+            ? readingBooksHandlers
+            : finishedBooksHandlers;
+      handler.swap({ from: source, to: index });
       toast.success('本の並び替えに成功しました！');
     } catch (error) {
       toast.error('本の並び替えに失敗しました。');
     }
   };
 
-  const items = state.map((item, index) => (
+  const items = filteredBooks.map((item, index) => (
     <div
       className="cursor-grab"
       draggable
@@ -135,7 +168,28 @@ export default function DndList({ bookItems, token }: DndListProps) {
           close={close}
         />
       </Modal>
-      {items}
+      <Space h={20} />
+      <Center>
+        <SegmentedControl
+          value={filter}
+          onChange={(value) => setFilter(value as Filter)}
+          size="md"
+          data={[
+            { label: 'まだ読んでない', value: 'unread' },
+            { label: '読んでる途中', value: 'reading' },
+            { label: '全部読んだ', value: 'finished' },
+          ]}
+        />
+      </Center>
+      <Space h={20} />
+      {items.length > 0 ? (
+        items
+      ) : (
+        <>
+          <Space h={20} />
+          <Text ta="center">{emptyMessages[filter]}</Text>
+        </>
+      )}
     </>
   );
 }
