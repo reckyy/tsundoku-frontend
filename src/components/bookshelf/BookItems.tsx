@@ -10,14 +10,12 @@ import {
   Text,
   SegmentedControl,
 } from '@mantine/core';
-import { UserBook } from '@/types/index';
+import { UserBook, Filter } from '@/types/index';
 
 export type BookItemsProps = {
   bookItems: Record<Filter, UserBook[]>;
   isPublic: boolean;
 };
-
-export type Filter = 'unread' | 'reading' | 'finished';
 
 const BookItems = ({ bookItems, isPublic }: BookItemsProps) => {
   const [filter, setFilter] = useState<Filter>('unread');
@@ -34,6 +32,7 @@ const BookItems = ({ bookItems, isPublic }: BookItemsProps) => {
       <Space h={20} />
       <Center>
         <SegmentedControl
+          color="blue"
           value={filter}
           onChange={(value) => setFilter(value as Filter)}
           size="md"

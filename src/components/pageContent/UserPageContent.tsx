@@ -5,7 +5,7 @@ import CalendarContent from '@/components/calendar/CalendarContent';
 import { useParams } from 'next/navigation';
 import useSWR from 'swr';
 import { useState } from 'react';
-import { UserBook, Log } from '@/types/index';
+import { UserBook, Log, Filter } from '@/types/index';
 import {
   Container,
   Space,
@@ -27,7 +27,7 @@ export default function UserPageContent() {
   const params = { id: dynamicParams.id as string };
   const apiUserUrl = `/users/${dynamicParams.id}`;
   const userPageUrl = `${process.env.NEXT_PUBLIC_NEXT_URL}/users/${dynamicParams.id}`;
-  const [bookItems, setBookItems] = useState<UserBook[]>([]);
+  const [bookItems, setBookItems] = useState<Record<Filter, UserBook[]>>();
   const [readingLogs, setReadingLogs] = useState<Log[]>([]);
   const [userName, setUserName] = useState<string>('');
   const clipboard = useClipboard();
@@ -89,7 +89,7 @@ export default function UserPageContent() {
         <Title size={'h2'} ta={'center'}>
           本棚
         </Title>
-        <BookItems bookItems={bookItems} isPublic={true} />
+        <BookItems bookItems={bookItems!} isPublic={true} />
         <Space h={60} />
       </Container>
     </>

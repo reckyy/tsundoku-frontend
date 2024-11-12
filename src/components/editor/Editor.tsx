@@ -20,8 +20,12 @@ import toast from 'react-hot-toast';
 type EditorProps = {
   heading: Heading | undefined;
   headingId: number;
-  handleSaveHeading: (title: string, headingId: number) => Promise<void>;
-  handleSaveMemo: (content: string, memoId: number) => Promise<void>;
+  handleSaveAll: (
+    title: string,
+    headingId: number,
+    content: string,
+    memoId: number,
+  ) => Promise<false | undefined>;
 };
 
 const lowlight = createLowlight();
@@ -30,8 +34,7 @@ lowlight.register({ js, ts, rb });
 export default function Editor({
   heading,
   headingId,
-  handleSaveHeading,
-  handleSaveMemo,
+  handleSaveAll,
 }: EditorProps) {
   const memoBody = heading?.memo.body ?? '';
   const title = heading?.title ?? '';
@@ -87,24 +90,16 @@ export default function Editor({
       prevHeading.current = heading;
       setHeadingTitle(title);
     }
-  }, [editor, heading, memoBody, title]);
+  }, [heading]);
 
-  const handleSave = async () => {
+  const handleSaveClick = async () => {
     const title = headingTitle;
-
     const content = editor?.getHTML() ?? '';
+    const memoId = heading?.memo.id;
+    const headingId = heading?.id;
 
-    try {
-      await handleSaveHeading(title, headingId);
-
-      const memoId = heading?.memo.id;
-      if (memoId) {
-        await handleSaveMemo(content, memoId);
-      }
-      toast.success('保存しました。');
-    } catch (error) {
-      console.warn(error);
-      toast.error('保存に失敗しました。');
+    if (memoId && headingId) {
+      await handleSaveAll(title, headingId, content, memoId);
     }
   };
 
@@ -142,7 +137,7 @@ export default function Editor({
             mt="2"
             variant="light"
             color="green"
-            onClick={handleSave}
+            onClick={handleSaveClick}
             fullWidth
             disabled={!isSaveEnable}
           >

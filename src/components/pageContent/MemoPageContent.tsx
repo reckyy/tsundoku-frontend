@@ -12,8 +12,6 @@ import {
   ScrollArea,
   Title,
   Button,
-  Tooltip,
-  Modal,
 } from '@mantine/core';
 import { useMediaQuery } from '@mantine/hooks';
 import { useParams } from 'next/navigation';
@@ -25,9 +23,8 @@ import MemoLoading from '@/components/loading/MemoLoading';
 import { axiosInstance, setHeader } from '@/lib/axios';
 import useAddHeading from '@/hooks/useAddHeading';
 import SaveData from '@/utils/saveData';
-import { IconPlayerPlay, IconCheck, IconHourglass } from '@tabler/icons-react';
-import ChangeToReadingModal from '@/components/modal/ChangeToReadingModal';
-import ChangeToFinishedModal from '@/components/modal/ChangeToFinishedModal';
+import toast from 'react-hot-toast';
+import useUpdateBookStatus from '@/hooks/useUpdateBookStatus';
 
 type GridItemType = {
   imageSpan: number | undefined;
@@ -46,47 +43,13 @@ function GridItem({
   bookWithMemos,
   setBookWithMemos,
 }: GridItemType) {
-  const [readingButtonModalOpened, setReadingButtonModalOpened] =
-    useState(false);
-  const [finishedButtonModalOpened, setFinishedButtonModalOpened] =
-    useState(false);
-  const isUnread = bookWithMemos.status === 'unread';
-  const isReading = bookWithMemos.status === 'reading';
-
-  const handleButtonClick = () => {
-    if (isUnread) {
-      setReadingButtonModalOpened(true);
-    } else if (isReading) {
-      setFinishedButtonModalOpened(true);
-    }
-  };
+  const { handleSubmit } = useUpdateBookStatus({
+    userBookId: bookWithMemos.id,
+    setBookWithMemos,
+  });
 
   return (
     <>
-      <Modal
-        opened={readingButtonModalOpened}
-        radius="md"
-        onClose={() => setReadingButtonModalOpened(false)}
-        centered
-      >
-        <ChangeToReadingModal
-          userBookId={bookWithMemos.id}
-          setBookWithMemos={setBookWithMemos}
-          setModalOpened={setReadingButtonModalOpened}
-        />
-      </Modal>
-      <Modal
-        opened={finishedButtonModalOpened}
-        radius="md"
-        onClose={() => setFinishedButtonModalOpened(false)}
-        centered
-      >
-        <ChangeToFinishedModal
-          userBookId={bookWithMemos.id}
-          setBookWithMemos={setBookWithMemos}
-          setModalOpened={setFinishedButtonModalOpened}
-        />
-      </Modal>
       <GridCol span={imageSpan}>
         <Image
           radius="lg"
@@ -97,29 +60,22 @@ function GridItem({
         />
       </GridCol>
       <GridCol offset={offset} span={bookInfoSpan}>
-        <Title size="h2">{bookWithMemos.book.title}</Title>
-        <Text size="lg" mt="10">
+        <Title size="h3">{bookWithMemos.book.title}</Title>
+        <Text size="md" mt="10">
           著者 : {bookWithMemos.book.author}
         </Text>
-        <Tooltip label="読書ステータスを変更できます。" position="bottom">
-          <Button
-            color="green"
-            mt="md"
-            rightSection={
-              isUnread ? (
-                <IconPlayerPlay size={14} />
-              ) : isReading ? (
-                <IconHourglass size={14} />
-              ) : (
-                <IconCheck size={14} />
-              )
-            }
-            disabled={!isUnread && !isReading}
-            onClick={handleButtonClick}
-          >
-            {isUnread ? '未読' : isReading ? '読書中' : '読了'}
-          </Button>
-        </Tooltip>
+        <SegmentedControl
+          mt="md"
+          color="blue"
+          value={bookWithMemos.status}
+          onChange={(value) => handleSubmit(value)}
+          size="md"
+          data={[
+            { label: 'まだ読んでない', value: 'unread' },
+            { label: '読んでる途中', value: 'reading' },
+            { label: '全部読んだ', value: 'finished' },
+          ]}
+        />
       </GridCol>
     </>
   );
@@ -156,53 +112,45 @@ export default function MemoPageContent() {
     },
   );
 
-  const handleSave = async (
-    type: 'heading' | 'memo',
-    id: number,
-    data: string,
-  ): Promise<boolean> => {
+  const handleSaveAll = async (
+    title: string,
+    headingId: number,
+    content: string,
+    memoId: number,
+  ) => {
     if (!token) {
       return false;
     }
-    const saved = await SaveData({
-      token,
-      id,
-      data,
-      type,
-    });
-    return saved;
-  };
 
-  const handleSaveHeading = async (title: string, headingId: number) => {
-    const headingSaved = await handleSave('heading', headingId, title);
+    try {
+      await Promise.all([
+        SaveData({ token, id: headingId, data: title, type: 'heading' }),
+        SaveData({ token, id: memoId, data: content, type: 'memo' }),
+      ]);
 
-    if (headingSaved) {
       setBookWithMemos((prev) => {
         if (!prev) return prev;
         return {
           ...prev,
           headings: prev.headings.map((h) =>
-            h.id === headingId ? { ...h, title } : h,
-          ),
-        };
-      });
-    }
-  };
-
-  const handleSaveMemo = async (content: string, memoId: number) => {
-    const memoSaved = await handleSave('memo', memoId, content);
-
-    if (memoSaved) {
-      setBookWithMemos((prev) => {
-        return {
-          ...prev!,
-          headings: prev!.headings.map((h) =>
-            h.memo.id === memoId
-              ? { ...h, memo: { ...h.memo, body: content } }
+            h.id === headingId
+              ? {
+                  ...h,
+                  title,
+                  memo: {
+                    ...h.memo,
+                    body: content,
+                  },
+                }
               : h,
           ),
         };
       });
+
+      toast.success('保存しました。');
+    } catch (error) {
+      console.warn(error);
+      toast.error('保存に失敗しました。');
     }
   };
 
@@ -262,8 +210,7 @@ export default function MemoPageContent() {
           <GridCol offset={1} span={2}>
             <Button
               size="md"
-              variant="light"
-              color="green"
+              variant="default"
               fullWidth
               onClick={handleAddNewHeading}
             >
@@ -275,8 +222,7 @@ export default function MemoPageContent() {
         <Editor
           heading={bookWithMemos?.headings[Number(heading) - 1]}
           headingId={bookWithMemos?.headings[Number(heading) - 1].id}
-          handleSaveHeading={handleSaveHeading}
-          handleSaveMemo={handleSaveMemo}
+          handleSaveAll={handleSaveAll}
         />
       </Container>
     </>

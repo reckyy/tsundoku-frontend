@@ -14,7 +14,7 @@ import {
 } from '@mantine/core';
 import { useListState, useDisclosure, useSetState } from '@mantine/hooks';
 import { IconTrash } from '@tabler/icons-react';
-import { UserBook } from '@/types/index';
+import { UserBook, Filter } from '@/types/index';
 import DeleteBookConfirmModal from '../modal/DeleteBookConfirmModal';
 import toast from 'react-hot-toast';
 import { useState } from 'react';
@@ -24,8 +24,6 @@ export type DndListProps = {
   bookItems: Record<Filter, UserBook[]>;
   token: string;
 };
-
-export type Filter = 'unread' | 'reading' | 'finished';
 
 export default function DndList({ bookItems, token }: DndListProps) {
   const [source, setSource] = useState<number>(0);

@@ -13,4 +13,6 @@ export type UserBook = {
   book: Book;
 };
 
+export type Filter = 'unread' | 'reading' | 'finished';
+
 export type BookWithMemos = UserBook & { headings: Heading[] };

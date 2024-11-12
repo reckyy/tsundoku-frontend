@@ -5,7 +5,6 @@ import { BookWithMemos } from '@/types/book';
 
 type useUpdateBookStatusProps = {
   userBookId: number;
-  status: string;
   setBookWithMemos: React.Dispatch<
     React.SetStateAction<BookWithMemos | undefined>
   >;
@@ -13,13 +12,12 @@ type useUpdateBookStatusProps = {
 
 const useUpdateBookStatus = ({
   userBookId,
-  status,
   setBookWithMemos,
 }: useUpdateBookStatusProps) => {
   const { data: session } = useSession();
   const token = session?.user?.idToken;
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (status: string) => {
     await setHeader(token!);
     try {
       await axiosInstance.patch(`/user_books/${userBookId}`, {
@@ -34,11 +32,9 @@ const useUpdateBookStatus = ({
           status,
         };
       });
-      toast.success(
-        status === 'reading' ? '読書を開始しました！' : '読了しました！',
-      );
+      toast.success('読書ステータスを更新しました！');
     } catch (error) {
-      toast.error('読書の開始に失敗しました。');
+      toast.error('読書ステータスの更新に失敗しました。');
     }
   };
 
