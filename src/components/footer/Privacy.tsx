@@ -13,14 +13,16 @@ const Privacy = () => {
   return (
     <Container my="md">
       <Title size={'h2'} ta={'center'}>
-        プライバシーポリシー
+        <Text inherit>プライバシーポリシー</Text>
       </Title>
       <Space h={20} />
       <Text>
         Tsundoku（以下、「当方」といいます。）は、本ウェブサイト上で提供するサービス（以下、「本サービス」といいます。）におけるユーザーの個人情報の取扱いについて、以下のとおりプライバシーポリシー（以下、「本ポリシー」といいます。）を定めます。
       </Text>
       <Space h={30} />
-      <Title size={'h3'}>お客様から取得する情報</Title>
+      <Title size={'h3'}>
+        <Text inherit>お客様から取得する情報</Text>
+      </Title>
       <Divider my={'sm'} />
       <Text>当方は、お客様から以下の情報を取得します。</Text>
       <List withPadding>
@@ -42,7 +44,9 @@ const Privacy = () => {
         </ListItem>
       </List>
       <Space h={30} />
-      <Title size={'h3'}>お客様の情報を利用する目的</Title>
+      <Title size={'h3'}>
+        <Text inherit>お客様の情報を利用する目的</Text>
+      </Title>
       <Divider my={'sm'} />
       <Text>
         当方は、お客様から取得した情報を、以下の目的のために利用します。
@@ -67,13 +71,17 @@ const Privacy = () => {
         </ListItem>
       </List>
       <Space h={30} />
-      <Title size={'h3'}>安全管理のために講じた措置</Title>
+      <Title size={'h3'}>
+        <Text inherit>安全管理のために講じた措置</Text>
+      </Title>
       <Divider my={'sm'} />
       <Text>
         当方が、お客様から取得した情報に関して安全管理のために講じた措置につきましては、末尾記載のお問い合わせ先にご連絡をいただきましたら、法令の定めに従い個別にご回答させていただきます。
       </Text>
       <Space h={30} />
-      <Title size={'h3'}>第三者提供</Title>
+      <Title size={'h3'}>
+        <Text inherit>第三者提供</Text>
+      </Title>
       <Divider my={'sm'} />
       <Text>
         当方は、お客様から取得する情報のうち、個人データ（個人情報保護法第２条第６項）に該当するものついては、あらかじめお客様の同意を得ずに、第三者（日本国外にある者を含みます。）に提供しません。
@@ -90,7 +98,9 @@ const Privacy = () => {
         </ListItem>
       </List>
       <Space h={30} />
-      <Title size={'h3'}>アクセス解析ツール</Title>
+      <Title size={'h3'}>
+        <Text inherit>アクセス解析ツール</Text>
+      </Title>
       <Divider my={'sm'} />
       <Text>
         当方は、お客様のアクセス解析のために、「Googleアナリティクス」を利用しています。Googleアナリティクスは、トラフィックデータの収集のためにCookieを使用しています。トラフィックデータは匿名で収集されており、個人を特定するものではありません。Cookieを無効にすれば、これらの情報の収集を拒否することができます。詳しくはお使いのブラウザの設定をご確認ください。Googleアナリティクスについて、詳しくは
@@ -104,13 +114,17 @@ const Privacy = () => {
         からご確認ください。
       </Text>
       <Space h={30} />
-      <Title size={'h3'}>プライバシーポリシーの変更</Title>
+      <Title size={'h3'}>
+        <Text inherit>プライバシーポリシーの変更</Text>
+      </Title>
       <Divider my={'sm'} />
       <Text>
         当方は、必要に応じて、このプライバシーポリシーの内容を変更します。この場合、変更後のプライバシーポリシーの施行時期と内容を適切な方法により周知または通知します。
       </Text>
       <Space h={30} />
-      <Title size={'h3'}>お問い合わせ</Title>
+      <Title size={'h3'}>
+        <Text inherit>お問い合わせ</Text>
+      </Title>
       <Divider my={'sm'} />
       <Text>
         お客様の情報の開示、情報の訂正、利用停止、削除をご希望の場合は、以下のお問い合わせフォームにご連絡ください。

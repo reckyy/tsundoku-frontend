@@ -136,7 +136,7 @@ export default function Editor({
           <Button
             mt="2"
             variant="light"
-            color="green"
+            color="blue"
             onClick={handleSaveClick}
             fullWidth
             disabled={!isSaveEnable}

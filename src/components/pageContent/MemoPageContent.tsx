@@ -60,7 +60,9 @@ function GridItem({
         />
       </GridCol>
       <GridCol offset={offset} span={bookInfoSpan}>
-        <Title size="h3">{bookWithMemos.book.title}</Title>
+        <Title size="h3">
+          <Text inherit>{bookWithMemos.book.title}</Text>
+        </Title>
         <Text size="md" mt="10">
           著者 : {bookWithMemos.book.author}
         </Text>
