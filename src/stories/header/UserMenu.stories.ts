@@ -23,7 +23,7 @@ type Story = StoryObj<typeof UserMenu>;
 
 export const AppearenceTest: Story = {};
 
-export const menuTest: Story = {
+export const MenuTest: Story = {
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
     const userMenuButton = canvas.getByText('Tsundoku');

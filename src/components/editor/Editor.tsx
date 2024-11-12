@@ -15,7 +15,6 @@ import { Button, Grid, GridCol, TextInput, Text } from '@mantine/core';
 import { useEffect, useRef, useState } from 'react';
 import { Heading } from '@/types/index';
 import classes from './Editor.module.css';
-import toast from 'react-hot-toast';
 
 type EditorProps = {
   heading: Heading | undefined;
@@ -31,11 +30,7 @@ type EditorProps = {
 const lowlight = createLowlight();
 lowlight.register({ js, ts, rb });
 
-export default function Editor({
-  heading,
-  headingId,
-  handleSaveAll,
-}: EditorProps) {
+export default function Editor({ heading, handleSaveAll }: EditorProps) {
   const memoBody = heading?.memo.body ?? '';
   const title = heading?.title ?? '';
   const memoPlaceholder = `1. 1章 - プログラミングの基礎概念
@@ -90,7 +85,7 @@ export default function Editor({
       prevHeading.current = heading;
       setHeadingTitle(title);
     }
-  }, [heading]);
+  }, [editor, heading, memoBody, title]);
 
   const handleSaveClick = async () => {
     const title = headingTitle;
