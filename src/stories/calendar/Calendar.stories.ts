@@ -19,16 +19,18 @@ const meta: Meta<typeof Calendar> = {
 export default meta;
 type Story = StoryObj<typeof Calendar>;
 
-const readingCalendarogs = [
-  {
-    date: previousDay,
-    count: 1,
-  },
-  {
-    date: today,
-    count: 5,
-  },
-];
+const readingCalendarogs = {
+  logs: [
+    {
+      date: previousDay,
+      count: 1,
+    },
+    {
+      date: today,
+      count: 5,
+    },
+  ],
+};
 
 export const AppearenceTest: Story = {
   parameters: {

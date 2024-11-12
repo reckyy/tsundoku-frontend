@@ -5,7 +5,7 @@ import ConfirmDeletion from '@/components/confirm/ConfirmDeletion';
 const meta: Meta<typeof ConfirmDeletion> = {
   component: ConfirmDeletion,
   parameters: {
-    layout: 'centered',
+    layout: 'padded',
     nextjs: {
       appDirectory: true,
     },

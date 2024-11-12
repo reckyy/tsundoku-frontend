@@ -29,25 +29,9 @@ type Story = StoryObj<typeof AddBookConfirmModal>;
 
 export const AppearenceTest: Story = {};
 
-export const EmptyValueTest: Story = {
-  play: async ({ canvasElement }) => {
-    const canvas = within(canvasElement);
-    const button = await canvas.getByRole('button', { name: '追加' });
-    await userEvent.click(button);
-
-    await waitFor(() => {
-      expect(
-        canvas.getByText('章の数を入力してください。'),
-      ).toBeInTheDocument();
-    });
-  },
-};
-
 export const AddBookTest: Story = {
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
-    const Input = await canvas.getByLabelText('headingNumber');
-    await userEvent.type(Input, '1');
     const button = await canvas.getByRole('button', { name: '追加' });
     await userEvent.click(button);
 
@@ -72,8 +56,6 @@ export const AddBookTest: Story = {
 export const AddBookFailedTest: Story = {
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
-    const Input = await canvas.getByLabelText('headingNumber');
-    await userEvent.type(Input, '1');
     const button = await canvas.getByRole('button', { name: '追加' });
     await userEvent.click(button);
 
