@@ -19,13 +19,21 @@ import DeleteBookConfirmModal from '../modal/DeleteBookConfirmModal';
 import toast from 'react-hot-toast';
 import { useState } from 'react';
 import { axiosInstance, setHeader } from '@/lib/axios';
+import { useSession, SessionProvider } from 'next-auth/react';
 
 export type DndListProps = {
   bookItems: Record<Filter, UserBook[]>;
-  token: string;
 };
 
-export default function DndList({ bookItems, token }: DndListProps) {
+export default function DndList({ bookItems }: DndListProps) {
+  return (
+    <SessionProvider>
+      <DndListContent bookItems={bookItems} />
+    </SessionProvider>
+  );
+}
+
+function DndListContent({ bookItems }: DndListProps) {
   const [source, setSource] = useState<number>(0);
   const [unreadBooks, unreadBooksHandlers] = useListState<UserBook>(
     bookItems['unread'],
@@ -39,7 +47,6 @@ export default function DndList({ bookItems, token }: DndListProps) {
   const [deleteParamsState, setDeleteParamsState] = useSetState({
     userBookId: 0,
     position: 0,
-    token,
   });
   const [opened, { open, close }] = useDisclosure(false);
   const [filter, setFilter] = useState<Filter>('unread');
@@ -55,6 +62,8 @@ export default function DndList({ bookItems, token }: DndListProps) {
     reading: '今読んでいる本はありません。',
     finished: '読み終わった本はありません。',
   };
+
+  const { data: session } = useSession();
 
   const handleClick = (item: UserBook) => {
     setDeleteParamsState({
@@ -91,7 +100,7 @@ export default function DndList({ bookItems, token }: DndListProps) {
       userBookId: userBook?.id,
       destinationBookId: destinationBook?.id,
     };
-    await setHeader(token!);
+    await setHeader(session?.user?.accessToken);
     try {
       await axiosInstance.patch(`/user_books/${userBook?.id}/position`, params);
       const handler =
@@ -152,7 +161,7 @@ export default function DndList({ bookItems, token }: DndListProps) {
   ));
 
   return (
-    <>
+    <SessionProvider>
       <Modal
         opened={opened}
         radius="md"
@@ -162,7 +171,6 @@ export default function DndList({ bookItems, token }: DndListProps) {
       >
         <DeleteBookConfirmModal
           userBookId={deleteParamsState.userBookId}
-          token={token!}
           close={close}
         />
       </Modal>
@@ -188,6 +196,6 @@ export default function DndList({ bookItems, token }: DndListProps) {
           <Text ta="center">{emptyMessages[filter]}</Text>
         </>
       )}
-    </>
+    </SessionProvider>
   );
 }

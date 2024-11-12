@@ -10,7 +10,7 @@ import Link from 'next/link';
 export default async function TopPageContent() {
   const session = await auth();
   if (session?.user) {
-    const bookItems = await getBooks(session.user.idToken!);
+    const bookItems = await getBooks();
 
     return (
       <Container my="md">

@@ -88,7 +88,7 @@ export default function MemoPageContent() {
   const dynamicParams = useParams<{ bookId: string }>();
   const bookId = Number(dynamicParams.bookId);
   const { data: session, status } = useSession();
-  const token = session?.user?.idToken;
+  const token = session?.user?.accessToken;
   const { handleAddHeading } = useAddHeading();
   const params = {
     bookId,
@@ -99,7 +99,7 @@ export default function MemoPageContent() {
   const fetchable = status === 'authenticated' && session?.user?.email;
 
   async function fetcher(url: string, params: { bookId: number }) {
-    await setHeader(token!);
+    await setHeader(token);
     const res = await axiosInstance.get(url, { params });
     return res.data;
   }

@@ -1,12 +1,30 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { http, HttpResponse } from 'msw';
 import { userEvent, within, expect, waitFor } from '@storybook/test';
-import DeleteUserConfirmModal from '@/components/modal/DeleteUserConfirmModal';
+import DeleteBookConfirmModal from '@/components/modal/DeleteBookConfirmModal';
+import { SessionProvider } from 'next-auth/react';
+import { Session } from 'next-auth';
 
 const RAILS_API_URL = process.env.STORYBOOK_NEXT_PUBLIC_RAILS_API_URL;
 
-const meta: Meta<typeof DeleteUserConfirmModal> = {
-  component: DeleteUserConfirmModal,
+const mockSession: Session = {
+  user: {
+    name: 'Test User',
+    email: 'testuser@example.com',
+    accessToken: 'hogehoge',
+  },
+  expires: '2025-12-31T23:59:59.999Z',
+};
+
+const meta: Meta<typeof DeleteBookConfirmModal> = {
+  component: DeleteBookConfirmModal,
+  decorators: [
+    (Story) => (
+      <SessionProvider session={mockSession}>
+        <Story />
+      </SessionProvider>
+    ),
+  ],
   parameters: {
     layout: 'centered',
     nextjs: {
@@ -14,8 +32,6 @@ const meta: Meta<typeof DeleteUserConfirmModal> = {
     },
   },
   args: {
-    id: '1',
-    token: 'hogehoge',
     close: () => {
       console.log('モーダルを閉じました。');
     },
@@ -23,7 +39,7 @@ const meta: Meta<typeof DeleteUserConfirmModal> = {
 };
 
 export default meta;
-type Story = StoryObj<typeof DeleteUserConfirmModal>;
+type Story = StoryObj<typeof DeleteBookConfirmModal>;
 
 export const AppearenceTest: Story = {
   args: {},
@@ -36,15 +52,13 @@ export const DeleteBookTest: Story = {
     await userEvent.click(button);
 
     await waitFor(() => {
-      expect(
-        canvas.getByText('アカウントを削除しました。'),
-      ).toBeInTheDocument();
+      expect(canvas.getByText('本を削除しました。')).toBeInTheDocument();
     });
   },
   parameters: {
     msw: {
       handlers: [
-        http.delete(`${RAILS_API_URL}/users/1`, () => {
+        http.delete(`${RAILS_API_URL}/user_books/1`, () => {
           return new HttpResponse(null, { status: 204 });
         }),
       ],
@@ -52,20 +66,20 @@ export const DeleteBookTest: Story = {
   },
 };
 
-export const DeleteUserFailedTest: Story = {
+export const DeleteBookFailedTest: Story = {
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
     const button = await canvas.getByRole('button', { name: '削除' });
     await userEvent.click(button);
 
     await waitFor(() => {
-      expect(canvas.getByText('退会に失敗しました。')).toBeInTheDocument();
+      expect(canvas.getByText('本の削除に失敗しました。')).toBeInTheDocument();
     });
   },
   parameters: {
     msw: {
       handlers: [
-        http.delete(`${RAILS_API_URL}/users/1`, () => {
+        http.delete(`${RAILS_API_URL}/user_books/1`, () => {
           return new HttpResponse('failed', { status: 420 });
         }),
       ],

@@ -4,16 +4,14 @@ import useDeleteBook from '@/hooks/useDeleteBook';
 
 type DeleteBookModalProps = {
   userBookId: number;
-  token: string;
   close: () => void;
 };
 
 export default function DeleteBookConfirmModal({
   userBookId,
-  token,
   close,
 }: DeleteBookModalProps) {
-  const { handleDeleteBook } = useDeleteBook(userBookId, token);
+  const { handleDeleteBook } = useDeleteBook(userBookId);
 
   return (
     <>

@@ -15,10 +15,9 @@ const useUpdateBookStatus = ({
   setBookWithMemos,
 }: useUpdateBookStatusProps) => {
   const { data: session } = useSession();
-  const token = session?.user?.idToken;
 
   const handleSubmit = async (status: string) => {
-    await setHeader(token!);
+    await setHeader(session?.user?.accessToken);
     try {
       await axiosInstance.patch(`/user_books/${userBookId}`, {
         userBookId,

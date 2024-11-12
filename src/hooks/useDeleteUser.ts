@@ -2,14 +2,16 @@ import { useRouter } from 'next/navigation';
 import toast from 'react-hot-toast';
 import { signOut } from 'next-auth/react';
 import { axiosInstance, setHeader } from '@/lib/axios';
+import { useSession } from 'next-auth/react';
 
-const useDeleteUser = (id: string, token: string) => {
+const useDeleteUser = () => {
   const router = useRouter();
+  const { data: session } = useSession();
 
   const handleDeleteUser = async () => {
-    await setHeader(token);
+    await setHeader(session?.user?.accessToken);
     try {
-      const res = await axiosInstance.delete(`/users/${id}`);
+      const res = await axiosInstance.delete(`/users/${session?.user?.id}`);
       if (res.status === 204) {
         signOut();
         router.push('/thanks');

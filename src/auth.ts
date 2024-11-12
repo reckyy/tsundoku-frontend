@@ -5,7 +5,7 @@ import { axiosInstance } from '@/lib/axios';
 
 declare module 'next-auth' {
   interface User {
-    idToken: string;
+    accessToken: string;
   }
 }
 
@@ -13,21 +13,21 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
   providers: [Google],
   callbacks: {
     async jwt({ token, user }) {
-      if (user?.id && user?.idToken) {
+      if (user?.id && user?.accessToken) {
         token.id = user.id;
-        token.idToken = user.idToken;
+        token.accessToken = user.accessToken;
       }
       return token;
     },
     async session({ session, token }) {
-      if (token.idToken && token.id) {
+      if (token.accessToken && token.id) {
         session.user.id = token.id as string;
-        session.user.idToken = token.idToken as string;
+        session.user.accessToken = token.accessToken as string;
       }
       return session;
     },
 
-    async signIn({ user, account }) {
+    async signIn({ user }) {
       const name = user.name;
       const email = user.email;
       const avatarUrl = user.image;
@@ -39,7 +39,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         });
         if (res.status === 200) {
           user.id = res.data.id;
-          user.idToken = account?.id_token as string;
+          user.accessToken = res.data.access_token as string;
           return true;
         } else {
           return false;

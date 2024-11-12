@@ -6,11 +6,10 @@ import { axiosInstance, setHeader } from '@/lib/axios';
 
 const useAddBook = (book: Book) => {
   const { data: session } = useSession();
-  const token = session?.user?.idToken;
   const router = useRouter();
 
   const handleSubmit = async () => {
-    await setHeader(token!);
+    await setHeader(session?.user?.accessToken);
     try {
       await Promise.all([
         axiosInstance.post('/books', {

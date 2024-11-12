@@ -5,13 +5,12 @@ import { BookWithMemos } from '@/types/index';
 
 const useAddHeading = () => {
   const { data: session } = useSession();
-  const token = session?.user?.idToken;
 
   const handleAddHeading = async (
     bookWithMemos: BookWithMemos,
     number: number,
   ) => {
-    await setHeader(token!);
+    await setHeader(session?.user?.accessToken);
     try {
       const res = await axiosInstance.post('/headings', {
         userBookId: bookWithMemos.id,

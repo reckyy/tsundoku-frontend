@@ -74,7 +74,6 @@ const meta: Meta<typeof DndList> = {
       ],
       finished: [],
     },
-    token: 'hogehoge',
   },
 };
 

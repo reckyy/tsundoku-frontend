@@ -5,8 +5,7 @@ import getBooks from '@/utils/getBooks';
 
 export default async function BookShelfPageContent() {
   const session = await auth();
-  const token = session?.user?.idToken;
-  const bookItems = await getBooks(token!);
+  const bookItems = await getBooks();
 
   return (
     <Container my="md">
@@ -17,7 +16,7 @@ export default async function BookShelfPageContent() {
         ドラッグ&ドロップで本の順番を入れ替えたり、削除したりできます。
       </Text>
       <Space h={20} />
-      <DndList bookItems={bookItems} token={token!} />
+      <DndList bookItems={bookItems} />
     </Container>
   );
 }
