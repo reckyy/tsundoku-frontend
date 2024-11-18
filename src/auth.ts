@@ -27,15 +27,17 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       return session;
     },
 
-    async signIn({ user }) {
+    async signIn({ user, account }) {
       const name = user.name;
       const email = user.email;
       const avatarUrl = user.image;
+      const idToken = account?.id_token;
       try {
         const res = await axiosInstance.post('/auth/callback/google', {
           name,
           email,
           avatarUrl,
+          idToken,
         });
         if (res.status === 200) {
           user.id = res.data.id;
