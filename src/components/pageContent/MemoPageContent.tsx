@@ -157,16 +157,24 @@ export default function MemoPageContent() {
   };
 
   const handleAddNewHeading = async () => {
+    if (!bookWithMemos) {
+      toast.error('章の追加に失敗しました。');
+      return false;
+    }
+
     const newHeading = await handleAddHeading(
-      bookWithMemos!,
-      bookWithMemos!.headings.length + 1,
+      bookWithMemos,
+      bookWithMemos.headings.length + 1,
     );
 
     if (newHeading) {
-      setBookWithMemos((prev) => ({
-        ...prev!,
-        headings: [...prev!.headings, newHeading],
-      }));
+      setBookWithMemos((prev) => {
+        if (!prev) return prev;
+        return {
+          ...prev,
+          headings: [...prev.headings, newHeading],
+        };
+      });
     }
   };
 
