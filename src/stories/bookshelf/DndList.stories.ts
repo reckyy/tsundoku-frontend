@@ -22,7 +22,7 @@ const meta: Meta<typeof DndList> = {
   },
   args: {
     bookItems: {
-      unread: [
+      unread_books: [
         {
           id: 1,
           status: 'unread',
@@ -59,7 +59,7 @@ const meta: Meta<typeof DndList> = {
           },
         },
       ],
-      reading: [
+      reading_books: [
         {
           id: 1,
           status: 'reading',
@@ -72,7 +72,7 @@ const meta: Meta<typeof DndList> = {
           },
         },
       ],
-      finished: [],
+      finished_books: [],
     },
   },
 };

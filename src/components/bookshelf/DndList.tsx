@@ -36,31 +36,31 @@ export default function DndList({ bookItems }: DndListProps) {
 function DndListContent({ bookItems }: DndListProps) {
   const [source, setSource] = useState<number>(0);
   const [unreadBooks, unreadBooksHandlers] = useListState<UserBook>(
-    bookItems['unread'],
+    bookItems['unread_books'],
   );
   const [readingBooks, readingBooksHandlers] = useListState<UserBook>(
-    bookItems['reading'],
+    bookItems['reading_books'],
   );
   const [finishedBooks, finishedBooksHandlers] = useListState<UserBook>(
-    bookItems['finished'],
+    bookItems['finished_books'],
   );
   const [deleteParamsState, setDeleteParamsState] = useSetState({
     userBookId: 0,
     position: 0,
   });
   const [opened, { open, close }] = useDisclosure(false);
-  const [filter, setFilter] = useState<Filter>('unread');
+  const [filter, setFilter] = useState<Filter>('unread_books');
   const filteredBooks =
-    filter === 'unread'
+    filter === 'unread_books'
       ? unreadBooks
-      : filter === 'reading'
+      : filter === 'reading_books'
         ? readingBooks
         : finishedBooks;
 
   const emptyMessages: Record<Filter, string> = {
-    unread: '「本を追加」から読む本を追加しましょう！',
-    reading: '今読んでいる本はありません。',
-    finished: '読み終わった本はありません。',
+    unread_books: '「本を追加」から読む本を追加しましょう！',
+    reading_books: '今読んでいる本はありません。',
+    finished_books: '読み終わった本はありません。',
   };
 
   const { data: session } = useSession();
@@ -104,9 +104,9 @@ function DndListContent({ bookItems }: DndListProps) {
     try {
       await axiosInstance.patch(`/user_books/${userBook?.id}/position`, params);
       const handler =
-        filter === 'unread'
+        filter === 'unread_books'
           ? unreadBooksHandlers
-          : filter === 'reading'
+          : filter === 'reading_books'
             ? readingBooksHandlers
             : finishedBooksHandlers;
       handler.swap({ from: source, to: index });
@@ -181,9 +181,9 @@ function DndListContent({ bookItems }: DndListProps) {
           onChange={(value) => setFilter(value as Filter)}
           size="md"
           data={[
-            { label: 'まだ読んでない', value: 'unread' },
-            { label: '読んでる途中', value: 'reading' },
-            { label: '全部読んだ', value: 'finished' },
+            { label: 'まだ読んでない', value: 'unread_books' },
+            { label: '読んでる途中', value: 'reading_books' },
+            { label: '全部読んだ', value: 'finished_books' },
           ]}
         />
       </Center>

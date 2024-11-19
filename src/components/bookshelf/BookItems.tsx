@@ -18,11 +18,11 @@ export type BookItemsProps = {
 };
 
 const BookItems = ({ bookItems, isPublic }: BookItemsProps) => {
-  const [filter, setFilter] = useState<Filter>('unread');
+  const [filter, setFilter] = useState<Filter>('unread_books');
   const emptyMessages: Record<Filter, string> = {
-    unread: '「本を追加」から読む本を追加しましょう！',
-    reading: '今読んでいる本はありません。',
-    finished: '読み終わった本はありません。',
+    unread_books: '「本を追加」から読む本を追加しましょう！',
+    reading_books: '今読んでいる本はありません。',
+    finished_books: '読み終わった本はありません。',
   };
 
   const filteredBooks = bookItems[filter];
@@ -37,9 +37,9 @@ const BookItems = ({ bookItems, isPublic }: BookItemsProps) => {
           onChange={(value) => setFilter(value as Filter)}
           size="md"
           data={[
-            { label: 'まだ読んでない', value: 'unread' },
-            { label: '読んでる途中', value: 'reading' },
-            { label: '全部読んだ', value: 'finished' },
+            { label: 'まだ読んでない', value: 'unread_books' },
+            { label: '読んでる途中', value: 'reading_books' },
+            { label: '全部読んだ', value: 'finished_books' },
           ]}
         />
       </Center>

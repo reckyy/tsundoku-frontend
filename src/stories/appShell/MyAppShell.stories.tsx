@@ -6,7 +6,7 @@ import BookItems from '@/components/bookshelf/BookItems';
 import Calendar from '@/components/calendar/Calendar';
 
 const mockBooks = {
-  unread: [
+  unread_books: [
     {
       id: 1,
       status: 'unread',
@@ -43,7 +43,7 @@ const mockBooks = {
       },
     },
   ],
-  reading: [
+  reading_books: [
     {
       id: 1,
       status: 'reading',
@@ -56,7 +56,7 @@ const mockBooks = {
       },
     },
   ],
-  finished: [],
+  finished_books: [],
 };
 
 const previousDay = dayjs().subtract(1, 'd').format('YYYY-MM-DD');

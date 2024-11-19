@@ -12,7 +12,7 @@ const meta: Meta<typeof BookItems> = {
   },
   args: {
     bookItems: {
-      unread: [
+      unread_books: [
         {
           id: 1,
           status: 'unread',
@@ -49,7 +49,7 @@ const meta: Meta<typeof BookItems> = {
           },
         },
       ],
-      reading: [
+      reading_books: [
         {
           id: 1,
           status: 'reading',
@@ -62,7 +62,7 @@ const meta: Meta<typeof BookItems> = {
           },
         },
       ],
-      finished: [],
+      finished_books: [],
     },
     isPublic: false,
   },
