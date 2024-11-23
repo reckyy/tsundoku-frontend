@@ -9,14 +9,10 @@ export type Book = {
 
 export type UserBook = {
   id: number;
+  status: string;
   book: Book;
 };
 
-export type BookWithMemos = {
-  book: {
-    title: string;
-    author: string;
-    coverImageUrl: string;
-  };
-  headings: Heading[];
-};
+export type Filter = 'unread_books' | 'reading_books' | 'finished_books';
+
+export type BookWithMemos = UserBook & { headings: Heading[] };

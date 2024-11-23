@@ -1,4 +1,4 @@
-import { Card, Image, Text, Button, Flex, NumberInput } from '@mantine/core';
+import { Card, Image, Text, Button, Flex } from '@mantine/core';
 import { Book } from '@/types/index';
 import useAddBook from '@/hooks/useAddBook';
 import { SessionProvider } from 'next-auth/react';
@@ -12,7 +12,7 @@ export default function AddBookConfirmModal({ book }: { book: Book }) {
 }
 
 const AddBookConfirmContent = ({ book }: { book: Book }) => {
-  const { value, setValue, handleSubmit } = useAddBook(book);
+  const { handleSubmit } = useAddBook(book);
 
   return (
     <Card shadow="sm" padding="sm" radius="md" withBorder>
@@ -26,17 +26,7 @@ const AddBookConfirmContent = ({ book }: { book: Book }) => {
         <Image src={book.coverImageUrl} w={141} h={200} alt="book" />
 
         <Text fw={500}>{book.title}を本棚に追加しますか？</Text>
-        <NumberInput
-          withAsterisk
-          label="章の数"
-          aria-label="headingNumber"
-          min={1}
-          value={value}
-          onChange={setValue}
-          placeholder="数字を入力してください。"
-        />
-
-        <Button color="blue" mt="md" radius="md" onClick={handleSubmit}>
+        <Button color="blue" radius="md" onClick={handleSubmit}>
           追加
         </Button>
       </Flex>

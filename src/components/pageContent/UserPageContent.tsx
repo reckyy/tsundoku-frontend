@@ -5,7 +5,7 @@ import CalendarContent from '@/components/calendar/CalendarContent';
 import { useParams } from 'next/navigation';
 import useSWR from 'swr';
 import { useState } from 'react';
-import { UserBook, Log } from '@/types/index';
+import { UserBook, Log, Filter } from '@/types/index';
 import {
   Container,
   Space,
@@ -27,8 +27,9 @@ export default function UserPageContent() {
   const params = { id: dynamicParams.id as string };
   const apiUserUrl = `/users/${dynamicParams.id}`;
   const userPageUrl = `${process.env.NEXT_PUBLIC_NEXT_URL}/users/${dynamicParams.id}`;
-  const [bookItems, setBookItems] = useState<UserBook[]>([]);
+  const [bookItems, setBookItems] = useState<Record<Filter, UserBook[]>>();
   const [readingLogs, setReadingLogs] = useState<Log[]>([]);
+  const [userName, setUserName] = useState<string>('');
   const clipboard = useClipboard();
 
   const handleCopyUrl = () => {
@@ -50,15 +51,8 @@ export default function UserPageContent() {
     ([url, params]) => fetcher(url, params),
     {
       onSuccess: (data) => {
-        const fetchedBookItems = data.user_books.map((userBook: UserBook) => ({
-          book: {
-            id: userBook.book.id,
-            title: userBook.book.title,
-            author: userBook.book.author,
-            coverImageUrl: userBook.book.coverImageUrl,
-          },
-        }));
-        setBookItems(fetchedBookItems);
+        setUserName(data.name);
+        setBookItems(data.user_books);
         setReadingLogs(data.logs);
       },
     },
@@ -68,8 +62,8 @@ export default function UserPageContent() {
   if (isLoading) return <div></div>;
 
   return (
-    <div>
-      <title>公開ページ</title>
+    <>
+      <title>{`${userName}さんの公開ページ`}</title>
       {String(session?.user?.id) === dynamicParams.id && (
         <Container bg={'var(--mantine-color-blue-light'} h={150} mt="md">
           <Stack pt="md" align="center" justify="center">
@@ -87,17 +81,17 @@ export default function UserPageContent() {
       )}
       <Container my="md">
         <Title size={'h2'} ta={'center'}>
-          読書記録
+          <Text inherit>読書記録</Text>
         </Title>
         <Space h={20} />
         <CalendarContent readingLogs={readingLogs} />
         <Space h="20" />
         <Title size={'h2'} ta={'center'}>
-          本棚
+          <Text inherit>本棚</Text>
         </Title>
-        <BookItems bookItems={bookItems} isPublic={true} />
+        <BookItems bookItems={bookItems!} isPublic={true} />
         <Space h={60} />
       </Container>
-    </div>
+    </>
   );
 }

@@ -18,14 +18,19 @@ import classes from './Editor.module.css';
 
 type EditorProps = {
   heading: Heading | undefined;
-  handleSave: (content: string, title: string) => void;
+  headingId: number;
+  handleSaveAll: (
+    title: string,
+    headingId: number,
+    content: string,
+    memoId: number,
+  ) => Promise<false | undefined>;
 };
 
 const lowlight = createLowlight();
-
 lowlight.register({ js, ts, rb });
 
-export default function Editor({ heading, handleSave }: EditorProps) {
+export default function Editor({ heading, handleSaveAll }: EditorProps) {
   const memoBody = heading?.memo.body ?? '';
   const title = heading?.title ?? '';
   const memoPlaceholder = `1. 1章 - プログラミングの基礎概念
@@ -59,35 +64,58 @@ export default function Editor({ heading, handleSave }: EditorProps) {
     ],
     autofocus: true,
     content: memoBody,
+    onUpdate: ({ editor }) => {
+      const content = editor.getHTML();
+      if (content !== memoBody) {
+        setIsSaveEnable(true);
+      } else {
+        setIsSaveEnable(false);
+      }
+    },
   });
 
-  editor?.commands.setColor('#37352f');
-
+  const initialHeadingTitle: string = title;
   const [headingTitle, setHeadingTitle] = useState<string>(title);
   const prevHeading = useRef(heading);
+  const [isSaveEnable, setIsSaveEnable] = useState<boolean>(false);
 
   useEffect(() => {
     if (editor && heading !== prevHeading.current) {
-      editor?.commands.setContent(memoBody);
+      editor.commands.setContent(memoBody);
       prevHeading.current = heading;
       setHeadingTitle(title);
     }
   }, [editor, heading, memoBody, title]);
 
   const handleSaveClick = async () => {
+    const title = headingTitle;
     const content = editor?.getHTML() ?? '';
-    const title = headingTitle ?? '';
-    await handleSave(content, title);
+    const memoId = heading?.memo.id;
+    const headingId = heading?.id;
+
+    if (memoId && headingId) {
+      await handleSaveAll(title, headingId, content, memoId);
+    }
+  };
+
+  const handleTitleChange = (title: string) => {
+    setHeadingTitle(title);
+
+    if (initialHeadingTitle !== title) {
+      setIsSaveEnable(true);
+    } else {
+      setIsSaveEnable(false);
+    }
   };
 
   return (
     <>
-      <Grid>
+      <Text fw="700">タイトル</Text>
+      <Grid align="center">
         <GridCol span={9}>
-          <Text fw="700">タイトル</Text>
           <TextInput
-            variant="unstyled"
             aria-label="heading-title"
+            variant="unstyled"
             size="lg"
             value={headingTitle}
             placeholder="第1章 : プログラミングの基礎概念"
@@ -96,15 +124,17 @@ export default function Editor({ heading, handleSave }: EditorProps) {
                 color: '#37352f',
               },
             }}
-            onChange={(event) => setHeadingTitle(event.currentTarget.value)}
+            onChange={(event) => handleTitleChange(event.currentTarget.value)}
           />
         </GridCol>
         <GridCol offset={1} span={2}>
           <Button
+            mt="2"
             variant="light"
-            fullWidth
-            color="green"
+            color="blue"
             onClick={handleSaveClick}
+            fullWidth
+            disabled={!isSaveEnable}
           >
             保存
           </Button>
@@ -112,7 +142,11 @@ export default function Editor({ heading, handleSave }: EditorProps) {
       </Grid>
       <Grid>
         <GridCol span={12}>
-          <Text fw="700">この章のメモ</Text>
+          <Text fw="700" mt="md">
+            この章のメモ
+          </Text>
+        </GridCol>
+        <GridCol span={12}>
           <RichTextEditor editor={editor} className={classes.customEditor}>
             <RichTextEditor.Content />
           </RichTextEditor>

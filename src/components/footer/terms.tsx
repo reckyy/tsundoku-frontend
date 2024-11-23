@@ -13,14 +13,16 @@ const Terms = () => {
   return (
     <Container my="md">
       <Title size={'h2'} ta={'center'}>
-        利用規約
+        <Text inherit>利用規約</Text>
       </Title>
       <Space h={20} />
       <Text>
         この利用規約（以下、「本規約」といいます。）は、Tsundokuの管理者（以下、「当方」といいます。）がこのウェブサイト上で提供するサービス（以下、「本サービス」といいます。）の利用条件を定めるものです。登録ユーザーの皆さま（以下、「ユーザー」といいます。）には、本規約に従って、本サービスをご利用いただきます。
       </Text>
       <Space h={30} />
-      <Title size={'h3'}>第1条（適用）</Title>
+      <Title size={'h3'}>
+        <Text inherit>第1条（適用）</Text>
+      </Title>
       <Divider my={'sm'} />
       <List type="ordered">
         <ListItem>
@@ -34,7 +36,9 @@ const Terms = () => {
         </ListItem>
       </List>
       <Space h={30} />
-      <Title size={'h3'}>第2条（利用登録）</Title>
+      <Title size={'h3'}>
+        <Text inherit>第2条（利用登録）</Text>
+      </Title>
       <Divider my={'sm'} />
       <List type="ordered">
         <ListItem>
@@ -54,7 +58,9 @@ const Terms = () => {
         </ListItem>
       </List>
       <Space h={30} />
-      <Title size={'h3'}>第3条（ユーザーIDおよびパスワードの管理）</Title>
+      <Title size={'h3'}>
+        <Text inherit>第3条（ユーザーIDおよびパスワードの管理）</Text>
+      </Title>
       <Divider my={'sm'} />
       <List type="ordered">
         <ListItem>
@@ -68,7 +74,9 @@ const Terms = () => {
         </ListItem>
       </List>
       <Space h={30} />
-      <Title size={'h3'}>第4条（禁止事項）</Title>
+      <Title size={'h3'}>
+        <Text inherit>第4条（禁止事項）</Text>
+      </Title>
       <Divider my={'sm'} />
       <Text>
         ユーザーは、本サービスの利用にあたり、以下の行為をしてはなりません。
@@ -111,7 +119,9 @@ const Terms = () => {
         <ListItem>その他、当方が不適切であると判断する行為</ListItem>
       </List>
       <Space h={30} />
-      <Title size={'h3'}>第5条（本サービスの提供の停止等）</Title>
+      <Title size={'h3'}>
+        <Text inherit>第5条（本サービスの提供の停止等）</Text>
+      </Title>
       <Divider my={'sm'} />
       <List type="ordered">
         <ListItem>
@@ -136,7 +146,9 @@ const Terms = () => {
         </ListItem>
       </List>
       <Space h={30} />
-      <Title size={'h3'}>第6条（利用制限および登録抹消）</Title>
+      <Title size={'h3'}>
+        <Text inherit>第6条（利用制限および登録抹消）</Text>
+      </Title>
       <Divider my={'sm'} />
       <List type="ordered">
         <ListItem>
@@ -158,13 +170,17 @@ const Terms = () => {
         </ListItem>
       </List>
       <Space h={30} />
-      <Title size={'h3'}>第7条（退会）</Title>
+      <Title size={'h3'}>
+        <Text inherit>第7条（退会）</Text>
+      </Title>
       <Divider my={'sm'} />
       <Text>
         ユーザーは、当方の定める退会手続により、本サービスから退会できるものとします。
       </Text>
       <Space h={30} />
-      <Title size={'h3'}>第8条（保証の否認および免責事項）</Title>
+      <Title size={'h3'}>
+        <Text inherit>第8条（保証の否認および免責事項）</Text>
+      </Title>
       <Divider my={'sm'} />
       <List type="ordered">
         <ListItem>
@@ -178,13 +194,17 @@ const Terms = () => {
         </ListItem>
       </List>
       <Space h={30} />
-      <Title size={'h3'}>第9条（サービス内容の変更等）</Title>
+      <Title size={'h3'}>
+        <Text inherit>第9条（サービス内容の変更等）</Text>
+      </Title>
       <Divider my={'sm'} />
       <Text>
         当方は、ユーザーへの事前の告知をもって、本サービスの内容を変更、追加または廃止することがあり、ユーザーはこれを承諾するものとします。
       </Text>
       <Space h={30} />
-      <Title size={'h3'}>第10条（利用規約の変更）</Title>
+      <Title size={'h3'}>
+        <Text inherit>第10条（利用規約の変更）</Text>
+      </Title>
       <Divider my={'sm'} />
       <List type="ordered">
         <ListItem>
@@ -203,7 +223,9 @@ const Terms = () => {
         </ListItem>
       </List>
       <Space h={30} />
-      <Title size={'h3'}>第11条（個人情報の取り扱い）</Title>
+      <Title size={'h3'}>
+        <Text inherit>第11条（個人情報の取り扱い）</Text>
+      </Title>
       <Divider my={'sm'} />
       <Text>
         当方は、本サービスの利用によって取得する個人情報については、
@@ -211,19 +233,25 @@ const Terms = () => {
         に従い適切に取り扱うものとします。
       </Text>
       <Space h={30} />
-      <Title size={'h3'}>第12条（通知または連絡）</Title>
+      <Title size={'h3'}>
+        <Text inherit>第12条（通知または連絡）</Text>
+      </Title>
       <Divider my={'sm'} />
       <Text>
         ユーザーと当方との間の通知または連絡は，当方の定める方法によって行うものとします。当方は、ユーザーから、当方が別途定める方式に従った変更届け出がない限り、現在登録されている連絡先が有効なものとみなして当該連絡先へ通知または連絡を行い、これらは、発信時にユーザーへ到達したものとみなします。
       </Text>
       <Space h={30} />
-      <Title size={'h3'}>第13条（権利義務の譲渡の禁止）</Title>
+      <Title size={'h3'}>
+        <Text inherit>第13条（権利義務の譲渡の禁止）</Text>
+      </Title>
       <Divider my={'sm'} />
       <Text>
         ユーザーは、当方の書面による事前の承諾なく、利用契約上の地位または本規約に基づく権利もしくは義務を第三者に譲渡し、または担保に供することはできません。
       </Text>
       <Space h={30} />
-      <Title size={'h3'}>第14条（準拠法・裁判管轄）</Title>
+      <Title size={'h3'}>
+        <Text inherit>第14条（準拠法・裁判管轄）</Text>
+      </Title>
       <Divider my={'sm'} />
       <List type="ordered">
         <ListItem>本規約の解釈にあたっては、日本法を準拠法とします。</ListItem>

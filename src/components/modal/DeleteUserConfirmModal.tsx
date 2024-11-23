@@ -1,21 +1,18 @@
 import { Text, Divider, Space, Button, Group } from '@mantine/core';
 import useDeleteUser from '@/hooks/useDeleteUser';
+import { SessionProvider } from 'next-auth/react';
 
 type DeleteUserConfirmModalParams = {
-  id: string;
-  token?: string;
   close?: () => void;
 };
 
 export default function DeleteUserConfirmModal({
-  id,
-  token,
   close,
 }: DeleteUserConfirmModalParams) {
-  const { handleDeleteUser } = useDeleteUser(id, token!);
+  const { handleDeleteUser } = useDeleteUser();
 
   return (
-    <>
+    <SessionProvider>
       <Text size="lg" fw={700} ta="center">
         本当に削除しますか？
       </Text>
@@ -37,6 +34,6 @@ export default function DeleteUserConfirmModal({
           削除
         </Button>
       </Group>
-    </>
+    </SessionProvider>
   );
 }

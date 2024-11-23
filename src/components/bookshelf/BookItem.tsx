@@ -1,6 +1,6 @@
 'use client';
 
-import { Image, Center, Text } from '@mantine/core';
+import { Image, Center, Text, Stack } from '@mantine/core';
 import { Book } from '@/types/index';
 import Link from 'next/link';
 
@@ -31,7 +31,7 @@ export default function BookItem({ book, isPublic }: BookItemProps) {
           </Text>
         </Link>
       ) : (
-        <>
+        <Stack>
           <Center>
             <Image
               radius="md"
@@ -47,7 +47,7 @@ export default function BookItem({ book, isPublic }: BookItemProps) {
           <Text size="sm" mt="2" ta="center">
             著者 : {book.author}
           </Text>
-        </>
+        </Stack>
       )}
     </>
   );

@@ -1,5 +1,5 @@
 import { auth } from '@/auth';
-import { Container, Space, Title, Button, Group } from '@mantine/core';
+import { Container, Space, Title, Button, Group, Text } from '@mantine/core';
 import TopPage from '@/components/top/TopPage';
 import BookItems from '@/components/bookshelf/BookItems';
 import Calendar from '@/components/calendar/Calendar';
@@ -10,18 +10,18 @@ import Link from 'next/link';
 export default async function TopPageContent() {
   const session = await auth();
   if (session?.user) {
-    const bookItems = await getBooks(session.user.idToken!);
+    const bookItems = await getBooks();
 
     return (
       <Container my="md">
         <Title size={'h2'} ta={'center'}>
-          読書記録
+          <Text inherit>読書記録</Text>
         </Title>
         <Space h={20} />
         <Calendar />
         <Space h={20} />
         <Title size={'h2'} ta={'center'}>
-          本棚
+          <Text inherit>本棚</Text>
         </Title>
         <BookItems bookItems={bookItems} isPublic={false} />
         <Space h={60} />
