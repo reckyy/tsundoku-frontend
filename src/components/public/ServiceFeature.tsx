@@ -1,5 +1,6 @@
 import {
   Text,
+  Title,
   Grid,
   GridCol,
   Image,
@@ -13,9 +14,9 @@ export default function ServiceFeature() {
   return (
     <Grid>
       <GridCol span={12}>
-        <Text size="xl" td="underline" ta={'center'}>
+        <Title order={2} td="underline" ta={'center'}>
           Tsundokuの基本的な使い方
-        </Text>
+        </Title>
       </GridCol>
       <GridCol span={12}>
         <Space h={20} />

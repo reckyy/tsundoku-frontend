@@ -44,24 +44,42 @@ export function Footer() {
                 />
               </ActionIcon>
             </Link>
-            <ActionIcon size="lg" variant="default" radius="xl">
-              <IconBrandTwitter
-                style={{ width: rem(18), height: rem(18) }}
-                stroke={1.5}
-              />
-            </ActionIcon>
-            <ActionIcon size="lg" variant="default" radius="xl">
-              <IconBrandGithub
-                style={{ width: rem(18), height: rem(18) }}
-                stroke={1.5}
-              />
-            </ActionIcon>
-            <ActionIcon size="lg" variant="default" radius="xl">
-              <IconArticle
-                style={{ width: rem(18), height: rem(18) }}
-                stroke={1.5}
-              />
-            </ActionIcon>
+            <Anchor
+              href="https://x.com/recky4711692"
+              target="_blank"
+              underline="never"
+            >
+              <ActionIcon size="lg" variant="default" radius="xl">
+                <IconBrandTwitter
+                  style={{ width: rem(18), height: rem(18) }}
+                  stroke={1.5}
+                />
+              </ActionIcon>
+            </Anchor>
+            <Anchor
+              href="https://github.com/reckyy/tsundoku"
+              target="_blank"
+              underline="never"
+            >
+              <ActionIcon size="lg" variant="default" radius="xl">
+                <IconBrandGithub
+                  style={{ width: rem(18), height: rem(18) }}
+                  stroke={1.5}
+                />
+              </ActionIcon>
+            </Anchor>
+            <Anchor
+              href="https://zenn.dev/recky/articles/tsundoku_release_notes"
+              target="_blank"
+              underline="never"
+            >
+              <ActionIcon size="lg" variant="default" radius="xl">
+                <IconArticle
+                  style={{ width: rem(18), height: rem(18) }}
+                  stroke={1.5}
+                />
+              </ActionIcon>
+            </Anchor>
           </Group>
         </div>
       </div>
