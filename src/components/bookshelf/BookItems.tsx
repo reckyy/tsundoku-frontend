@@ -11,6 +11,7 @@ import {
   SegmentedControl,
 } from '@mantine/core';
 import { UserBook, Filter } from '@/types/index';
+import { useMediaQuery } from '@mantine/hooks';
 
 export type BookItemsProps = {
   bookItems: Record<Filter, UserBook[]>;
@@ -18,6 +19,7 @@ export type BookItemsProps = {
 };
 
 const BookItems = ({ bookItems, isPublic }: BookItemsProps) => {
+  const isLargeScreen = useMediaQuery('(min-width: 48em)');
   const [filter, setFilter] = useState<Filter>('unread_books');
   const emptyMessages: Record<Filter, string> = {
     unread_books: '「本を追加」から読む本を追加しましょう！',
@@ -35,7 +37,7 @@ const BookItems = ({ bookItems, isPublic }: BookItemsProps) => {
           color="blue"
           value={filter}
           onChange={(value) => setFilter(value as Filter)}
-          size="md"
+          size={isLargeScreen ? 'md' : 'sm'}
           data={[
             { label: 'まだ読んでない', value: 'unread_books' },
             { label: '読んでる途中', value: 'reading_books' },
