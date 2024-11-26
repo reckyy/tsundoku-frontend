@@ -20,6 +20,7 @@ import { axiosInstance } from '@/lib/axios';
 import { useClipboard } from '@mantine/hooks';
 import toast from 'react-hot-toast';
 import { useSession } from 'next-auth/react';
+import Head from 'next/head';
 
 export default function UserPageContent() {
   const { data: session } = useSession();
@@ -31,6 +32,8 @@ export default function UserPageContent() {
   const [readingLogs, setReadingLogs] = useState<Log[]>([]);
   const [userName, setUserName] = useState<string>('');
   const clipboard = useClipboard();
+  const description = `${userName}の読書記録ページです！`;
+  const imageUrl = 'https://tsundoku.tech/images/tsundoku.png';
 
   const handleCopyUrl = () => {
     clipboard.copy(userPageUrl);
@@ -63,7 +66,22 @@ export default function UserPageContent() {
 
   return (
     <>
-      <title>{`${userName}さんの公開ページ`}</title>
+      <Head>
+        <title>{`${userName}のページ | Tsundoku`}</title>
+        <meta name="description" content={description} />
+        <meta property="og:title" content={`${userName}のページ | Tsundoku`} />
+        <meta property="og:description" content={description} />
+        <meta property="og:image" content={imageUrl} />
+        <meta
+          property="og:url"
+          content={`https://tsundoku.tech/users/${userName}`}
+        />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={`${userName}のページ | Tsundoku`} />
+        <meta name="twitter:description" content={description} />
+        <meta name="twitter:image" content={imageUrl} />
+      </Head>
+
       {String(session?.user?.id) === dynamicParams.id && (
         <Container bg={'var(--mantine-color-blue-light'} h={150} mt="md">
           <Stack pt="md" align="center" justify="center">
