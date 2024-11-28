@@ -63,15 +63,16 @@ function GridItem({
         />
       </GridCol>
       <GridCol offset={offset} span={bookInfoSpan}>
-        <Title size="h3">
+        <Title size="h3" ta="center">
           <Text inherit>{bookWithMemos.book.title}</Text>
         </Title>
-        <Text size="md" mt="10">
+        <Text size="md" mt="10" ta="center">
           著者 : {bookWithMemos.book.author}
         </Text>
         <SegmentedControl
           mt="md"
           color="blue"
+          fullWidth
           value={bookWithMemos.status}
           onChange={(value) => handleSubmit(value)}
           size="md"
