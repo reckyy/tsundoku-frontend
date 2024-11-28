@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
+import { within, expect, waitFor, userEvent } from '@storybook/test';
 
 import BookItems from '@/components/bookshelf/BookItems';
 
@@ -51,7 +52,7 @@ const meta: Meta<typeof BookItems> = {
       ],
       reading_books: [
         {
-          id: 1,
+          id: 4,
           status: 'reading',
           book: {
             id: 1,
@@ -73,4 +74,26 @@ type Story = StoryObj<typeof BookItems>;
 
 export const AppearenceTest: Story = {
   args: {},
+};
+
+export const ChangeStatusTest: Story = {
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    const readingLabel = canvas.getByText('読んでる途中');
+    await userEvent.click(readingLabel);
+    await waitFor(() => {
+      expect(
+        canvas.queryByText(
+          'プロを目指す人のためのTypeScript入門　安全なコードの書き方から高度な型の使い方まで',
+        ),
+      ).toBeFalsy();
+    });
+    const finishedLabel = canvas.getByText('全部読んだ');
+    await userEvent.click(finishedLabel);
+    await waitFor(() => {
+      expect(
+        canvas.getByText('読み終わった本はありません。'),
+      ).toBeInTheDocument();
+    });
+  },
 };
