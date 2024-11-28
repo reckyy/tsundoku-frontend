@@ -9,6 +9,7 @@ const RAILS_API_URL = process.env.STORYBOOK_NEXT_PUBLIC_RAILS_API_URL;
 
 const mockSession: Session = {
   user: {
+    id: '1',
     name: 'Test User',
     email: 'testuser@example.com',
     accessToken: 'hogehoge',
@@ -45,7 +46,7 @@ export const AppearenceTest: Story = {
   args: {},
 };
 
-export const DeleteBookTest: Story = {
+export const DeleteUserTest: Story = {
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
     const button = await canvas.getByRole('button', { name: '削除' });
