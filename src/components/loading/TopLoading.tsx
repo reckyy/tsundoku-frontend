@@ -1,8 +1,6 @@
 import {
   Container,
   Space,
-  Paper,
-  Text,
   Skeleton,
   Grid,
   GridCol,
@@ -12,6 +10,8 @@ import {
 export default function TopLoading() {
   return (
     <Container my="md">
+      <Space h={20} />
+      <Skeleton height={200} />
       <Grid>
         <GridCol span={12}>
           <Space h={40} />
@@ -25,11 +25,6 @@ export default function TopLoading() {
         ))}
       </Grid>
       <Space h={60} />
-      <Paper withBorder shadow="xs" radius="md" p="xl">
-        <Text ta={'center'}>毎日、コツコツと。</Text>
-        <Space h={20} />
-        <Skeleton height={200} />
-      </Paper>
     </Container>
   );
 }
