@@ -63,13 +63,13 @@ export default function UserPageContent({
       )}
       <Container my="md">
         <Title size={'h2'} ta={'center'}>
-          <Text inherit>読書記録</Text>
+          <Text inherit>{userData.name}さんの読書記録</Text>
         </Title>
         <Space h={20} />
         <CalendarContent readingLogs={userData.logs} />
         <Space h="20" />
         <Title size={'h2'} ta={'center'}>
-          <Text inherit>本棚</Text>
+          <Text inherit>{userData.name}さんの本棚</Text>
         </Title>
         <BookItems bookItems={userData.user_books} isPublic={true} />
         <Space h={60} />
