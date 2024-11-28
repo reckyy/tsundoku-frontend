@@ -11,6 +11,7 @@ import {
   Modal,
   Space,
   SegmentedControl,
+  GridCol,
 } from '@mantine/core';
 import { useListState, useDisclosure, useSetState } from '@mantine/hooks';
 import { IconTrash } from '@tabler/icons-react';
@@ -20,6 +21,7 @@ import toast from 'react-hot-toast';
 import { useState } from 'react';
 import { axiosInstance, setHeader } from '@/lib/axios';
 import { useSession, SessionProvider } from 'next-auth/react';
+import { useMediaQuery } from '@mantine/hooks';
 
 export type DndListProps = {
   bookItems: Record<Filter, UserBook[]>;
@@ -34,6 +36,7 @@ export default function DndList({ bookItems }: DndListProps) {
 }
 
 function DndListContent({ bookItems }: DndListProps) {
+  const isLargeScreen = useMediaQuery('(min-width: 48em)');
   const [source, setSource] = useState<number>(0);
   const [unreadBooks, unreadBooksHandlers] = useListState<UserBook>(
     bookItems['unread_books'],
@@ -175,18 +178,22 @@ function DndListContent({ bookItems }: DndListProps) {
         />
       </Modal>
       <Space h={20} />
-      <Center>
-        <SegmentedControl
-          value={filter}
-          onChange={(value) => setFilter(value as Filter)}
-          size="md"
-          data={[
-            { label: 'まだ読んでない', value: 'unread_books' },
-            { label: '読んでる途中', value: 'reading_books' },
-            { label: '全部読んだ', value: 'finished_books' },
-          ]}
-        />
-      </Center>
+      <Grid>
+        <GridCol offset={2} span={8}>
+          <SegmentedControl
+            color="blue"
+            fullWidth
+            value={filter}
+            onChange={(value) => setFilter(value as Filter)}
+            size={isLargeScreen ? 'md' : 'sm'}
+            data={[
+              { label: 'まだ読んでない', value: 'unread_books' },
+              { label: '読んでる途中', value: 'reading_books' },
+              { label: '全部読んだ', value: 'finished_books' },
+            ]}
+          />
+        </GridCol>
+      </Grid>
       <Space h={20} />
       {items.length > 0 ? (
         items
