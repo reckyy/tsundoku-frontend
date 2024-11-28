@@ -13,6 +13,7 @@ import * as nextNavigation from 'next/navigation';
 
 const mockSession: Session = {
   user: {
+    id: '1',
     name: 'Test User',
     email: 'testuser@example.com',
     accessToken: 'hogehoge',

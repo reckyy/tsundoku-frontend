@@ -32,6 +32,7 @@ const meta: Meta<typeof DeleteBookConfirmModal> = {
     },
   },
   args: {
+    userBookId: 1,
     close: () => {
       console.log('モーダルを閉じました。');
     },
