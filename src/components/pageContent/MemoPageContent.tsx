@@ -11,8 +11,11 @@ import {
   Space,
   ScrollArea,
   Title,
-  Button,
+  ActionIcon,
+  rem,
+  Tooltip,
 } from '@mantine/core';
+import { IconPlus } from '@tabler/icons-react';
 import { useMediaQuery } from '@mantine/hooks';
 import { useParams } from 'next/navigation';
 import { useSession } from 'next-auth/react';
@@ -217,15 +220,19 @@ export default function MemoPageContent() {
               />
             </ScrollArea>
           </GridCol>
-          <GridCol offset={1} span={2}>
-            <Button
-              size="md"
-              variant="default"
-              fullWidth
-              onClick={handleAddNewHeading}
-            >
-              追加
-            </Button>
+          <GridCol span={1}>
+            <Tooltip label="章を追加">
+              <ActionIcon
+                size={44}
+                variant="default"
+                onClick={handleAddNewHeading}
+              >
+                <IconPlus
+                  style={{ width: rem(24), height: rem(24) }}
+                  stroke={3}
+                />
+              </ActionIcon>
+            </Tooltip>
           </GridCol>
         </Grid>
         <Space h={50} />
