@@ -14,6 +14,7 @@ import {
   ActionIcon,
   rem,
   Tooltip,
+  Center,
 } from '@mantine/core';
 import { IconPlus } from '@tabler/icons-react';
 import { useMediaQuery } from '@mantine/hooks';
@@ -33,6 +34,7 @@ type GridItemType = {
   imageSpan: number | undefined;
   bookInfoSpan: number | undefined;
   offset: number | undefined;
+  isLargeScreen: boolean | undefined;
   bookWithMemos: BookWithMemos;
   setBookWithMemos: React.Dispatch<
     React.SetStateAction<BookWithMemos | undefined>
@@ -43,6 +45,7 @@ function GridItem({
   imageSpan,
   bookInfoSpan,
   offset,
+  isLargeScreen,
   bookWithMemos,
   setBookWithMemos,
 }: GridItemType) {
@@ -72,10 +75,10 @@ function GridItem({
         <SegmentedControl
           mt="md"
           color="blue"
-          fullWidth
+          fullWidth={isLargeScreen}
           value={bookWithMemos.status}
           onChange={(value) => handleSubmit(value)}
-          size="md"
+          size={isLargeScreen ? 'md' : 'sm'}
           data={[
             { label: 'まだ読んでない', value: 'unread' },
             { label: '読んでる途中', value: 'reading' },
@@ -199,19 +202,53 @@ export default function MemoPageContent() {
             imageSpan={isLargeScreen ? 3 : undefined}
             bookInfoSpan={isLargeScreen ? 8 : undefined}
             offset={isLargeScreen ? 1 : undefined}
+            isLargeScreen={isLargeScreen}
             bookWithMemos={bookWithMemos}
             setBookWithMemos={setBookWithMemos}
           />
         </Grid>
         <Space h="20" />
-        <Grid>
-          <GridCol span={9}>
+        {isLargeScreen ? (
+          <Grid>
+            <GridCol span={9}>
+              <ScrollArea scrollHideDelay={0}>
+                <SegmentedControl
+                  value={heading}
+                  onChange={setHeading}
+                  fullWidth
+                  size="md"
+                  data={
+                    bookWithMemos.headings.map((heading: Heading) => ({
+                      label: `${heading.number}章`,
+                      value: String(heading.number),
+                    })) ?? []
+                  }
+                />
+              </ScrollArea>
+            </GridCol>
+            <GridCol span={1}>
+              <Tooltip label="章を追加">
+                <ActionIcon
+                  size={44}
+                  variant="default"
+                  onClick={handleAddNewHeading}
+                >
+                  <IconPlus
+                    style={{ width: rem(24), height: rem(24) }}
+                    stroke={3}
+                  />
+                </ActionIcon>
+              </Tooltip>
+            </GridCol>
+          </Grid>
+        ) : (
+          <Center>
             <ScrollArea scrollHideDelay={0}>
               <SegmentedControl
                 value={heading}
                 onChange={setHeading}
                 fullWidth
-                size="md"
+                size="sm"
                 data={
                   bookWithMemos.headings.map((heading: Heading) => ({
                     label: `${heading.number}章`,
@@ -220,11 +257,10 @@ export default function MemoPageContent() {
                 }
               />
             </ScrollArea>
-          </GridCol>
-          <GridCol span={1}>
             <Tooltip label="章を追加">
               <ActionIcon
-                size={44}
+                size={36}
+                ml="xs"
                 variant="default"
                 onClick={handleAddNewHeading}
               >
@@ -234,8 +270,9 @@ export default function MemoPageContent() {
                 />
               </ActionIcon>
             </Tooltip>
-          </GridCol>
-        </Grid>
+          </Center>
+        )}
+
         <Space h={50} />
         <Editor
           heading={bookWithMemos?.headings[Number(heading) - 1]}
