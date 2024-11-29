@@ -32,7 +32,6 @@ export default function UserPageContent({
   isCurrentUser,
 }: UserPageContentProps) {
   const clipboard = useClipboard();
-  console.log(userData);
   const userPageUrl = `${process.env.NEXT_PUBLIC_NEXT_URL}/users/${id}`;
 
   const handleCopyUrl = () => {

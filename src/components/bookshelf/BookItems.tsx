@@ -32,22 +32,38 @@ const BookItems = ({ bookItems, isPublic }: BookItemsProps) => {
   return (
     <>
       <Space h={20} />
-      <Grid>
-        <GridCol offset={2} span={8}>
+      {isLargeScreen ? (
+        <Grid>
+          <GridCol offset={2} span={8}>
+            <SegmentedControl
+              color="blue"
+              fullWidth
+              value={filter}
+              onChange={(value) => setFilter(value as Filter)}
+              size="md"
+              data={[
+                { label: 'まだ読んでない', value: 'unread_books' },
+                { label: '読んでる途中', value: 'reading_books' },
+                { label: '全部読んだ', value: 'finished_books' },
+              ]}
+            />
+          </GridCol>
+        </Grid>
+      ) : (
+        <Center>
           <SegmentedControl
             color="blue"
-            fullWidth
             value={filter}
             onChange={(value) => setFilter(value as Filter)}
-            size={isLargeScreen ? 'md' : 'sm'}
+            size="sm"
             data={[
               { label: 'まだ読んでない', value: 'unread_books' },
-              { label: ' 読んでる途中 ', value: 'reading_books' },
+              { label: '読んでる途中', value: 'reading_books' },
               { label: '全部読んだ', value: 'finished_books' },
             ]}
           />
-        </GridCol>
-      </Grid>
+        </Center>
+      )}
       <Space h={20} />
       {filteredBooks.length > 0 ? (
         <Grid>
