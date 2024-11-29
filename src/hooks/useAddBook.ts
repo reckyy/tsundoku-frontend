@@ -11,18 +11,16 @@ const useAddBook = (book: Book) => {
   const handleSubmit = async () => {
     await setHeader(session?.user?.accessToken);
     try {
-      await Promise.all([
-        axiosInstance.post('/books', {
-          title: book.title,
-          author: book.author,
-          coverImageUrl: book.coverImageUrl,
-        }),
-        axiosInstance.post('/user_books', {
-          title: book.title,
-          author: book.author,
-          coverImageUrl: book.coverImageUrl,
-        }),
-      ]);
+      await axiosInstance.post('/books', {
+        title: book.title,
+        author: book.author,
+        coverImageUrl: book.coverImageUrl,
+      });
+      axiosInstance.post('/user_books', {
+        title: book.title,
+        author: book.author,
+        coverImageUrl: book.coverImageUrl,
+      });
       router.push('/');
       router.refresh();
       toast.success('本を保存しました！');
