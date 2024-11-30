@@ -1,15 +1,43 @@
 import axios from 'axios';
 
-const axiosInstance = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_RAILS_API_URL,
-});
+const BASE_URL = process.env.NEXT_PUBLIC_RAILS_API_URL;
 
-async function setHeader(token: string | undefined) {
-  axiosInstance.interceptors.request.use((config) => {
-    config.headers['Authorization'] = `Bearer ${token}`;
+export async function axiosGet(url: string, token: string | undefined) {
+  const headers = {
+    Authorization: `Bearer ${token}`,
+  };
 
-    return config;
-  });
+  return await axios.get(`${BASE_URL}${url}`, { headers });
 }
 
-export { axiosInstance, setHeader };
+export async function axiosPost<B>(
+  url: string,
+  token: string | undefined,
+  body: B,
+) {
+  const headers = {
+    Authorization: `Bearer ${token}`,
+  };
+
+  return await axios.post(`${BASE_URL}${url}`, body, { headers });
+}
+
+export async function axiosPatch<B>(
+  url: string,
+  token: string | undefined,
+  body: B,
+) {
+  const headers = {
+    Authorization: `Bearer ${token}`,
+  };
+
+  return await axios.patch(`${BASE_URL}${url}`, body, { headers });
+}
+
+export async function axiosDelete(url: string, token: string | undefined) {
+  const headers = {
+    Authorization: `Bearer ${token}`,
+  };
+
+  return await axios.delete(`${BASE_URL}${url}`, { headers });
+}

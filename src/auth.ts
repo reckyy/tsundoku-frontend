@@ -1,7 +1,7 @@
 import NextAuth from 'next-auth';
 import Google from 'next-auth/providers/google';
 import { NextResponse } from 'next/server';
-import { axiosInstance } from '@/lib/axios';
+import axios from 'axios';
 
 declare module 'next-auth' {
   interface User {
@@ -33,12 +33,15 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       const avatarUrl = user.image;
       const idToken = account?.id_token;
       try {
-        const res = await axiosInstance.post('/auth/callback/google', {
-          name,
-          email,
-          avatarUrl,
-          idToken,
-        });
+        const res = await axios.post(
+          `${process.env.NEXT_PUBLIC_RAILS_API_URL}/auth/callback/google`,
+          {
+            name,
+            email,
+            avatarUrl,
+            idToken,
+          },
+        );
         if (res.status === 200) {
           user.id = res.data.id;
           user.accessToken = res.data.access_token as string;

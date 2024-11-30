@@ -24,7 +24,7 @@ import React, { useState } from 'react';
 import useSWR from 'swr';
 import { BookWithMemos, Heading } from '@/types/index';
 import MemoLoading from '@/components/loading/MemoLoading';
-import { axiosInstance, setHeader } from '@/lib/axios';
+import { axiosGet } from '@/lib/axios';
 import useAddHeading from '@/hooks/useAddHeading';
 import SaveData from '@/utils/saveData';
 import toast from 'react-hot-toast';
@@ -94,26 +94,20 @@ export default function MemoPageContent() {
   const isLargeScreen = useMediaQuery('(min-width: 48em)');
   const dynamicParams = useParams<{ bookId: string }>();
   const bookId = Number(dynamicParams.bookId);
-  const { data: session, status } = useSession();
+  const { data: session } = useSession();
   const token = session?.user?.accessToken;
   const { handleAddHeading } = useAddHeading();
-  const params = {
-    bookId,
-  };
   const [bookWithMemos, setBookWithMemos] = useState<BookWithMemos>();
   const [heading, setHeading] = useState('1');
 
-  const fetchable = status === 'authenticated' && session?.user?.email;
-
-  async function fetcher(url: string, params: { bookId: number }) {
-    await setHeader(token);
-    const res = await axiosInstance.get(url, { params });
+  async function fetcher(url: string) {
+    const res = await axiosGet(url, token);
     return res.data;
   }
 
   const { error, isLoading } = useSWR(
-    fetchable ? ['/memos', params] : null,
-    ([url, params]) => fetcher(url, params),
+    token ? `/memos/?bookId=${bookId}` : null,
+    fetcher,
     {
       onSuccess: (data) => {
         setBookWithMemos(data);
