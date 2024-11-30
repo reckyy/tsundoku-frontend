@@ -19,7 +19,7 @@ import { UserBook, Filter } from '@/types/index';
 import DeleteBookConfirmModal from '../modal/DeleteBookConfirmModal';
 import toast from 'react-hot-toast';
 import { useState } from 'react';
-import { clientAxiosPatch } from '@/lib/clientAxios';
+import { axiosPatch } from '@/lib/axios';
 import { useSession, SessionProvider } from 'next-auth/react';
 import { useMediaQuery } from '@mantine/hooks';
 
@@ -105,11 +105,7 @@ function DndListContent({ bookItems }: DndListProps) {
       destinationBookId: destinationBook?.id,
     };
     try {
-      await clientAxiosPatch(
-        `/user_books/${userBook?.id}/position`,
-        token,
-        params,
-      );
+      await axiosPatch(`/user_books/${userBook?.id}/position`, token, params);
       const handler =
         filter === 'unread_books'
           ? unreadBooksHandlers

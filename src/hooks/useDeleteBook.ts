@@ -1,6 +1,6 @@
 import toast from 'react-hot-toast';
 import { useRouter } from 'next/navigation';
-import { clientAxiosDelete } from '@/lib/clientAxios';
+import { axiosDelete } from '@/lib/axios';
 import { useSession } from 'next-auth/react';
 
 const useDeleteBook = (userBookId: number) => {
@@ -10,7 +10,7 @@ const useDeleteBook = (userBookId: number) => {
   const handleDeleteBook = async () => {
     const token = session?.user?.accessToken;
     try {
-      const res = await clientAxiosDelete(`/user_books/${userBookId}`, token);
+      const res = await axiosDelete(`/user_books/${userBookId}`, token);
       if (res.status === 204) {
         router.refresh();
         toast('本を削除しました。');

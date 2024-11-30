@@ -1,7 +1,7 @@
 import toast from 'react-hot-toast';
 import { useSession } from 'next-auth/react';
 import { BookWithMemos } from '@/types/index';
-import { clientAxiosPost } from '@/lib/clientAxios';
+import { axiosPost } from '@/lib/axios';
 
 const useAddHeading = () => {
   const { data: session } = useSession();
@@ -12,7 +12,7 @@ const useAddHeading = () => {
     number: number,
   ) => {
     try {
-      const res = await clientAxiosPost('/headings', token, {
+      const res = await axiosPost('/headings', token, {
         userBookId: bookWithMemos.id,
         number,
       });

@@ -1,6 +1,6 @@
 import toast from 'react-hot-toast';
 import { useSession } from 'next-auth/react';
-import { clientAxiosPatch } from '@/lib/clientAxios';
+import { axiosPatch } from '@/lib/axios';
 import { BookWithMemos } from '@/types/book';
 
 type useUpdateBookStatusProps = {
@@ -19,7 +19,7 @@ const useUpdateBookStatus = ({
 
   const handleSubmit = async (status: string) => {
     try {
-      await clientAxiosPatch(`/user_books/${userBookId}`, token, {
+      await axiosPatch(`/user_books/${userBookId}`, token, {
         userBookId,
         status,
       });

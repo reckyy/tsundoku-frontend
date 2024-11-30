@@ -24,7 +24,7 @@ import React, { useState } from 'react';
 import useSWR from 'swr';
 import { BookWithMemos, Heading } from '@/types/index';
 import MemoLoading from '@/components/loading/MemoLoading';
-import { clientAxiosGet } from '@/lib/clientAxios';
+import { axiosGet } from '@/lib/axios';
 import useAddHeading from '@/hooks/useAddHeading';
 import SaveData from '@/utils/saveData';
 import toast from 'react-hot-toast';
@@ -101,7 +101,7 @@ export default function MemoPageContent() {
   const [heading, setHeading] = useState('1');
 
   async function fetcher(url: string) {
-    const res = await clientAxiosGet(url, token);
+    const res = await axiosGet(url, token);
     return res.data;
   }
 
