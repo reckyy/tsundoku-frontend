@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 import UserPageContent from '@/components/pageContent/UserPageContent';
-import { axiosInstance } from '@/lib/axios';
 import { auth } from '@/auth';
+import { axiosGet } from '@/lib/axios';
 
 type Props = {
   params: { id: string };
@@ -9,7 +9,7 @@ type Props = {
 
 async function fetchUserData(id: string) {
   try {
-    const res = await axiosInstance.get(`/users/${id}`);
+    const res = await axiosGet(`/users/${id}`);
     return res.data;
   } catch (error) {
     console.warn(error);

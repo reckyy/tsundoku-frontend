@@ -1,4 +1,4 @@
-import { axiosInstance, setHeader } from '@/lib/axios';
+import { clientAxiosPost, clientAxiosPatch } from '@/lib/clientAxios';
 
 export type SaveDataParams = {
   token: string;
@@ -13,20 +13,18 @@ export default async function SaveData({
   data,
   type,
 }: SaveDataParams): Promise<boolean> {
-  await setHeader(token);
-
   const url = type === 'heading' ? `/headings/${id}` : `/memos/${id}`;
   const params = type === 'heading' ? { title: data } : { body: data };
 
   try {
     if (type === 'memo') {
       await Promise.all([
-        axiosInstance.patch(url, params),
-        axiosInstance.post('/reading_logs', { memoId: id }),
+        clientAxiosPatch(url, token, params),
+        clientAxiosPost('/reading_logs', token, { memoId: id }),
       ]);
       return true;
     } else {
-      await axiosInstance.patch(url, params);
+      await clientAxiosPatch(url, token, params);
       return true;
     }
   } catch (error) {

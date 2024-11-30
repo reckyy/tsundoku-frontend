@@ -1,18 +1,18 @@
 import toast from 'react-hot-toast';
-import { axiosInstance, setHeader } from '@/lib/axios';
 import { useSession } from 'next-auth/react';
 import { BookWithMemos } from '@/types/index';
+import { clientAxiosPost } from '@/lib/clientAxios';
 
 const useAddHeading = () => {
   const { data: session } = useSession();
+  const token = session?.user?.accessToken;
 
   const handleAddHeading = async (
     bookWithMemos: BookWithMemos,
     number: number,
   ) => {
-    await setHeader(session?.user?.accessToken);
     try {
-      const res = await axiosInstance.post('/headings', {
+      const res = await clientAxiosPost('/headings', token, {
         userBookId: bookWithMemos.id,
         number,
       });

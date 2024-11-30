@@ -1,9 +1,6 @@
-import { axiosInstance, setHeader } from '@/lib/axios';
-import { auth } from '@/auth';
+import { axiosGet } from '@/lib/axios';
 
 export default async function getBooks() {
-  const session = await auth();
-  await setHeader(session?.user?.accessToken);
-  const res = await axiosInstance.get('/user_books');
+  const res = await axiosGet('/user_books');
   return res.data;
 }

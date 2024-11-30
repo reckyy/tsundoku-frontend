@@ -19,7 +19,7 @@ import { UserBook, Filter } from '@/types/index';
 import DeleteBookConfirmModal from '../modal/DeleteBookConfirmModal';
 import toast from 'react-hot-toast';
 import { useState } from 'react';
-import { axiosInstance, setHeader } from '@/lib/axios';
+import { clientAxiosPatch } from '@/lib/clientAxios';
 import { useSession, SessionProvider } from 'next-auth/react';
 import { useMediaQuery } from '@mantine/hooks';
 
@@ -67,6 +67,7 @@ function DndListContent({ bookItems }: DndListProps) {
   };
 
   const { data: session } = useSession();
+  const token = session?.user?.accessToken;
 
   const handleClick = (item: UserBook) => {
     setDeleteParamsState({
@@ -100,12 +101,15 @@ function DndListContent({ bookItems }: DndListProps) {
       (_element, idx) => idx === index,
     );
     const params = {
-      userBookId: userBook?.id,
+      id: userBook?.id,
       destinationBookId: destinationBook?.id,
     };
-    await setHeader(session?.user?.accessToken);
     try {
-      await axiosInstance.patch(`/user_books/${userBook?.id}/position`, params);
+      await clientAxiosPatch(
+        `/user_books/${userBook?.id}/position`,
+        token,
+        params,
+      );
       const handler =
         filter === 'unread_books'
           ? unreadBooksHandlers

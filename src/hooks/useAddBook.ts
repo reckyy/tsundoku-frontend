@@ -2,21 +2,21 @@ import { useRouter } from 'next/navigation';
 import toast from 'react-hot-toast';
 import { useSession } from 'next-auth/react';
 import { Book } from '@/types/index';
-import { axiosInstance, setHeader } from '@/lib/axios';
+import { clientAxiosPost } from '@/lib/clientAxios';
 
 const useAddBook = (book: Book) => {
   const { data: session } = useSession();
   const router = useRouter();
 
   const handleSubmit = async () => {
-    await setHeader(session?.user?.accessToken);
+    const token = session?.user?.accessToken;
     try {
-      await axiosInstance.post('/books', {
+      await clientAxiosPost('/books', token, {
         title: book.title,
         author: book.author,
         coverImageUrl: book.coverImageUrl,
       });
-      axiosInstance.post('/user_books', {
+      clientAxiosPost('/user_books', token, {
         title: book.title,
         author: book.author,
         coverImageUrl: book.coverImageUrl,
