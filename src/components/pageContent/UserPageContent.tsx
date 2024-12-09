@@ -20,7 +20,7 @@ type UserPageContentProps = {
   userData: {
     name: string;
     user_books: Record<Filter, UserBook[]>;
-    logs: Log[];
+    logs: Record<string, Log[]>;
   };
   id: string;
   isCurrentUser: boolean;
