@@ -20,15 +20,17 @@ type Story = StoryObj<typeof CalendarContent>;
 
 export const AppearenceTest: Story = {
   args: {
-    readingLogs: [
-      {
-        date: previousDay,
-        count: 1,
-      },
-      {
-        date: today,
-        count: 5,
-      },
-    ],
+    readingLogs: {
+      '2024': [
+        {
+          date: previousDay,
+          count: 1,
+        },
+        {
+          date: today,
+          count: 5,
+        },
+      ],
+    },
   },
 };
