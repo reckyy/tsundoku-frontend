@@ -20,16 +20,23 @@ export default function CalendarContent({ readingLogs }: ReadingLogs) {
   const today = new Date();
   const currentYear = String(today.getFullYear());
   const [year, setYear] = useState(currentYear);
-  const value = readingLogs[year].map((log) => ({
-    date: log.date.replaceAll('-', '/'),
-    count: log.count,
-  }));
-  const data = Object.keys(readingLogs)
-    .reverse()
-    .map((year) => ({
-      label: year,
-      target: year,
-    }));
+
+  const noLog = Object.keys(readingLogs).length === 0;
+
+  const value = noLog
+    ? []
+    : readingLogs[year].map((log) => ({
+        date: log.date.replaceAll('-', '/'),
+        count: log.count,
+      }));
+  const data = noLog
+    ? [{ label: currentYear, target: currentYear }]
+    : Object.keys(readingLogs)
+        .reverse()
+        .map((year) => ({
+          label: year,
+          target: year,
+        }));
   const selected = data.find((item) => item.target === year) || data[0];
 
   const handleClick = (item: YearItem) => {
