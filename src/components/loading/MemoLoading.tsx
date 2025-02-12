@@ -1,4 +1,4 @@
-import { Container, Grid, GridCol, Space, Skeleton, Text } from '@mantine/core';
+import { Container, Grid, GridCol, Space, Skeleton } from '@mantine/core';
 
 const MemoLoading = () => {
   return (
@@ -7,22 +7,19 @@ const MemoLoading = () => {
         <GridCol span={3}>
           <Skeleton radius="lg" w={141} h={200} />
         </GridCol>
-        <GridCol offset={1} span={6}>
-          <Text size="md" ta={'center'} mb={7}>
-            章
-          </Text>
-          <Skeleton height={50} />
+        <GridCol offset={1} span={8}>
+          <Skeleton height={120} />
         </GridCol>
       </Grid>
       <Space h={50} />
       <Grid>
-        <GridCol span={12}>
+        <GridCol span={9}>
           <Skeleton height={50} />
         </GridCol>
       </Grid>
       <Grid>
         <GridCol span={12}>
-          <Skeleton height={200} />
+          <Skeleton height={300} />
         </GridCol>
       </Grid>
     </Container>
