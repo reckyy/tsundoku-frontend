@@ -92,7 +92,7 @@ export const WithBooksAndCalendar: Story = {
   render: () => {
     return (
       <MyAppShell>
-        <Calendar />
+        <Calendar readingLogs={readingLogs} />
         <BookItems bookItems={mockBooks} isPublic={false} />
       </MyAppShell>
     );
