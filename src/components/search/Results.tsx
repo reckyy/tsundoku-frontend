@@ -8,12 +8,13 @@ import {
   Flex,
   Center,
 } from '@mantine/core';
-import AddBookConfirmButton from '../button/AddBookConfirmButton';
+import AddBookButton from '../button/AddBookButton';
 import { Book } from '@/types/index';
+import { SessionProvider } from 'next-auth/react';
 
 const Results = ({ bookItems }: { bookItems: Book[] }) => {
   return (
-    <>
+    <SessionProvider>
       {bookItems.length > 1 ? (
         <Grid justify="center" align="stretch">
           {bookItems.map((book) => (
@@ -36,7 +37,7 @@ const Results = ({ bookItems }: { bookItems: Book[] }) => {
                   >
                     <Text lineClamp={2}>{book.title}</Text>
                     <Text lineClamp={1}>{book.author}</Text>
-                    <AddBookConfirmButton book={book} />
+                    <AddBookButton book={book} />
                   </Flex>
                 </SimpleGrid>
               </Card>
@@ -58,13 +59,13 @@ const Results = ({ bookItems }: { bookItems: Book[] }) => {
               <Flex gap="sm" justify="center" align="center" direction="column">
                 <Text lineClamp={2}>{bookItems[0].title}</Text>
                 <Text lineClamp={1}>{bookItems[0].author}</Text>
-                <AddBookConfirmButton book={bookItems[0]} />
+                <AddBookButton book={bookItems[0]} />
               </Flex>
             </SimpleGrid>
           </Card>
         </Center>
       )}
-    </>
+    </SessionProvider>
   );
 };
 
