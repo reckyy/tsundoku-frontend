@@ -4,6 +4,7 @@ import TopPage from '@/components/top/TopPage';
 import BookItems from '@/components/bookshelf/BookItems';
 import Calendar from '@/components/calendar/Calendar';
 import getBooks from '@/utils/getBooks';
+import getLogs from '@/utils/getLogs';
 import { IconPlus, IconBook } from '@tabler/icons-react';
 import Link from 'next/link';
 
@@ -11,6 +12,7 @@ export default async function TopPageContent() {
   const session = await auth();
   if (session?.user) {
     const bookItems = await getBooks();
+    const readingLogs = await getLogs();
 
     return (
       <Container my="md">
@@ -18,7 +20,7 @@ export default async function TopPageContent() {
           <Text inherit>読書記録</Text>
         </Title>
         <Space h={20} />
-        <Calendar />
+        <Calendar readingLogs={readingLogs} />
         <Space h={20} />
         <Title size={'h2'} ta={'center'}>
           <Text inherit>本棚</Text>

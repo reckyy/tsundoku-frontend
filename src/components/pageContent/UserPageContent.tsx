@@ -12,7 +12,7 @@ import {
 } from '@mantine/core';
 import { useClipboard } from '@mantine/hooks';
 import toast from 'react-hot-toast';
-import CalendarContent from '@/components/calendar/CalendarContent';
+import Calendar from '@/components/calendar/Calendar';
 import BookItems from '@/components/bookshelf/BookItems';
 import { UserBook, Log, Filter } from '@/types/index';
 
@@ -65,7 +65,7 @@ export default function UserPageContent({
           <Text inherit>{userData.name}さんの読書記録</Text>
         </Title>
         <Space h={20} />
-        <CalendarContent readingLogs={userData.logs} />
+        <Calendar readingLogs={userData.logs} />
         <Space h="20" />
         <Title size={'h2'} ta={'center'}>
           <Text inherit>{userData.name}さんの本棚</Text>
