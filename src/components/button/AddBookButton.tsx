@@ -3,7 +3,7 @@ import { Book } from '@/types/index';
 import { IconBookUpload } from '@tabler/icons-react';
 import useAddBook from '@/hooks/useAddBook';
 
-const AddBookButton = ({ book }: { book: Book }) => {
+export default function AddBookButton({ book }: { book: Book }) {
   const { handleSubmit } = useAddBook(book);
 
   return (
@@ -18,6 +18,4 @@ const AddBookButton = ({ book }: { book: Book }) => {
       </Button>
     </>
   );
-};
-
-export default AddBookButton;
+}

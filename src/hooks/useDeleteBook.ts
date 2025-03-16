@@ -3,7 +3,7 @@ import { useRouter } from 'next/navigation';
 import { axiosDelete } from '@/lib/axios';
 import { useSession } from 'next-auth/react';
 
-const useDeleteBook = (userBookId: number) => {
+export default function useDeleteBook(userBookId: number) {
   const router = useRouter();
   const { data: session } = useSession();
 
@@ -23,6 +23,4 @@ const useDeleteBook = (userBookId: number) => {
   };
 
   return { handleDeleteBook };
-};
-
-export default useDeleteBook;
+}

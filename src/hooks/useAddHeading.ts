@@ -3,7 +3,7 @@ import { useSession } from 'next-auth/react';
 import { BookWithMemos } from '@/types/index';
 import { axiosPost } from '@/lib/axios';
 
-const useAddHeading = () => {
+export default function useAddHeading() {
   const { data: session } = useSession();
   const token = session?.user?.accessToken;
 
@@ -34,6 +34,4 @@ const useAddHeading = () => {
   };
 
   return { handleAddHeading };
-};
-
-export default useAddHeading;
+}

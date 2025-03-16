@@ -1,6 +1,6 @@
 import { Container, Grid, GridCol, Space, Skeleton } from '@mantine/core';
 
-const MemoLoading = () => {
+export default function MemoLoading() {
   return (
     <Container my={'md'}>
       <Grid>
@@ -24,6 +24,4 @@ const MemoLoading = () => {
       </Grid>
     </Container>
   );
-};
-
-export default MemoLoading;
+}

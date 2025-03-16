@@ -1,9 +1,9 @@
 import { Button, ButtonProps } from '@mantine/core';
 import GoogleIcon from '../icon/GoogleIcon';
 
-const GoogleButton = (
+export default function GoogleButton(
   props: ButtonProps & React.ComponentPropsWithoutRef<'button'>,
-) => {
+) {
   return (
     <Button
       size="md"
@@ -13,6 +13,4 @@ const GoogleButton = (
       {...props}
     />
   );
-};
-
-export default GoogleButton;
+}

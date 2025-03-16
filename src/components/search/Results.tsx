@@ -12,7 +12,7 @@ import AddBookButton from '../button/AddBookButton';
 import { Book } from '@/types/index';
 import { SessionProvider } from 'next-auth/react';
 
-const Results = ({ bookItems }: { bookItems: Book[] }) => {
+export default function Results({ bookItems }: { bookItems: Book[] }) {
   return (
     <SessionProvider>
       {bookItems.length > 1 ? (
@@ -67,6 +67,4 @@ const Results = ({ bookItems }: { bookItems: Book[] }) => {
       )}
     </SessionProvider>
   );
-};
-
-export default Results;
+}
