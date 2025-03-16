@@ -1,12 +1,30 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import AddBookConfirmModal from '@/components/modal/AddBookConfirmModal';
 import { http, HttpResponse } from 'msw';
 import { userEvent, within, expect, waitFor } from '@storybook/test';
+import AddBookButton from '@/components/button/AddBookButton';
+import { SessionProvider } from 'next-auth/react';
+import { Session } from 'next-auth';
 
 const RAILS_API_URL = process.env.STORYBOOK_NEXT_PUBLIC_RAILS_API_URL;
 
-const meta: Meta<typeof AddBookConfirmModal> = {
-  component: AddBookConfirmModal,
+const mockSession: Session = {
+  user: {
+    name: 'Test User',
+    email: 'testuser@example.com',
+    accessToken: 'hogehoge',
+  },
+  expires: '2025-12-31T23:59:59.999Z',
+};
+
+const meta: Meta<typeof AddBookButton> = {
+  component: AddBookButton,
+  decorators: [
+    (Story) => (
+      <SessionProvider session={mockSession}>
+        <Story />
+      </SessionProvider>
+    ),
+  ],
   parameters: {
     layout: 'centered',
     nextjs: {
@@ -25,14 +43,14 @@ const meta: Meta<typeof AddBookConfirmModal> = {
 };
 
 export default meta;
-type Story = StoryObj<typeof AddBookConfirmModal>;
+type Story = StoryObj<typeof AddBookButton>;
 
 export const AppearenceTest: Story = {};
 
 export const AddBookTest: Story = {
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
-    const button = await canvas.getByRole('button', { name: '追加' });
+    const button = await canvas.getByRole('button', { name: '本棚に追加' });
     await userEvent.click(button);
 
     await waitFor(() => {
@@ -47,27 +65,6 @@ export const AddBookTest: Story = {
         }),
         http.post(`${RAILS_API_URL}/user_books`, () => {
           return new HttpResponse();
-        }),
-      ],
-    },
-  },
-};
-
-export const AddBookFailedTest: Story = {
-  play: async ({ canvasElement }) => {
-    const canvas = within(canvasElement);
-    const button = await canvas.getByRole('button', { name: '追加' });
-    await userEvent.click(button);
-
-    await waitFor(() => {
-      expect(canvas.getByText('本の保存に失敗しました。')).toBeInTheDocument();
-    });
-  },
-  parameters: {
-    msw: {
-      handlers: [
-        http.delete(`${RAILS_API_URL}/user_books/1`, () => {
-          return new HttpResponse('failed', { status: 420 });
         }),
       ],
     },

@@ -19,7 +19,7 @@ const meta: Meta<typeof Calendar> = {
 export default meta;
 type Story = StoryObj<typeof Calendar>;
 
-const readingCalendarogs = {
+const readingLogs = {
   logs: [
     {
       date: previousDay,
@@ -39,7 +39,7 @@ export const AppearenceTest: Story = {
         http.get(
           `${process.env.STORYBOOK_NEXT_PUBLIC_RAILS_API_URL}/reading_logs`,
           () => {
-            return HttpResponse.json(readingCalendarogs);
+            return HttpResponse.json(readingLogs);
           },
         ),
       ],
