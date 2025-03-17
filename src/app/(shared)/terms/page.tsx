@@ -1,4 +1,4 @@
-import Terms from '@/components/footer/terms';
+import Terms from '@/components/footer/Terms';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
