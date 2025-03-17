@@ -12,11 +12,10 @@ import {
 } from '@mantine/core';
 import { IconInfoCircle } from '@tabler/icons-react';
 import DeleteAccountButton from '../button/DeleteAccountButton';
-import { SessionProvider } from 'next-auth/react';
 
 export default async function ConfirmDeletion() {
   return (
-    <SessionProvider>
+    <>
       <Container my="md">
         <Title order={3} ta="center">
           アカウントを削除しますか？
@@ -43,6 +42,6 @@ export default async function ConfirmDeletion() {
           <DeleteAccountButton />
         </Center>
       </Container>
-    </SessionProvider>
+    </>
   );
 }
