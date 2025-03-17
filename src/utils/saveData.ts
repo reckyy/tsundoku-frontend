@@ -7,7 +7,7 @@ export type SaveDataParams = {
   type: 'heading' | 'memo';
 };
 
-export default async function SaveData({
+export default async function saveData({
   token,
   id,
   data,

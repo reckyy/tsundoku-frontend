@@ -26,7 +26,7 @@ import { BookWithMemos, Heading } from '@/types/index';
 import MemoLoading from '@/components/loading/MemoLoading';
 import { axiosGet } from '@/lib/axios';
 import useAddHeading from '@/hooks/useAddHeading';
-import SaveData from '@/utils/saveData';
+import saveData from '@/utils/saveData';
 import toast from 'react-hot-toast';
 import useUpdateBookStatus from '@/hooks/useUpdateBookStatus';
 
@@ -127,8 +127,8 @@ export default function MemoPageContent() {
 
     try {
       await Promise.all([
-        SaveData({ token, id: headingId, data: title, type: 'heading' }),
-        SaveData({ token, id: memoId, data: content, type: 'memo' }),
+        saveData({ token, id: headingId, data: title, type: 'heading' }),
+        saveData({ token, id: memoId, data: content, type: 'memo' }),
       ]);
 
       setBookWithMemos((prev) => {
