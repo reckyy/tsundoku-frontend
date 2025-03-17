@@ -1,9 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
-import DefaultLoader from '@/components/loading/DefaultLoader';
+import DefaultLoading from '@/components/loading/DefaultLoading';
 
-const meta: Meta<typeof DefaultLoader> = {
-  component: DefaultLoader,
+const meta: Meta<typeof DefaultLoading> = {
+  component: DefaultLoading,
   parameters: {
     layout: 'centered',
     nextjs: {
@@ -13,7 +13,7 @@ const meta: Meta<typeof DefaultLoader> = {
 };
 
 export default meta;
-type Story = StoryObj<typeof DefaultLoader>;
+type Story = StoryObj<typeof DefaultLoading>;
 
 export const AppearenceTest: Story = {
   args: {},
