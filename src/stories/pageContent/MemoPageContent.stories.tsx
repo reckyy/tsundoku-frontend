@@ -60,9 +60,9 @@ const meta: Meta<typeof MemoPageContent> = {
   component: MemoPageContent,
   decorators: [
     (Story) => (
-      <SessionProvider session={mockSession}>
-        <Story />
-      </SessionProvider>
+        <SessionProvider session={mockSession}>
+          <Story />
+        </SessionProvider>
     ),
   ],
   parameters: {
@@ -133,13 +133,16 @@ export const AddHeadingTest: Story = {
         canvas.getByText('実践Next.js -- App Routerで進化するWebアプリ開発'),
       ).toBeInTheDocument();
     });
-    const button = canvas.getByRole('button', { name: '追加' });
-    await userEvent.click(button);
-
+    const addHeadingButton = canvas.getByTestId('add-heading-button')
+    await userEvent.click(addHeadingButton)
     await waitFor(() => {
       expect(canvas.getByText('章を追加しました。')).toBeInTheDocument();
+    })
+    await waitFor(() => {
+      expect(canvas.getByText('3章')).toBeInTheDocument();
     });
   },
+
   parameters: {
     msw: {
       handlers: [

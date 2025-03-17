@@ -63,7 +63,7 @@ const previousDay = dayjs().subtract(1, 'd').format('YYYY-MM-DD');
 const today = dayjs().format('YYYY-MM-DD');
 
 const readingLogs = {
-  logs: [
+  '2025': [
     {
       date: previousDay,
       count: 1,
