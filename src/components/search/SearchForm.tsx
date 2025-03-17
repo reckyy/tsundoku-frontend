@@ -24,7 +24,7 @@ type SearchFormProps = {
   onResults: (results: Book[]) => void;
 };
 
-const SearchForm = ({ onResults }: SearchFormProps) => {
+export default function SearchForm({ onResults }: SearchFormProps) {
   const theme = useMantineTheme();
   const form = useForm({
     mode: 'uncontrolled',
@@ -111,6 +111,4 @@ const SearchForm = ({ onResults }: SearchFormProps) => {
       </Grid>
     </Container>
   );
-};
-
-export default SearchForm;
+}

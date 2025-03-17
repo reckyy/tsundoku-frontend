@@ -4,7 +4,7 @@ import { signOut } from 'next-auth/react';
 import { axiosDelete } from '@/lib/axios';
 import { useSession } from 'next-auth/react';
 
-const useDeleteUser = () => {
+export default function useDeleteUser() {
   const router = useRouter();
   const { data: session } = useSession();
 
@@ -26,6 +26,4 @@ const useDeleteUser = () => {
   };
 
   return { handleDeleteUser };
-};
-
-export default useDeleteUser;
+}

@@ -18,7 +18,7 @@ export type BookItemsProps = {
   isPublic: boolean;
 };
 
-const BookItems = ({ bookItems, isPublic }: BookItemsProps) => {
+export default function BookItems({ bookItems, isPublic }: BookItemsProps) {
   const isLargeScreen = useMediaQuery('(min-width: 48em)');
   const [filter, setFilter] = useState<Filter>('unread_books');
   const emptyMessages: Record<Filter, string> = {
@@ -86,6 +86,4 @@ const BookItems = ({ bookItems, isPublic }: BookItemsProps) => {
       )}
     </>
   );
-};
-
-export default BookItems;
+}

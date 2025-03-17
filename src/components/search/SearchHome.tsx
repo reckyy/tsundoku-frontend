@@ -6,7 +6,7 @@ import { useState } from 'react';
 import { Book } from '@/types/index';
 import { Grid, GridCol, Space, Container, Text } from '@mantine/core';
 
-const SearchHome = () => {
+export default function SearchHome() {
   const [searchResults, setSearchResults] = useState<Book[]>([]);
 
   const handleResults = (results: Book[]) => {
@@ -30,6 +30,4 @@ const SearchHome = () => {
       )}
     </Container>
   );
-};
-
-export default SearchHome;
+}

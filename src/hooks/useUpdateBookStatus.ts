@@ -10,10 +10,10 @@ type useUpdateBookStatusProps = {
   >;
 };
 
-const useUpdateBookStatus = ({
+export default function useUpdateBookStatus({
   userBookId,
   setBookWithMemos,
-}: useUpdateBookStatusProps) => {
+}: useUpdateBookStatusProps) {
   const { data: session } = useSession();
   const token = session?.user?.accessToken;
 
@@ -38,6 +38,4 @@ const useUpdateBookStatus = ({
   };
 
   return { handleSubmit };
-};
-
-export default useUpdateBookStatus;
+}

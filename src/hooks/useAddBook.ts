@@ -4,7 +4,7 @@ import { useSession } from 'next-auth/react';
 import { Book } from '@/types/index';
 import { axiosPost } from '@/lib/axios';
 
-const useAddBook = (book: Book) => {
+export default function useAddBook(book: Book) {
   const { data: session } = useSession();
   const router = useRouter();
 
@@ -30,6 +30,4 @@ const useAddBook = (book: Book) => {
   };
 
   return { handleSubmit };
-};
-
-export default useAddBook;
+}

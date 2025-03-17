@@ -9,7 +9,7 @@ import {
 } from '@mantine/core';
 import Link from 'next/link';
 
-const Terms = () => {
+export default function Terms() {
   return (
     <Container my="md">
       <Title size={'h2'} ta={'center'}>
@@ -264,6 +264,4 @@ const Terms = () => {
       <Text>2024年7月12日制定</Text>
     </Container>
   );
-};
-
-export default Terms;
+}

@@ -9,7 +9,7 @@ import {
   ListItem,
 } from '@mantine/core';
 
-const Privacy = () => {
+export default function Privacy() {
   return (
     <Container my="md">
       <Title size={'h2'} ta={'center'}>
@@ -139,6 +139,4 @@ const Privacy = () => {
       <Text>2024年7月12日制定</Text>
     </Container>
   );
-};
-
-export default Privacy;
+}
