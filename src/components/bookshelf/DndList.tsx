@@ -164,7 +164,7 @@ function DndListContent({ bookItems }: DndListProps) {
   ));
 
   return (
-    <SessionProvider>
+    <>
       <Modal
         opened={opened}
         radius="md"
@@ -175,6 +175,16 @@ function DndListContent({ bookItems }: DndListProps) {
         <DeleteBookConfirmModal
           userBookId={deleteParamsState.userBookId}
           close={close}
+          onSuccess={() => {
+            const handler =
+              filter === 'unread_books'
+                ? unreadBooksHandlers
+                : filter === 'reading_books'
+                  ? readingBooksHandlers
+                  : finishedBooksHandlers;
+            handler.remove(deleteParamsState.position);
+            close();
+          }}
         />
       </Modal>
       <Space h={20} />
@@ -220,6 +230,6 @@ function DndListContent({ bookItems }: DndListProps) {
           <Text ta="center">{emptyMessages[filter]}</Text>
         </>
       )}
-    </SessionProvider>
+    </>
   );
 }

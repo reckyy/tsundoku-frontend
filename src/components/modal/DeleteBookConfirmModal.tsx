@@ -5,13 +5,15 @@ import useDeleteBook from '@/hooks/useDeleteBook';
 type DeleteBookModalProps = {
   userBookId: number;
   close: () => void;
+  onSuccess: () => void;
 };
 
 export default function DeleteBookConfirmModal({
   userBookId,
   close,
+  onSuccess,
 }: DeleteBookModalProps) {
-  const { handleDeleteBook } = useDeleteBook(userBookId);
+  const { handleDeleteBook } = useDeleteBook({ userBookId, onSuccess });
 
   return (
     <>

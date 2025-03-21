@@ -1,10 +1,16 @@
 import toast from 'react-hot-toast';
-import { useRouter } from 'next/navigation';
 import { axiosDelete } from '@/lib/axios';
 import { useSession } from 'next-auth/react';
 
-export default function useDeleteBook(userBookId: number) {
-  const router = useRouter();
+type useDeleteBookProps = {
+  userBookId: number;
+  onSuccess: () => void;
+};
+
+export default function useDeleteBook({
+  userBookId,
+  onSuccess,
+}: useDeleteBookProps) {
   const { data: session } = useSession();
 
   const handleDeleteBook = async () => {
@@ -12,7 +18,7 @@ export default function useDeleteBook(userBookId: number) {
     try {
       const res = await axiosDelete(`/user_books/${userBookId}`, token);
       if (res.status === 204) {
-        router.refresh();
+        onSuccess();
         toast('本を削除しました。');
       } else {
         throw new Error();
