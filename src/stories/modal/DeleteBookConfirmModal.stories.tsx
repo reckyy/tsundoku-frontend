@@ -33,6 +33,9 @@ const meta: Meta<typeof DeleteBookConfirmModal> = {
   },
   args: {
     userBookId: 1,
+    onSuccess: () => {
+      console.log('onSuccessが呼ばれた');
+    },
     close: () => {
       console.log('モーダルを閉じました。');
     },

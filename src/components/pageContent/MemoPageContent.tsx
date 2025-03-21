@@ -20,7 +20,7 @@ import { IconPlus } from '@tabler/icons-react';
 import { useMediaQuery } from '@mantine/hooks';
 import { useParams } from 'next/navigation';
 import { useSession } from 'next-auth/react';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import useSWR from 'swr';
 import { BookWithMemos, Heading } from '@/types/index';
 import MemoLoading from '@/components/loading/MemoLoading';
@@ -36,9 +36,7 @@ type GridItemType = {
   offset: number | undefined;
   isLargeScreen: boolean | undefined;
   bookWithMemos: BookWithMemos;
-  setBookWithMemos: React.Dispatch<
-    React.SetStateAction<BookWithMemos | undefined>
-  >;
+  onStatusChange: (status: string) => Promise<void>;
 };
 
 function GridItem({
@@ -47,13 +45,8 @@ function GridItem({
   offset,
   isLargeScreen,
   bookWithMemos,
-  setBookWithMemos,
+  onStatusChange,
 }: GridItemType) {
-  const { handleSubmit } = useUpdateBookStatus({
-    userBookId: bookWithMemos.id,
-    setBookWithMemos,
-  });
-
   return (
     <>
       <GridCol span={imageSpan}>
@@ -77,7 +70,7 @@ function GridItem({
           color="blue"
           fullWidth={isLargeScreen}
           value={bookWithMemos.status}
-          onChange={(value) => handleSubmit(value)}
+          onChange={onStatusChange}
           size={isLargeScreen ? 'md' : 'sm'}
           data={[
             { label: 'まだ読んでない', value: 'unread' },
@@ -99,6 +92,7 @@ export default function MemoPageContent() {
   const { handleAddHeading } = useAddHeading();
   const [bookWithMemos, setBookWithMemos] = useState<BookWithMemos>();
   const [heading, setHeading] = useState('1');
+  const { handleUpdateBookStatus } = useUpdateBookStatus(bookWithMemos?.id);
 
   async function fetcher(url: string) {
     const res = await axiosGet(url, token);
@@ -114,6 +108,16 @@ export default function MemoPageContent() {
       },
     },
   );
+
+  const handleStatusChange = async (status: string) => {
+    try {
+      await handleUpdateBookStatus(status);
+      setBookWithMemos((prev) => (prev ? { ...prev, status } : prev));
+      toast.success('読書ステータスを更新しました！');
+    } catch {
+      toast.error('読書ステータスの更新に失敗しました。');
+    }
+  };
 
   const handleSaveAll = async (
     title: string,
@@ -198,7 +202,7 @@ export default function MemoPageContent() {
             offset={isLargeScreen ? 1 : undefined}
             isLargeScreen={isLargeScreen}
             bookWithMemos={bookWithMemos}
-            setBookWithMemos={setBookWithMemos}
+            onStatusChange={handleStatusChange}
           />
         </Grid>
         <Space h="20" />
