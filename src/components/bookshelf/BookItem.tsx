@@ -26,9 +26,11 @@ export default function BookItem({ book, isPublic }: BookItemProps) {
           <Text size="sm" fw="700" mt="2" ta="center">
             {book.title}
           </Text>
-          <Text size="sm" mt="2" ta="center">
-            著者 : {book.author}
-          </Text>
+          {book.author && (
+            <Text size="sm" mt="2" ta="center">
+              著者 : {book.author}
+            </Text>
+          )}
         </Link>
       ) : (
         <Stack>
@@ -44,9 +46,11 @@ export default function BookItem({ book, isPublic }: BookItemProps) {
           <Text size="sm" fw="700" mt="2" ta="center">
             {book.title}
           </Text>
-          <Text size="sm" mt="2" ta="center">
-            著者 : {book.author}
-          </Text>
+          {book.author && (
+            <Text size="sm" mt="2" ta="center">
+              著者 : {book.author}
+            </Text>
+          )}
         </Stack>
       )}
     </>
