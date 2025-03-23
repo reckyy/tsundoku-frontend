@@ -62,9 +62,11 @@ function GridItem({
         <Title size="h3" ta="center">
           <Text inherit>{bookWithMemos.book.title}</Text>
         </Title>
-        <Text size="md" mt="10" ta="center">
-          著者 : {bookWithMemos.book.author}
-        </Text>
+        {bookWithMemos.book.author && (
+          <Text size="md" mt="10" ta="center">
+            著者 : {bookWithMemos.book.author}
+          </Text>
+        )}
         <SegmentedControl
           mt="md"
           color="blue"
