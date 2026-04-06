@@ -4,6 +4,19 @@ import { userEvent, within, expect, waitFor, screen } from '@storybook/test';
 import SearchForm from '@/components/search/SearchForm';
 import toast from 'react-hot-toast';
 
+const mockBooksResponse = {
+  Items: [
+    {
+      Item: {
+        title: '本のタイトル',
+        author: '著者名',
+        largeImageUrl:
+          'https://thumbnail.image.rakuten.co.jp/@0_mall/book/cabinet/0618/9784297140618_1_2.jpg?_ex=200x200',
+      },
+    },
+  ],
+};
+
 const meta: Meta<typeof SearchForm> = {
   component: SearchForm,
   parameters: {
@@ -46,6 +59,15 @@ export const LabelAuthorTest: Story = {
 };
 
 export const SearchTest: Story = {
+  parameters: {
+    msw: {
+      handlers: [
+        http.get('/api/books/search', () => {
+          return HttpResponse.json(mockBooksResponse);
+        }),
+      ],
+    },
+  },
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
     const searchInput = canvas.getByLabelText('search');
@@ -73,12 +95,9 @@ export const ErrorTest: Story = {
   parameters: {
     msw: {
       handlers: [
-        http.get(
-          `https://app.rakuten.co.jp/services/api/BooksBook/Search/20170404`,
-          () => {
-            return HttpResponse.error();
-          },
-        ),
+        http.get(`/api/books/search`, () => {
+          return HttpResponse.error();
+        }),
       ],
     },
   },
