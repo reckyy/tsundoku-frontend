@@ -48,12 +48,9 @@ export async function searchBooks({
   selected,
   onResults,
 }: SearchParams) {
-  const applicationId = process.env.NEXT_PUBLIC_RAKUTEN_API_APPLICATION_ID;
-  const apiUrl = `https://app.rakuten.co.jp/services/api/BooksBook/Search/20170404`;
+  const apiUrl = '/api/books/search';
   const params =
-    selected.label === 'title'
-      ? { applicationId, title: searchWord }
-      : { applicationId, author: searchWord };
+    selected.label === 'title' ? { title: searchWord } : { author: searchWord };
 
   try {
     const res = await axios.get(apiUrl, { params });
