@@ -82,6 +82,17 @@ export function Footer() {
             </Anchor>
           </Group>
         </div>
+        <Text ta="center" size="xs" c="dimmed" pb="md">
+          {/* Rakuten Web Services Attribution Snippet FROM HERE */}
+          <a
+            href="https://developers.rakuten.com/"
+            target="_blank"
+            rel="noreferrer"
+          >
+            Supported by Rakuten Developers
+          </a>
+          {/* Rakuten Web Services Attribution Snippet TO HERE */}
+        </Text>
       </div>
     </Container>
   );
