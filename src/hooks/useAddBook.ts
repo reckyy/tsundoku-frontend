@@ -16,7 +16,7 @@ export default function useAddBook(book: Book) {
         author: book.author,
         coverImageUrl: book.coverImageUrl,
       });
-      axiosPost('/user_books', token, {
+      await axiosPost('/user_books', token, {
         title: book.title,
         author: book.author,
         coverImageUrl: book.coverImageUrl,
