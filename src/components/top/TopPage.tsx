@@ -18,7 +18,7 @@ export default function TopPage() {
             利用規約
           </Anchor>
           と
-          <Anchor href="privacy" underline="hover">
+          <Anchor href="/privacy" underline="hover">
             プライバシーポリシー
           </Anchor>
           に同意したことになります。
