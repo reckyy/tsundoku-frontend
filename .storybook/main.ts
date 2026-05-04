@@ -12,7 +12,6 @@ const config: StorybookConfig = {
     'storybook-dark-mode',
     'storybook-addon-module-mock',
     '@storybook/addon-coverage',
-    '@storybook/addon-interactions',
   ],
   framework: {
     name: '@storybook/nextjs',
