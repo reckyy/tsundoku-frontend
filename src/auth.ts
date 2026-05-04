@@ -2,8 +2,7 @@ import NextAuth, { type DefaultSession } from 'next-auth';
 import Google from 'next-auth/providers/google';
 import { NextResponse } from 'next/server';
 import axios from 'axios';
-
-const THIRTY_DAYS_IN_SECONDS = 30 * 24 * 60 * 60;
+import { THIRTY_DAYS_IN_SECONDS } from '@/constants/session';
 
 type BackendSignInResponse = {
   id: string;

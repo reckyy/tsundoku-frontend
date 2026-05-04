@@ -3,23 +3,20 @@ import { http, HttpResponse } from 'msw';
 import { userEvent, within, expect, waitFor, screen } from '@storybook/test';
 import MemoPageContent from '@/components/pageContent/MemoPageContent';
 import { SessionProvider } from 'next-auth/react';
-import { Session } from 'next-auth';
 import * as nextNavigation from 'next/navigation';
+import { createMockSession } from '@/stories/utils/mockSession';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 (nextNavigation as any).useParams = () => ({
   bookId: '1',
 });
 
-const mockSession: Session = {
-  user: {
-    id: '1',
-    name: 'Test User',
-    email: 'testuser@example.com',
-    accessToken: 'hogehoge',
-  },
-  expires: '2025-12-31T23:59:59.999Z',
-};
+const mockSession = createMockSession({
+  id: '1',
+  name: 'Test User',
+  email: 'testuser@example.com',
+  accessToken: 'hogehoge',
+});
 
 const RAILS_API_URL = process.env.STORYBOOK_NEXT_PUBLIC_RAILS_API_URL;
 

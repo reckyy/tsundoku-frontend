@@ -3,19 +3,16 @@ import { http, HttpResponse } from 'msw';
 import { userEvent, within, expect, waitFor } from '@storybook/test';
 import DeleteUserConfirmModal from '@/components/modal/DeleteUserConfirmModal';
 import { SessionProvider } from 'next-auth/react';
-import { Session } from 'next-auth';
+import { createMockSession } from '@/stories/utils/mockSession';
 
 const RAILS_API_URL = process.env.STORYBOOK_NEXT_PUBLIC_RAILS_API_URL;
 
-const mockSession: Session = {
-  user: {
-    id: '1',
-    name: 'Test User',
-    email: 'testuser@example.com',
-    accessToken: 'hogehoge',
-  },
-  expires: '2025-12-31T23:59:59.999Z',
-};
+const mockSession = createMockSession({
+  id: '1',
+  name: 'Test User',
+  email: 'testuser@example.com',
+  accessToken: 'hogehoge',
+});
 
 const meta: Meta<typeof DeleteUserConfirmModal> = {
   component: DeleteUserConfirmModal,
