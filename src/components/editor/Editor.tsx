@@ -18,7 +18,6 @@ import classes from './Editor.module.css';
 
 type EditorProps = {
   heading: Heading | undefined;
-  headingId: number;
   handleSaveAll: (
     title: string,
     headingId: number,
