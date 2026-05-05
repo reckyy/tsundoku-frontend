@@ -11,11 +11,6 @@ export default function useAddBook(book: Book) {
   const handleSubmit = async () => {
     const token = session?.user?.accessToken;
     try {
-      await axiosPost('/books', token, {
-        title: book.title,
-        author: book.author,
-        coverImageUrl: book.coverImageUrl,
-      });
       await axiosPost('/user_books', token, {
         title: book.title,
         author: book.author,
