@@ -277,7 +277,6 @@ export default function MemoPageContent() {
         <Space h={50} />
         <Editor
           heading={bookWithMemos?.headings[Number(heading) - 1]}
-          headingId={bookWithMemos?.headings[Number(heading) - 1].id}
           handleSaveAll={handleSaveAll}
         />
       </Container>
