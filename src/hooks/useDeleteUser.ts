@@ -1,11 +1,9 @@
-import { useRouter } from 'next/navigation';
 import toast from 'react-hot-toast';
 import { signOut } from 'next-auth/react';
 import { axiosDelete } from '@/lib/axios';
 import { useSession } from 'next-auth/react';
 
 export default function useDeleteUser() {
-  const router = useRouter();
   const { data: session } = useSession();
 
   const handleDeleteUser = async () => {
@@ -13,10 +11,7 @@ export default function useDeleteUser() {
     try {
       const res = await axiosDelete(`/users/${session?.user?.id}`, token);
       if (res.status === 204) {
-        signOut();
-        router.push('/thanks');
-        router.refresh();
-        toast.success('アカウントを削除しました。');
+        await signOut({ callbackUrl: '/thanks' });
       } else {
         throw new Error();
       }
