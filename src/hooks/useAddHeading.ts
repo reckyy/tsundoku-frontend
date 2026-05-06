@@ -16,7 +16,7 @@ export default function useAddHeading() {
         userBookId: bookWithMemos.id,
         number,
       });
-      if (res.status === 200) {
+      if (res.status === 201) {
         toast.success('章を追加しました。');
         return {
           id: res.data.id,
