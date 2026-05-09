@@ -11,7 +11,7 @@ const today = dayjs().format('YYYY-MM-DD');
 const meta: Meta<typeof Calendar> = {
   component: Calendar,
   parameters: {
-    Calendarayout: 'centered',
+    layout: 'centered',
     nextjs: {
       appDirectory: true,
     },
@@ -50,7 +50,7 @@ export const ChangeYearTest: Story = {
     const canvas = within(canvasElement);
     const toggleYearButton = canvas.getByText(`Year: ${currentYear}`);
     await userEvent.click(toggleYearButton);
-    const lasyYearButton = screen.getByText(`${lastYear}`);
+    const lasyYearButton = await screen.findByText(`${lastYear}`);
     await userEvent.click(lasyYearButton);
     await waitFor(() => {
       expect(screen.getByText(`Year: ${lastYear}`)).toBeInTheDocument();
