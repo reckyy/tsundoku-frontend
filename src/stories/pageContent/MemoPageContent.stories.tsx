@@ -183,7 +183,7 @@ export const AddMemoTest: Story = {
         http.patch(`${RAILS_API_URL}/headings/1`, () => {
           return new HttpResponse();
         }),
-        http.patch(`${RAILS_API_URL}/headings/1`, () => {
+        http.patch(`${RAILS_API_URL}/memos/1`, () => {
           return new HttpResponse();
         }),
         http.post(`${RAILS_API_URL}/reading_logs`, () => {

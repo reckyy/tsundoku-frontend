@@ -92,29 +92,44 @@ export default function MemoPageContent() {
   const { data: session } = useSession();
   const token = session?.user?.accessToken;
   const { handleAddHeading } = useAddHeading();
-  const [bookWithMemos, setBookWithMemos] = useState<BookWithMemos>();
   const [heading, setHeading] = useState('1');
-  const { handleUpdateBookStatus } = useUpdateBookStatus(bookWithMemos?.id);
 
   async function fetcher(url: string) {
     const res = await axiosGet(url, token);
     return res.data;
   }
 
-  const { error, isLoading } = useSWR(
+  const {
+    data: bookWithMemos,
+    error,
+    isLoading,
+    mutate,
+  } = useSWR<BookWithMemos>(
     token ? `/memos/?bookId=${bookId}` : null,
     fetcher,
     {
-      onSuccess: (data) => {
-        setBookWithMemos(data);
-      },
+      revalidateOnFocus: false,
     },
   );
 
+  const { handleUpdateBookStatus } = useUpdateBookStatus(bookWithMemos?.id);
+
   const handleStatusChange = async (status: string) => {
+    if (!bookWithMemos) return;
+    const optimisticData: BookWithMemos = { ...bookWithMemos, status };
     try {
-      await handleUpdateBookStatus(status);
-      setBookWithMemos((prev) => (prev ? { ...prev, status } : prev));
+      await mutate(
+        async () => {
+          await handleUpdateBookStatus(status);
+          return optimisticData;
+        },
+        {
+          optimisticData,
+          rollbackOnError: true,
+          populateCache: true,
+          revalidate: false,
+        },
+      );
       toast.success('読書ステータスを更新しました！');
     } catch {
       toast.error('読書ステータスの更新に失敗しました。');
@@ -127,35 +142,36 @@ export default function MemoPageContent() {
     content: string,
     memoId: number,
   ) => {
-    if (!token) {
+    if (!token || !bookWithMemos) {
       return false;
     }
 
+    const optimisticData: BookWithMemos = {
+      ...bookWithMemos,
+      headings: bookWithMemos.headings.map((h) =>
+        h.id === headingId
+          ? { ...h, title, memo: { ...h.memo, body: content } }
+          : h,
+      ),
+    };
+
     try {
-      await Promise.all([
-        saveData({ token, id: headingId, data: title, type: 'heading' }),
-        saveData({ token, id: memoId, data: content, type: 'memo' }),
-      ]);
-
-      setBookWithMemos((prev) => {
-        if (!prev) return prev;
-        return {
-          ...prev,
-          headings: prev.headings.map((h) =>
-            h.id === headingId
-              ? {
-                  ...h,
-                  title,
-                  memo: {
-                    ...h.memo,
-                    body: content,
-                  },
-                }
-              : h,
-          ),
-        };
-      });
-
+      await mutate(
+        async () => {
+          const [okHeading, okMemo] = await Promise.all([
+            saveData({ token, id: headingId, data: title, type: 'heading' }),
+            saveData({ token, id: memoId, data: content, type: 'memo' }),
+          ]);
+          if (!okHeading || !okMemo) throw new Error('save failed');
+          return optimisticData;
+        },
+        {
+          optimisticData,
+          rollbackOnError: true,
+          populateCache: true,
+          revalidate: false,
+        },
+      );
       toast.success('保存しました。');
     } catch (error) {
       console.warn(error);
@@ -175,13 +191,13 @@ export default function MemoPageContent() {
     );
 
     if (newHeading) {
-      setBookWithMemos((prev) => {
-        if (!prev) return prev;
-        return {
-          ...prev,
-          headings: [...prev.headings, newHeading],
-        };
-      });
+      await mutate(
+        (current) =>
+          current
+            ? { ...current, headings: [...current.headings, newHeading] }
+            : current,
+        { revalidate: false },
+      );
     }
   };
 
