@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { http, HttpResponse } from 'msw';
-import { userEvent, within, expect, waitFor } from '@storybook/test';
+import { http, HttpResponse, delay } from 'msw';
+import { userEvent, within, expect, waitFor, fn } from '@storybook/test';
 import DeleteUserConfirmModal from '@/components/modal/DeleteUserConfirmModal';
 import { SessionProvider } from 'next-auth/react';
 import { createMockSession } from '@/stories/utils/mockSession';
@@ -43,16 +43,17 @@ export const AppearenceTest: Story = {
   args: {},
 };
 
+const signOutSpy = fn();
+
 export const DeleteUserTest: Story = {
   play: async ({ canvasElement }) => {
+    signOutSpy.mockClear();
     const canvas = within(canvasElement);
     const button = await canvas.getByRole('button', { name: '削除' });
     await userEvent.click(button);
 
     await waitFor(() => {
-      expect(
-        canvas.getByText('アカウントを削除しました。'),
-      ).toBeInTheDocument();
+      expect(signOutSpy).toHaveBeenCalled();
     });
   },
   parameters: {
@@ -60,6 +61,15 @@ export const DeleteUserTest: Story = {
       handlers: [
         http.delete(`${RAILS_API_URL}/users/1`, () => {
           return new HttpResponse(null, { status: 204 });
+        }),
+        http.get('/api/auth/csrf', () => {
+          return HttpResponse.json({ csrfToken: 'fake-csrf-token' });
+        }),
+        http.post('/api/auth/signout', async ({ request }) => {
+          const body = await request.text();
+          signOutSpy(body);
+          await delay('infinite');
+          return HttpResponse.json({ url: '/thanks' });
         }),
       ],
     },
