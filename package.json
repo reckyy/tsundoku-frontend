@@ -14,7 +14,6 @@
     "test-storybook": "test-storybook --coverage"
   },
   "dependencies": {
-    "@hello-pangea/dnd": "^16.6.0",
     "@mantine/core": "^7.12.2",
     "@mantine/form": "^7.12.2",
     "@mantine/hooks": "^7.12.2",
