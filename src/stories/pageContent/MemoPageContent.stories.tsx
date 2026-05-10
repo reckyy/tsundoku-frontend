@@ -147,12 +147,15 @@ export const AddHeadingTest: Story = {
           return HttpResponse.json(bookWithMemos);
         }),
         http.post(`${RAILS_API_URL}/headings`, () => {
-          return HttpResponse.json({
-            id: 3,
-            number: 3,
-            title: '',
-            memo: { id: 3, body: '' },
-          });
+          return HttpResponse.json(
+            {
+              id: 3,
+              number: 3,
+              title: '',
+              memo: { id: 3, body: '' },
+            },
+            { status: 201 },
+          );
         }),
       ],
     },

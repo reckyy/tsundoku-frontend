@@ -248,6 +248,7 @@ export default function MemoPageContent() {
                   size={44}
                   variant="default"
                   onClick={handleAddNewHeading}
+                  data-testid="add-heading-button"
                 >
                   <IconPlus
                     style={{ width: rem(24), height: rem(24) }}
