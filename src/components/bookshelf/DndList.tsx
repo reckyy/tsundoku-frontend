@@ -10,18 +10,18 @@ import {
   rem,
   Modal,
   Space,
-  SegmentedControl,
-  GridCol,
 } from '@mantine/core';
 import { useListState, useDisclosure, useSetState } from '@mantine/hooks';
 import { IconTrash } from '@tabler/icons-react';
 import { UserBook, Filter } from '@/types/index';
 import DeleteBookConfirmModal from '../modal/DeleteBookConfirmModal';
+import BookFilterSegmentedControl, {
+  EMPTY_MESSAGES,
+} from './BookFilterSegmentedControl';
 import toast from 'react-hot-toast';
 import { useState } from 'react';
 import { axiosPatch } from '@/lib/axios';
 import { useSession, SessionProvider } from 'next-auth/react';
-import { useMediaQuery } from '@mantine/hooks';
 
 export type DndListProps = {
   bookItems: Record<Filter, UserBook[]>;
@@ -36,7 +36,6 @@ export default function DndList({ bookItems }: DndListProps) {
 }
 
 function DndListContent({ bookItems }: DndListProps) {
-  const isLargeScreen = useMediaQuery('(min-width: 48em)');
   const [source, setSource] = useState<number>(0);
   const [unreadBooks, unreadBooksHandlers] = useListState<UserBook>(
     bookItems['unread_books'],
@@ -59,12 +58,6 @@ function DndListContent({ bookItems }: DndListProps) {
       : filter === 'reading_books'
         ? readingBooks
         : finishedBooks;
-
-  const emptyMessages: Record<Filter, string> = {
-    unread_books: '「本を追加」から読む本を追加しましょう！',
-    reading_books: '今読んでいる本はありません。',
-    finished_books: '読み終わった本はありません。',
-  };
 
   const { data: session } = useSession();
   const token = session?.user?.accessToken;
@@ -188,38 +181,7 @@ function DndListContent({ bookItems }: DndListProps) {
         />
       </Modal>
       <Space h={20} />
-      {isLargeScreen ? (
-        <Grid>
-          <GridCol offset={2} span={8}>
-            <SegmentedControl
-              color="blue"
-              fullWidth
-              value={filter}
-              onChange={(value) => setFilter(value as Filter)}
-              size="md"
-              data={[
-                { label: 'まだ読んでない', value: 'unread_books' },
-                { label: '読んでる途中', value: 'reading_books' },
-                { label: '全部読んだ', value: 'finished_books' },
-              ]}
-            />
-          </GridCol>
-        </Grid>
-      ) : (
-        <Center>
-          <SegmentedControl
-            color="blue"
-            value={filter}
-            onChange={(value) => setFilter(value as Filter)}
-            size="sm"
-            data={[
-              { label: 'まだ読んでない', value: 'unread_books' },
-              { label: '読んでる途中', value: 'reading_books' },
-              { label: '全部読んだ', value: 'finished_books' },
-            ]}
-          />
-        </Center>
-      )}
+      <BookFilterSegmentedControl value={filter} onChange={setFilter} />
 
       <Space h={20} />
       {items.length > 0 ? (
@@ -227,7 +189,7 @@ function DndListContent({ bookItems }: DndListProps) {
       ) : (
         <>
           <Space h={20} />
-          <Text ta="center">{emptyMessages[filter]}</Text>
+          <Text ta="center">{EMPTY_MESSAGES[filter]}</Text>
         </>
       )}
     </>
