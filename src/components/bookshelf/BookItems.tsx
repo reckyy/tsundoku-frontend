@@ -2,16 +2,11 @@
 
 import { useState } from 'react';
 import BookItem from './BookItem';
-import {
-  Grid,
-  GridCol,
-  Space,
-  Center,
-  Text,
-  SegmentedControl,
-} from '@mantine/core';
+import BookFilterSegmentedControl, {
+  EMPTY_MESSAGES,
+} from './BookFilterSegmentedControl';
+import { Grid, GridCol, Space, Center, Text } from '@mantine/core';
 import { UserBook, Filter } from '@/types/index';
-import { useMediaQuery } from '@mantine/hooks';
 
 export type BookItemsProps = {
   bookItems: Record<Filter, UserBook[]>;
@@ -19,51 +14,14 @@ export type BookItemsProps = {
 };
 
 export default function BookItems({ bookItems, isPublic }: BookItemsProps) {
-  const isLargeScreen = useMediaQuery('(min-width: 48em)');
   const [filter, setFilter] = useState<Filter>('unread_books');
-  const emptyMessages: Record<Filter, string> = {
-    unread_books: '「本を追加」から読む本を追加しましょう！',
-    reading_books: '今読んでいる本はありません。',
-    finished_books: '読み終わった本はありません。',
-  };
 
   const filteredBooks = bookItems[filter];
 
   return (
     <>
       <Space h={20} />
-      {isLargeScreen ? (
-        <Grid>
-          <GridCol offset={2} span={8}>
-            <SegmentedControl
-              color="blue"
-              fullWidth
-              value={filter}
-              onChange={(value) => setFilter(value as Filter)}
-              size="md"
-              data={[
-                { label: 'まだ読んでない', value: 'unread_books' },
-                { label: '読んでる途中', value: 'reading_books' },
-                { label: '全部読んだ', value: 'finished_books' },
-              ]}
-            />
-          </GridCol>
-        </Grid>
-      ) : (
-        <Center>
-          <SegmentedControl
-            color="blue"
-            value={filter}
-            onChange={(value) => setFilter(value as Filter)}
-            size="sm"
-            data={[
-              { label: 'まだ読んでない', value: 'unread_books' },
-              { label: '読んでる途中', value: 'reading_books' },
-              { label: '全部読んだ', value: 'finished_books' },
-            ]}
-          />
-        </Center>
-      )}
+      <BookFilterSegmentedControl value={filter} onChange={setFilter} />
       <Space h={20} />
       {filteredBooks.length > 0 ? (
         <Grid>
@@ -81,7 +39,7 @@ export default function BookItems({ bookItems, isPublic }: BookItemsProps) {
       ) : (
         <>
           <Space h={20} />
-          <Text ta="center">{emptyMessages[filter]}</Text>
+          <Text ta="center">{EMPTY_MESSAGES[filter]}</Text>
         </>
       )}
     </>
