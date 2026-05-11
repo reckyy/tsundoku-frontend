@@ -24,7 +24,7 @@ import Link from 'next/link';
 type UserMenuProps = {
   name: string;
   id: string;
-  image: string;
+  image?: string;
 };
 
 export default function UserMenu({ name, id, image }: UserMenuProps) {
