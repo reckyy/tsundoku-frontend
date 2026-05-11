@@ -21,21 +21,13 @@ import BookFilterSegmentedControl, {
 import toast from 'react-hot-toast';
 import { useState } from 'react';
 import { axiosPatch } from '@/lib/axios';
-import { useSession, SessionProvider } from 'next-auth/react';
+import { useSession } from 'next-auth/react';
 
 export type DndListProps = {
   bookItems: Record<Filter, UserBook[]>;
 };
 
 export default function DndList({ bookItems }: DndListProps) {
-  return (
-    <SessionProvider>
-      <DndListContent bookItems={bookItems} />
-    </SessionProvider>
-  );
-}
-
-function DndListContent({ bookItems }: DndListProps) {
   const [source, setSource] = useState<number>(0);
   const [unreadBooks, unreadBooksHandlers] = useListState<UserBook>(
     bookItems['unread_books'],
