@@ -16,6 +16,7 @@ export default function useDeleteUser() {
         throw new Error();
       }
     } catch (error) {
+      console.warn(error);
       toast.error('退会に失敗しました。');
     }
   };

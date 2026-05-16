@@ -62,6 +62,7 @@ export async function searchBooks({
     }));
     onResults(books);
   } catch (error) {
+    console.warn(error);
     toast.error('本の検索に失敗しました。');
   }
 }

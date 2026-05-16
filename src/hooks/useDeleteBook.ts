@@ -24,6 +24,7 @@ export default function useDeleteBook({
         throw new Error();
       }
     } catch (error) {
+      console.warn(error);
       toast.error('本の削除に失敗しました。');
     }
   };
