@@ -100,6 +100,7 @@ export default function DndList({ bookItems }: DndListProps) {
       handler.swap({ from: source, to: index });
       toast.success('本の並び替えに成功しました！');
     } catch (error) {
+      console.warn(error);
       toast.error('本の並び替えに失敗しました。');
     }
   };

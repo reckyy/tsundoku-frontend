@@ -131,7 +131,8 @@ export default function MemoPageContent() {
         },
       );
       toast.success('読書ステータスを更新しました！');
-    } catch {
+    } catch (error) {
+      console.warn(error);
       toast.error('読書ステータスの更新に失敗しました。');
     }
   };

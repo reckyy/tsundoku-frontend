@@ -20,6 +20,7 @@ export default function useAddBook(book: Book) {
       router.refresh();
       toast.success('本を保存しました！');
     } catch (error) {
+      console.warn(error);
       toast.error('本の保存に失敗しました。');
     }
   };
