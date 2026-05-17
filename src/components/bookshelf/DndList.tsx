@@ -109,7 +109,7 @@ export default function DndList({ bookItems }: DndListProps) {
     <div
       className="cursor-grab"
       draggable
-      key={index}
+      key={item.id}
       onDragStart={() => handleDragStart(index)}
       onDragOver={handleDragOver}
       onDrop={() => handleDragEnd(index)}
