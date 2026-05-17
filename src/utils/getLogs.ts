@@ -1,9 +1,9 @@
-import { axiosGet } from '@/lib/axios';
+import { apiGet } from '@/lib/api/server';
 import { auth } from '@/auth';
 
 export default async function getLogs() {
   const session = await auth();
   const token = session?.user?.accessToken;
-  const res = await axiosGet('/reading_logs', token);
-  return res.data.logs;
+  const data = await apiGet('/reading_logs', token);
+  return data.logs;
 }

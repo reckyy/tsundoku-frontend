@@ -20,7 +20,7 @@ import BookFilterSegmentedControl, {
 } from './BookFilterSegmentedControl';
 import toast from 'react-hot-toast';
 import { useState } from 'react';
-import { axiosPatch } from '@/lib/axios';
+import { apiPatch } from '@/lib/api/client';
 import { useSession } from 'next-auth/react';
 
 export type DndListProps = {
@@ -90,7 +90,7 @@ export default function DndList({ bookItems }: DndListProps) {
       destinationBookId: destinationBook?.id,
     };
     try {
-      await axiosPatch(`/user_books/${userBook?.id}/position`, token, params);
+      await apiPatch(`/user_books/${userBook?.id}/position`, token, params);
       const handler =
         filter === 'unread_books'
           ? unreadBooksHandlers
