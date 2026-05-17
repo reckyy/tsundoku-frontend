@@ -1,4 +1,4 @@
-import { axiosPost, axiosPatch } from '@/lib/axios';
+import { apiPost, apiPatch } from '@/lib/api/client';
 
 export type SaveDataParams = {
   token: string;
@@ -19,12 +19,12 @@ export default async function saveData({
   try {
     if (type === 'memo') {
       await Promise.all([
-        axiosPatch(url, token, params),
-        axiosPost('/reading_logs', token, { memoId: id }),
+        apiPatch(url, token, params),
+        apiPost('/reading_logs', token, { memoId: id }),
       ]);
       return true;
     } else {
-      await axiosPatch(url, token, params);
+      await apiPatch(url, token, params);
       return true;
     }
   } catch (error) {

@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 import UserPageContent from '@/components/pageContent/UserPageContent';
 import { auth } from '@/auth';
-import axios from 'axios';
+import { apiGet } from '@/lib/api/server';
 
 type Props = {
   params: { id: string };
@@ -9,10 +9,7 @@ type Props = {
 
 async function fetchUserData(id: string) {
   try {
-    const res = await axios.get(
-      `${process.env.NEXT_PUBLIC_RAILS_API_URL}/users/${id}`,
-    );
-    return res.data;
+    return await apiGet(`/users/${id}`, undefined);
   } catch (error) {
     console.warn(error);
     return null;

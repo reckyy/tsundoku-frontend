@@ -1,5 +1,5 @@
 import toast from 'react-hot-toast';
-import { axiosDelete } from '@/lib/axios';
+import { apiDelete } from '@/lib/api/client';
 import { useSession } from 'next-auth/react';
 
 type useDeleteBookProps = {
@@ -16,13 +16,9 @@ export default function useDeleteBook({
   const handleDeleteBook = async () => {
     const token = session?.user?.accessToken;
     try {
-      const res = await axiosDelete(`/user_books/${userBookId}`, token);
-      if (res.status === 204) {
-        onSuccess();
-        toast('本を削除しました。');
-      } else {
-        throw new Error();
-      }
+      await apiDelete(`/user_books/${userBookId}`, token);
+      onSuccess();
+      toast('本を削除しました。');
     } catch (error) {
       console.warn(error);
       toast.error('本の削除に失敗しました。');

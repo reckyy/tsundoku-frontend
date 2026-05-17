@@ -1,4 +1,3 @@
-import axios from 'axios';
 import toast from 'react-hot-toast';
 import { Book } from '@/types/index';
 
@@ -48,13 +47,15 @@ export async function searchBooks({
   selected,
   onResults,
 }: SearchParams) {
-  const apiUrl = '/api/books/search';
-  const params =
-    selected.label === 'title' ? { title: searchWord } : { author: searchWord };
+  const params = new URLSearchParams(
+    selected.label === 'title' ? { title: searchWord } : { author: searchWord },
+  );
 
   try {
-    const res = await axios.get(apiUrl, { params });
-    const books = res.data.Items.map((element: Item, index: number) => ({
+    const res = await fetch(`/api/books/search?${params.toString()}`);
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const data = await res.json();
+    const books = data.Items.map((element: Item, index: number) => ({
       id: index + 1,
       title: element.Item.title,
       author: element.Item.author,

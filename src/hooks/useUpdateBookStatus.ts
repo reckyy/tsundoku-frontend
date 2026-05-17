@@ -1,5 +1,5 @@
 import { useSession } from 'next-auth/react';
-import { axiosPatch } from '@/lib/axios';
+import { apiPatch } from '@/lib/api/client';
 
 export default function useUpdateBookStatus(userBookId?: number) {
   const { data: session } = useSession();
@@ -7,7 +7,7 @@ export default function useUpdateBookStatus(userBookId?: number) {
 
   const handleUpdateBookStatus = async (status: string) => {
     if (!userBookId) throw new Error();
-    await axiosPatch(`/user_books/${userBookId}`, token, {
+    await apiPatch(`/user_books/${userBookId}`, token, {
       userBookId,
       status,
     });

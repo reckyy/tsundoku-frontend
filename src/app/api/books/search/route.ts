@@ -1,5 +1,4 @@
 import { NextRequest, NextResponse } from 'next/server';
-import axios from 'axios';
 
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
@@ -18,18 +17,24 @@ export async function GET(request: NextRequest) {
     );
   }
 
-  const params: Record<string, string> = { applicationId, accessKey };
-  if (title) params.title = title;
-  if (author) params.author = author;
+  const params = new URLSearchParams({ applicationId, accessKey });
+  if (title) params.set('title', title);
+  if (author) params.set('author', author);
 
   try {
-    const res = await axios.get(apiUrl, {
-      params,
+    const res = await fetch(`${apiUrl}?${params.toString()}`, {
       headers: {
         Origin: 'https://tsundoku.tech',
       },
     });
-    return NextResponse.json(res.data);
+    if (!res.ok) {
+      return NextResponse.json(
+        { error: '楽天APIへのリクエストに失敗しました。' },
+        { status: 502 },
+      );
+    }
+    const data = await res.json();
+    return NextResponse.json(data);
   } catch {
     return NextResponse.json(
       { error: '楽天APIへのリクエストに失敗しました。' },
