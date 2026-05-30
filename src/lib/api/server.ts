@@ -18,7 +18,8 @@ async function request(
     body: body !== undefined ? JSON.stringify(body) : undefined,
   });
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
-  return res.status === 204 ? null : await res.json();
+  const text = await res.text();
+  return text ? JSON.parse(text) : null;
 }
 
 export const apiGet = (path: string, token: string | undefined) =>
