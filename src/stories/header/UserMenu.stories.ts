@@ -33,6 +33,10 @@ export const MenuTest: Story = {
       expect(screen.getByText('公開ページ')).toBeInTheDocument();
       expect(screen.getByText('アカウントの削除')).toBeInTheDocument();
     });
+    expect(screen.getByText('アカウントの削除').closest('a')).toHaveAttribute(
+      'href',
+      '/confirm_deletion',
+    );
     await userEvent.click(userMenuButton);
     await waitFor(() => {
       expect(screen.queryByText('ログアウト')).toBeFalsy();
