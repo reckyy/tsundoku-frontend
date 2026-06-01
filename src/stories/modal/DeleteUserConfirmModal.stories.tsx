@@ -96,3 +96,25 @@ export const DeleteUserFailedTest: Story = {
     },
   },
 };
+
+export const PreventDoubleSubmitTest: Story = {
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    const button = canvas.getByRole('button', { name: '削除' });
+    await userEvent.click(button);
+
+    await waitFor(() => {
+      expect(button).toBeDisabled();
+    });
+  },
+  parameters: {
+    msw: {
+      handlers: [
+        http.delete(`${RAILS_API_URL}/users/1`, async () => {
+          await delay('infinite');
+          return new HttpResponse(null, { status: 204 });
+        }),
+      ],
+    },
+  },
+};

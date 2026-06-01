@@ -8,7 +8,7 @@ type DeleteUserConfirmModalParams = {
 export default function DeleteUserConfirmModal({
   close,
 }: DeleteUserConfirmModalParams) {
-  const { handleDeleteUser } = useDeleteUser();
+  const { handleDeleteUser, isSubmitting } = useDeleteUser();
 
   return (
     <>
@@ -29,6 +29,7 @@ export default function DeleteUserConfirmModal({
           radius="lg"
           color="red"
           onClick={handleDeleteUser}
+          loading={isSubmitting}
         >
           削除
         </Button>

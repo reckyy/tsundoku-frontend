@@ -13,7 +13,10 @@ export default function DeleteBookConfirmModal({
   close,
   onSuccess,
 }: DeleteBookModalProps) {
-  const { handleDeleteBook } = useDeleteBook({ userBookId, onSuccess });
+  const { handleDeleteBook, isSubmitting } = useDeleteBook({
+    userBookId,
+    onSuccess,
+  });
 
   return (
     <>
@@ -35,6 +38,7 @@ export default function DeleteBookConfirmModal({
           color="red"
           leftSection={<IconTrash size={14} />}
           onClick={handleDeleteBook}
+          loading={isSubmitting}
         >
           削除
         </Button>

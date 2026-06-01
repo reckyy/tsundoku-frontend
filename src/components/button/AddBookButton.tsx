@@ -4,7 +4,7 @@ import { IconBookUpload } from '@tabler/icons-react';
 import useAddBook from '@/hooks/useAddBook';
 
 export default function AddBookButton({ book }: { book: Book }) {
-  const { handleSubmit } = useAddBook(book);
+  const { handleSubmit, isSubmitting } = useAddBook(book);
 
   return (
     <>
@@ -13,6 +13,7 @@ export default function AddBookButton({ book }: { book: Book }) {
         rightSection={<IconBookUpload size={14} />}
         variant="light"
         onClick={handleSubmit}
+        loading={isSubmitting}
       >
         本棚に追加
       </Button>

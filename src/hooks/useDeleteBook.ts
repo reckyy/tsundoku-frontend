@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import toast from 'react-hot-toast';
 import { apiDelete } from '@/lib/api/client';
 import { useSession } from 'next-auth/react';
@@ -12,8 +13,11 @@ export default function useDeleteBook({
   onSuccess,
 }: useDeleteBookProps) {
   const { data: session } = useSession();
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleDeleteBook = async () => {
+    if (isSubmitting) return;
+    setIsSubmitting(true);
     const token = session?.user?.accessToken;
     try {
       await apiDelete(`/user_books/${userBookId}`, token);
@@ -22,8 +26,9 @@ export default function useDeleteBook({
     } catch (error) {
       console.warn(error);
       toast.error('本の削除に失敗しました。');
+      setIsSubmitting(false);
     }
   };
 
-  return { handleDeleteBook };
+  return { handleDeleteBook, isSubmitting };
 }
