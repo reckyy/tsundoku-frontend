@@ -89,7 +89,7 @@ export default function UserMenu({ name, id, image }: UserMenuProps) {
         <Menu.Divider />
 
         <Menu.Label>Danger zone</Menu.Label>
-        <Link href="confirm_deletion">
+        <Link href="/confirm_deletion">
           <Menu.Item
             color="red"
             leftSection={
