@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { http, HttpResponse } from 'msw';
+import { http, HttpResponse, delay } from 'msw';
 import { userEvent, within, expect, waitFor } from '@storybook/test';
 import AddBookButton from '@/components/button/AddBookButton';
 import { SessionProvider } from 'next-auth/react';
@@ -61,6 +61,28 @@ export const AddBookTest: Story = {
           return new HttpResponse();
         }),
         http.post(`${RAILS_API_URL}/user_books`, () => {
+          return new HttpResponse();
+        }),
+      ],
+    },
+  },
+};
+
+export const PreventDoubleSubmitTest: Story = {
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    const button = canvas.getByRole('button', { name: '本棚に追加' });
+    await userEvent.click(button);
+
+    await waitFor(() => {
+      expect(button).toBeDisabled();
+    });
+  },
+  parameters: {
+    msw: {
+      handlers: [
+        http.post(`${RAILS_API_URL}/user_books`, async () => {
+          await delay('infinite');
           return new HttpResponse();
         }),
       ],
