@@ -2,6 +2,8 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { http, HttpResponse } from 'msw';
 import { userEvent, within, expect, waitFor } from '@storybook/test';
 import SearchHome from '@/components/search/SearchHome';
+import { SessionProvider } from 'next-auth/react';
+import { createMockSession } from '@/stories/utils/mockSession';
 
 const mockBooksResponse = {
   Items: [
@@ -16,8 +18,22 @@ const mockBooksResponse = {
   ],
 };
 
+const mockSession = createMockSession({
+  id: '1',
+  name: 'Test User',
+  email: 'testuser@example.com',
+  accessToken: 'hogehoge',
+});
+
 const meta: Meta<typeof SearchHome> = {
   component: SearchHome,
+  decorators: [
+    (Story) => (
+      <SessionProvider session={mockSession}>
+        <Story />
+      </SessionProvider>
+    ),
+  ],
   parameters: {
     layout: 'fullscreen',
     nextjs: {

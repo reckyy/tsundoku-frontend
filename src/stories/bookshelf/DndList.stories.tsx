@@ -9,11 +9,27 @@ import {
   userEvent,
 } from '@storybook/test'; // userEventではdraganddropができないため、fireEventを採用している。
 import DndList from '@/components/bookshelf/DndList';
+import { SessionProvider } from 'next-auth/react';
+import { createMockSession } from '@/stories/utils/mockSession';
 
 const RAILS_API_URL = process.env.STORYBOOK_NEXT_PUBLIC_RAILS_API_URL;
 
+const mockSession = createMockSession({
+  id: '1',
+  name: 'Test User',
+  email: 'testuser@example.com',
+  accessToken: 'hogehoge',
+});
+
 const meta: Meta<typeof DndList> = {
   component: DndList,
+  decorators: [
+    (Story) => (
+      <SessionProvider session={mockSession}>
+        <Story />
+      </SessionProvider>
+    ),
+  ],
   parameters: {
     layout: 'padded',
     nextjs: {
