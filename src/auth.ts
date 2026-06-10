@@ -76,15 +76,9 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     },
 
     async signIn({ user, account }) {
-      const name = user.name;
-      const email = user.email;
-      const avatarUrl = user.image;
       const idToken = account?.id_token;
       try {
         const data = (await apiPost('/auth/callback/google', undefined, {
-          name,
-          email,
-          avatarUrl,
           idToken,
         })) as BackendSignInResponse;
         user.id = data.id;
