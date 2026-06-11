@@ -6,3 +6,6 @@
 next.config.mjs
 tailwind.config.mjs
 tsconfig.json
+
+# build artifacts
+storybook-static/
