@@ -1,9 +1,25 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
 import Results from '@/components/search/Results';
+import { SessionProvider } from 'next-auth/react';
+import { createMockSession } from '@/stories/utils/mockSession';
+
+const mockSession = createMockSession({
+  id: '1',
+  name: 'Test User',
+  email: 'testuser@example.com',
+  accessToken: 'hogehoge',
+});
 
 const meta: Meta<typeof Results> = {
   component: Results,
+  decorators: [
+    (Story) => (
+      <SessionProvider session={mockSession}>
+        <Story />
+      </SessionProvider>
+    ),
+  ],
   parameters: {
     layout: 'padded',
     nextjs: {
