@@ -3,13 +3,7 @@ import { http, HttpResponse } from 'msw';
 import { userEvent, within, expect, waitFor, screen } from '@storybook/test';
 import MemoPageContent from '@/components/pageContent/MemoPageContent';
 import { SessionProvider } from 'next-auth/react';
-import * as nextNavigation from 'next/navigation';
 import { createMockSession } from '@/stories/utils/mockSession';
-
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-(nextNavigation as any).useParams = () => ({
-  bookId: '1',
-});
 
 const mockSession = createMockSession({
   id: '1',
@@ -66,6 +60,9 @@ const meta: Meta<typeof MemoPageContent> = {
     layout: 'fullscreen',
     nextjs: {
       appDirectory: true,
+      navigation: {
+        segments: [['bookId', '1']],
+      },
     },
   },
 };
