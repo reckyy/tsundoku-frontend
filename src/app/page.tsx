@@ -1,5 +1,7 @@
 import type { Metadata } from 'next';
+import { auth } from '@/auth';
 import TopLoading from '@/components/loading/TopLoading';
+import TopPage from '@/components/top/TopPage';
 import TopPageContent from '@/components/pageContent/TopPageContent';
 import { Suspense } from 'react';
 
@@ -29,12 +31,16 @@ export const metadata: Metadata = {
   },
 };
 
-export default function Home() {
+export default async function Home() {
+  const session = await auth();
+
+  if (!session?.user) {
+    return <TopPage />;
+  }
+
   return (
-    <>
-      <Suspense fallback={<TopLoading />}>
-        <TopPageContent />
-      </Suspense>
-    </>
+    <Suspense fallback={<TopLoading />}>
+      <TopPageContent />
+    </Suspense>
   );
 }
