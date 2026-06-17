@@ -1,8 +1,8 @@
 'use client';
 
 import toast from 'react-hot-toast';
-import { useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { useEffect } from 'react';
 
 const messages = {
   success: 'ログインしました！',
@@ -10,20 +10,19 @@ const messages = {
 
 export const AuthToaster = () => {
   const router = useRouter();
-  const [authenticated, setAuthenticated] = useState<string | null>(null);
+  const searchParams = useSearchParams();
+  const pathname = usePathname();
 
   useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-    const authenticatedParams = params.get('authenticated');
-    setAuthenticated(authenticatedParams);
+    if (searchParams.get('authenticated') !== 'true') return;
 
-    if (authenticated === 'true') {
-      toast.success(messages.success);
+    toast.success(messages.success);
 
-      params.delete('authenticated');
-      router.replace(`${window.location.pathname}?${params.toString()}`);
-    }
-  }, [authenticated, router]);
+    const params = new URLSearchParams(searchParams.toString());
+    params.delete('authenticated');
+    const query = params.toString();
+    router.replace(query ? `${pathname}?${query}` : pathname);
+  }, [searchParams, pathname, router]);
 
   return null;
 };

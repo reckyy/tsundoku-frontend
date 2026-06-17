@@ -6,6 +6,7 @@ import { MantineProvider } from '@mantine/core';
 import { Toaster } from 'react-hot-toast';
 import { AuthToaster } from '@/components/auth/AuthToaster';
 import MyAppShell from '@/components/appShell/MyAppShell';
+import { Suspense } from 'react';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -31,7 +32,9 @@ export default function RootLayout({
           >
             <MyAppShell>
               <Toaster />
-              <AuthToaster />
+              <Suspense fallback={null}>
+                <AuthToaster />
+              </Suspense>
               {children}
             </MyAppShell>
           </MantineProvider>
