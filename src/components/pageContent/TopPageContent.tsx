@@ -7,8 +7,7 @@ import { IconPlus, IconBook } from '@tabler/icons-react';
 import Link from 'next/link';
 
 export default async function TopPageContent() {
-  const bookItems = await getBooks();
-  const readingLogs = await getLogs();
+  const [bookItems, readingLogs] = await Promise.all([getBooks(), getLogs()]);
 
   return (
     <Container my="md">
