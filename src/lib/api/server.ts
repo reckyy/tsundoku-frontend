@@ -1,4 +1,5 @@
 import 'server-only';
+import { ApiError } from './error';
 
 const BASE_URL = process.env.RAILS_API_URL;
 
@@ -17,7 +18,10 @@ async function request(
     headers,
     body: body !== undefined ? JSON.stringify(body) : undefined,
   });
-  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  if (!res.ok) {
+    const errorBody = await res.json().catch(() => null);
+    throw new ApiError(res.status, errorBody);
+  }
   const text = await res.text();
   return text ? JSON.parse(text) : null;
 }
