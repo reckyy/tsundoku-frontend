@@ -6,6 +6,7 @@ import { useEffect } from 'react';
 
 const messages = {
   success: 'ログインしました！',
+  error: 'ログインが必要です。',
 };
 
 export const AuthToaster = () => {
@@ -14,9 +15,14 @@ export const AuthToaster = () => {
   const pathname = usePathname();
 
   useEffect(() => {
-    if (searchParams.get('authenticated') !== 'true') return;
+    const authenticated = searchParams.get('authenticated');
+    if (authenticated !== 'true' && authenticated !== 'false') return;
 
-    toast.success(messages.success);
+    if (authenticated === 'true') {
+      toast.success(messages.success);
+    } else {
+      toast.error(messages.error);
+    }
 
     const params = new URLSearchParams(searchParams.toString());
     params.delete('authenticated');

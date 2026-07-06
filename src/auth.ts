@@ -93,7 +93,9 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       if (auth) {
         return true;
       } else {
-        return NextResponse.redirect(new URL('/', request.nextUrl));
+        const redirectUrl = new URL('/', request.nextUrl);
+        redirectUrl.searchParams.set('authenticated', 'false');
+        return NextResponse.redirect(redirectUrl);
       }
     },
   },
