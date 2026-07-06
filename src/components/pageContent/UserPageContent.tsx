@@ -10,7 +10,6 @@ import {
   Space,
   Title,
 } from '@mantine/core';
-import { useClipboard } from '@mantine/hooks';
 import toast from 'react-hot-toast';
 import Calendar from '@/components/calendar/Calendar';
 import BookItems from '@/components/bookshelf/BookItems';
@@ -31,15 +30,13 @@ export default function UserPageContent({
   id,
   isCurrentUser,
 }: UserPageContentProps) {
-  const clipboard = useClipboard();
   const userPageUrl = `${process.env.NEXT_PUBLIC_NEXT_URL}/users/${id}`;
 
-  const handleCopyUrl = () => {
-    clipboard.copy(userPageUrl);
-
-    if (!clipboard.error) {
+  const handleCopyUrl = async () => {
+    try {
+      await navigator.clipboard.writeText(userPageUrl);
       toast.success('URLのコピーに成功しました');
-    } else {
+    } catch {
       toast.error('URLのコピーに失敗しました');
     }
   };
