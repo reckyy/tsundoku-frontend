@@ -86,7 +86,6 @@ export default function DndList({ bookItems }: DndListProps) {
       (_element, idx) => idx === index,
     );
     const params = {
-      id: userBook?.id,
       destinationBookId: destinationBook?.id,
     };
     try {
