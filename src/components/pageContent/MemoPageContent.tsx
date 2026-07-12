@@ -111,7 +111,7 @@ export default function MemoPageContent() {
     },
   );
 
-  const { handleUpdateBookStatus } = useUpdateBookStatus(bookWithMemos?.id);
+  const { handleUpdateBookStatus } = useUpdateBookStatus();
 
   const handleStatusChange = async (status: string) => {
     if (!bookWithMemos) return;
@@ -119,7 +119,7 @@ export default function MemoPageContent() {
     try {
       await mutate(
         async () => {
-          await handleUpdateBookStatus(status);
+          await handleUpdateBookStatus(bookWithMemos.id, status);
           return optimisticData;
         },
         {
