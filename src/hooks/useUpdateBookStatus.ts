@@ -7,10 +7,7 @@ export default function useUpdateBookStatus(userBookId?: number) {
 
   const handleUpdateBookStatus = async (status: string) => {
     if (!userBookId) throw new Error();
-    await apiPatch(`/user_books/${userBookId}`, token, {
-      userBookId,
-      status,
-    });
+    await apiPatch(`/user_books/${userBookId}`, token, { status });
   };
 
   return { handleUpdateBookStatus };
