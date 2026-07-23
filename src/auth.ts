@@ -5,7 +5,7 @@ import { apiPost } from '@/lib/api/server';
 import { THIRTY_DAYS_IN_SECONDS } from '@/constants/session';
 
 type BackendSignInResponse = {
-  id: string;
+  id: number;
   access_token: string;
   access_token_expires_at: string;
 };
@@ -81,7 +81,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         const data = (await apiPost('/auth/callback/google', undefined, {
           idToken,
         })) as BackendSignInResponse;
-        user.id = data.id;
+        user.id = String(data.id);
         user.accessToken = data.access_token;
         user.accessTokenExpiresAt = data.access_token_expires_at;
         return true;
