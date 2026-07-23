@@ -62,7 +62,7 @@ export default async function Page({ params }: Props) {
 
   const userData = await fetchUserData(id);
   const session = await auth();
-  const isCurrentUser = String(session?.user?.id) === id;
+  const isCurrentUser = session?.user?.id === id;
 
   if (!userData) {
     return <>ユーザーが見つかりませんでした。</>;
