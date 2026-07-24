@@ -23,7 +23,7 @@ type EditorProps = {
     headingId: number,
     content: string,
     memoId: number,
-  ) => Promise<false | undefined>;
+  ) => Promise<boolean>;
 };
 
 const lowlight = createLowlight();
@@ -32,6 +32,19 @@ lowlight.register({ js, ts, rb });
 export default function Editor({ heading, handleSaveAll }: EditorProps) {
   const memoBody = heading?.memo.body ?? '';
   const title = heading?.title ?? '';
+  const [saved, setSaved] = useState({ title, body: memoBody });
+  const [draftTitle, setDraftTitle] = useState(title);
+  const [draftBody, setDraftBody] = useState(memoBody);
+  const [isSaving, setIsSaving] = useState(false);
+  const previousHeadingId = useRef(heading?.id);
+  const activeHeadingId = useRef(heading?.id);
+  activeHeadingId.current = heading?.id;
+
+  const isTitleDirty = draftTitle !== saved.title;
+  const isBodyDirty = draftBody !== saved.body;
+  const canSave =
+    (isTitleDirty || isBodyDirty) && Boolean(heading) && !isSaving;
+
   const memoPlaceholder = `1. 1章 - プログラミングの基礎概念
 - プログラミングは、問題解決のための手順を記述する行為である。
 - アルゴリズムとデータ構造の基礎について学ぶ。
@@ -63,47 +76,49 @@ export default function Editor({ heading, handleSaveAll }: EditorProps) {
     ],
     autofocus: true,
     content: memoBody,
-    onUpdate: ({ editor }) => {
+    onCreate: ({ editor }) => {
       const content = editor.getHTML();
-      if (content !== memoBody) {
-        setIsSaveEnable(true);
-      } else {
-        setIsSaveEnable(false);
-      }
+      setDraftBody(content);
+      setSaved((current) => ({ ...current, body: content }));
+    },
+    onUpdate: ({ editor }) => {
+      setDraftBody(editor.getHTML());
     },
   });
 
-  const initialHeadingTitle: string = title;
-  const [headingTitle, setHeadingTitle] = useState<string>(title);
-  const prevHeading = useRef(heading);
-  const [isSaveEnable, setIsSaveEnable] = useState<boolean>(false);
-
   useEffect(() => {
-    if (editor && heading !== prevHeading.current) {
-      editor.commands.setContent(memoBody);
-      prevHeading.current = heading;
-      setHeadingTitle(title);
-    }
+    if (!editor || heading?.id === previousHeadingId.current) return;
+
+    previousHeadingId.current = heading?.id;
+    editor.commands.setContent(memoBody);
+    const content = editor.getHTML();
+
+    setDraftTitle(title);
+    setDraftBody(content);
+    setSaved({ title, body: content });
   }, [editor, heading, memoBody, title]);
 
   const handleSaveClick = async () => {
-    const title = headingTitle;
-    const content = editor?.getHTML() ?? '';
     const memoId = heading?.memo.id;
     const headingId = heading?.id;
 
-    if (memoId && headingId) {
-      await handleSaveAll(title, headingId, content, memoId);
-    }
-  };
+    if (memoId === undefined || headingId === undefined) return;
 
-  const handleTitleChange = (title: string) => {
-    setHeadingTitle(title);
-
-    if (initialHeadingTitle !== title) {
-      setIsSaveEnable(true);
-    } else {
-      setIsSaveEnable(false);
+    const titleToSave = draftTitle;
+    const bodyToSave = draftBody;
+    setIsSaving(true);
+    try {
+      const succeeded = await handleSaveAll(
+        titleToSave,
+        headingId,
+        bodyToSave,
+        memoId,
+      );
+      if (succeeded && activeHeadingId.current === headingId) {
+        setSaved({ title: titleToSave, body: bodyToSave });
+      }
+    } finally {
+      setIsSaving(false);
     }
   };
 
@@ -116,14 +131,14 @@ export default function Editor({ heading, handleSaveAll }: EditorProps) {
             aria-label="heading-title"
             variant="unstyled"
             size="lg"
-            value={headingTitle}
+            value={draftTitle}
             placeholder="第1章 : プログラミングの基礎概念"
             styles={{
               input: {
                 color: '#37352f',
               },
             }}
-            onChange={(event) => handleTitleChange(event.currentTarget.value)}
+            onChange={(event) => setDraftTitle(event.currentTarget.value)}
           />
         </GridCol>
         <GridCol offset={1} span={2}>
@@ -133,7 +148,7 @@ export default function Editor({ heading, handleSaveAll }: EditorProps) {
             color="blue"
             onClick={handleSaveClick}
             fullWidth
-            disabled={!isSaveEnable}
+            disabled={!canSave}
           >
             保存
           </Button>

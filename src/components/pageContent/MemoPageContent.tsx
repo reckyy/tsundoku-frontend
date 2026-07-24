@@ -173,9 +173,11 @@ export default function MemoPageContent() {
         },
       );
       toast.success('保存しました。');
+      return true;
     } catch (error) {
       console.warn(error);
       toast.error('保存に失敗しました。');
+      return false;
     }
   };
 
