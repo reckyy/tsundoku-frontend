@@ -13,7 +13,7 @@ const heading: Heading = {
   },
 };
 
-const handleSaveAllSpy = fn(async () => undefined);
+const handleSaveAllSpy = fn(async () => true);
 
 const waitForEditorElement = async (canvasElement: HTMLElement) => {
   await waitFor(() => {
@@ -61,11 +61,14 @@ export const EditTitleAndSaveTest: Story = {
   play: async ({ canvasElement }) => {
     handleSaveAllSpy.mockClear();
     const canvas = within(canvasElement);
-    await waitForEditorElement(canvasElement);
+    const editorElement = await waitForEditorElement(canvasElement);
     const saveButton = canvas.getByRole('button', { name: '保存' });
     const titleInput = canvas.getByLabelText('heading-title');
 
     await userEvent.type(titleInput, '追記');
+    await userEvent.click(editorElement);
+    await userEvent.keyboard('追記');
+    await userEvent.keyboard('{Backspace}{Backspace}');
     await waitFor(() => {
       expect(saveButton).toBeEnabled();
     });
@@ -79,6 +82,9 @@ export const EditTitleAndSaveTest: Story = {
         1,
       );
     });
+    await waitFor(() => {
+      expect(saveButton).toBeDisabled();
+    });
   },
 };
 
@@ -87,10 +93,13 @@ export const EditMemoAndSaveTest: Story = {
     handleSaveAllSpy.mockClear();
     const canvas = within(canvasElement);
     const saveButton = canvas.getByRole('button', { name: '保存' });
+    const titleInput = canvas.getByLabelText('heading-title');
     const editorElement = await waitForEditorElement(canvasElement);
 
     await userEvent.click(editorElement);
     await userEvent.keyboard('追記');
+    await userEvent.type(titleInput, '追記');
+    await userEvent.keyboard('{Backspace}{Backspace}');
     await waitFor(() => {
       expect(saveButton).toBeEnabled();
     });
@@ -103,6 +112,9 @@ export const EditMemoAndSaveTest: Story = {
         expect.stringContaining('追記'),
         1,
       );
+    });
+    await waitFor(() => {
+      expect(saveButton).toBeDisabled();
     });
   },
 };
